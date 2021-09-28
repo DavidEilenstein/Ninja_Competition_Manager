@@ -17,13 +17,45 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
-    ncm_mainwindow.cpp
+    ncm_competition.cpp \
+    ncm_competitor.cpp \
+    ncm_competitor.cpp \
+    ncm_competitorclass.cpp \
+    ncm_competitorlist.cpp \
+    ncm_liveranking.cpp \
+    ncm_mainwindow.cpp \
+    ncm_rankingscheme.cpp \
+    ncm_run.cpp \
+    ncm_stage.cpp \
+    ncm_stage.cpp \
+    ncm_starterlist.cpp
 
 HEADERS += \
-    ncm_mainwindow.h
+    NCM_enum.h \
+    ncm_competition.h \
+    ncm_competitor.h \
+    ncm_competitor.h \
+    ncm_competitorclass.h \
+    ncm_competitorlist.h \
+    ncm_liveranking.h \
+    ncm_mainwindow.h \
+    ncm_rankingscheme.h \
+    ncm_run.h \
+    ncm_stage.h \
+    ncm_stage.h \
+    ncm_starterlist.h
 
 FORMS += \
-    ncm_mainwindow.ui
+    ncm_competition.ui \
+    ncm_competitor.ui \
+    ncm_competitorclass.ui \
+    ncm_competitorlist.ui \
+    ncm_liveranking.ui \
+    ncm_mainwindow.ui \
+    ncm_rankingscheme.ui \
+    ncm_run.ui \
+    ncm_stage.ui \
+    ncm_starterlist.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

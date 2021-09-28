@@ -6,10 +6,106 @@ NCM_MainWindow::NCM_MainWindow(QWidget *parent)
     , ui(new Ui::NCM_MainWindow)
 {
     ui->setupUi(this);
+
+    DIR_Settings.setPath(QDir().homePath() + "/Ninja_Competition_Manager");
+    DIR_Master.setPath(DIR_Settings.path());
+    FI_Settings.setFile(DIR_Settings.path() + "/Settings.txt");
+    settings_load();
 }
 
 NCM_MainWindow::~NCM_MainWindow()
 {
+    settings_save();
     delete ui;
 }
 
+void NCM_MainWindow::settings_load()
+{
+    if(FI_Settings.exists())
+    {
+        ifstream IS_settings;
+        IS_settings.open(FI_Settings.absoluteFilePath().toStdString());
+
+        string ST_line;
+        getline(IS_settings, ST_line);
+        QString QS_Line = QString::fromStdString(ST_line);
+
+        DIR_Master.setPath(QS_Line);
+    }
+
+    settings_save();
+}
+
+void NCM_MainWindow::settings_save()
+{
+    if(!DIR_Settings.exists())
+        QDir().mkdir(DIR_Settings.path());
+
+    ofstream OF_settings;
+    OF_settings.open(FI_Settings.absoluteFilePath().toStdString());
+    if(!OF_settings.is_open())
+        return;
+
+    OF_settings << DIR_Master.path().toStdString() << "\n";
+    OF_settings.close();
+}
+
+
+void NCM_MainWindow::on_pushButton_CompetitionCreate_clicked()
+{
+    NCM_Competition comp(&DIR_Master);
+    comp.create_dialogue();
+
+    if(!comp.is_valid())
+        return;
+
+    competition = comp;
+
+    ui->lineEdit_CompetitionPath->setText(competition.competition_dir().path());
+    ui->groupBox_Competition->setEnabled(false);
+    ui->groupBox_Modules->setEnabled(true);
+
+    settings_save();
+}
+
+void NCM_MainWindow::on_pushButton_CompetitionLoad_clicked()
+{
+    NCM_Competition comp(&DIR_Master);
+    comp.load_dialogue();
+
+    if(!comp.is_valid())
+        return;
+
+    competition = comp;
+
+    ui->lineEdit_CompetitionPath->setText(competition.competition_dir().path());
+    ui->groupBox_Competition->setEnabled(false);
+    ui->groupBox_Modules->setEnabled(true);
+
+    settings_save();
+}
+
+void NCM_MainWindow::on_pushButton_EditStages_clicked()
+{
+
+}
+
+void NCM_MainWindow::on_pushButton_Checkin_clicked()
+{
+
+}
+
+void NCM_MainWindow::on_pushButton_ResultsEntering_clicked()
+{
+
+}
+
+void NCM_MainWindow::on_pushButton_StarterList_clicked()
+{
+
+}
+
+void NCM_MainWindow::on_pushButton_Ranking_clicked()
+{
+
+}
