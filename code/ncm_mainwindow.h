@@ -10,6 +10,7 @@
 #include <ncm_stage.h>
 #include <ncm_competitor.h>
 #include <ncm_competition.h>
+#include <ncm_checkin.h>
 
 using namespace std;
 
@@ -51,5 +52,7 @@ private:
     QFileInfo FI_Settings;
 
     NCM_Competition *competition;
+
+    NCM_CheckIn *pCheckIn;
 };
 #endif // NCM_MAINWINDOW_H

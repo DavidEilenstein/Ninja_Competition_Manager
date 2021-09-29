@@ -102,7 +102,12 @@ void NCM_MainWindow::on_pushButton_EditStages_clicked()
 
 void NCM_MainWindow::on_pushButton_Checkin_clicked()
 {
+    if(!competition->is_valid())
+        return;
 
+    pCheckIn = new NCM_CheckIn(competition->dir_competition(), competition->competitor_classes());
+    this->close();
+    pCheckIn->show();
 }
 
 void NCM_MainWindow::on_pushButton_ResultsEntering_clicked()

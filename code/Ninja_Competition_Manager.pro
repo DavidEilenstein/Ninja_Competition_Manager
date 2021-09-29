@@ -17,11 +17,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
+    ncm_checkin.cpp \
     ncm_competition.cpp \
     ncm_competitor.cpp \
-    ncm_competitor.cpp \
-    ncm_competitorclass.cpp \
-    ncm_competitorlist.cpp \
     ncm_liveranking.cpp \
     ncm_mainwindow.cpp \
     ncm_rankingscheme.cpp \
@@ -32,11 +30,9 @@ SOURCES += \
 
 HEADERS += \
     NCM_enum.h \
+    ncm_checkin.h \
     ncm_competition.h \
     ncm_competitor.h \
-    ncm_competitor.h \
-    ncm_competitorclass.h \
-    ncm_competitorlist.h \
     ncm_liveranking.h \
     ncm_mainwindow.h \
     ncm_rankingscheme.h \
@@ -46,10 +42,8 @@ HEADERS += \
     ncm_starterlist.h
 
 FORMS += \
+    ncm_checkin.ui \
     ncm_competition.ui \
-    ncm_competitor.ui \
-    ncm_competitorclass.ui \
-    ncm_competitorlist.ui \
     ncm_liveranking.ui \
     ncm_mainwindow.ui \
     ncm_rankingscheme.ui \

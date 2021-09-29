@@ -319,7 +319,7 @@ void NCM_Stage::stage_code_save()
     QString QS_SavePath = QFileDialog::getSaveFileName(
                 this,
                 "Save Stage",
-                DIR_Competition.path() + "/" + QSL_CompDirs[COMP_DIR_STAGES],
+                DIR_Competition.path() + "/" + QSL_CompDirs[COMP_DIR_STAGES] + "/" + QS_Name + ".txt",
                 tr("*txt *TXT"));
 
     QFileInfo FI(QS_SavePath);
