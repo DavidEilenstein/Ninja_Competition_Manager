@@ -15,6 +15,9 @@ public:
     NCM_Competitor(QDir competitors_dir, QString name, QString competitor_class, int number);
 
     void set_data(QDir competitors_dir, QString name, QString competitor_class, int number);
+    void set_name(QString name) {QS_Name = name;}
+    void set_competitor_class(QString competitor_class) {QS_CompClass = competitor_class;}
+    void set_starter_number(int number) {starter_number = number;}
 
     bool save();
     bool load();
@@ -23,11 +26,15 @@ public:
     int number() {return starter_number;}
     QString name() {return QS_Name;}
     QString competitor_class() {return QS_CompClass;}
+    QDir competitor_dir() {return DIR_Competitors;}
 signals:
+
+protected:
+
+    QDir DIR_Competitors;
 
 private:
 
-    QDir DIR_Competitors;
     int starter_number = 0;
     QString QS_Name = "";
     QString QS_CompClass = "";

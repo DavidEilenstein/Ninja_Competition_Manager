@@ -8,7 +8,6 @@
 #include <QMessageBox>
 #include <QStringList>
 #include <QDir>
-#include <ncm_rankingscheme.h>
 #include <NCM_enum.h>
 #include <fstream>
 

@@ -97,7 +97,6 @@ void NCM_MainWindow::on_pushButton_EditStages_clicked()
     NCM_Stage stage(competition->dir_competition(), competition->competitor_classes());
     this->close();
     stage.exec();
-    this->show();
 }
 
 void NCM_MainWindow::on_pushButton_Checkin_clicked()

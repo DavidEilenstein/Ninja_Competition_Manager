@@ -20,9 +20,8 @@ SOURCES += \
     ncm_checkin.cpp \
     ncm_competition.cpp \
     ncm_competitor.cpp \
-    ncm_liveranking.cpp \
     ncm_mainwindow.cpp \
-    ncm_rankingscheme.cpp \
+    ncm_resultentering.cpp \
     ncm_run.cpp \
     ncm_stage.cpp \
     ncm_stage.cpp \
@@ -33,9 +32,8 @@ HEADERS += \
     ncm_checkin.h \
     ncm_competition.h \
     ncm_competitor.h \
-    ncm_liveranking.h \
     ncm_mainwindow.h \
-    ncm_rankingscheme.h \
+    ncm_resultentering.h \
     ncm_run.h \
     ncm_stage.h \
     ncm_stage.h \
@@ -44,10 +42,8 @@ HEADERS += \
 FORMS += \
     ncm_checkin.ui \
     ncm_competition.ui \
-    ncm_liveranking.ui \
     ncm_mainwindow.ui \
-    ncm_rankingscheme.ui \
-    ncm_run.ui \
+    ncm_resultentering.ui \
     ncm_stage.ui \
     ncm_starterlist.ui
 
