@@ -16,6 +16,7 @@ NCM_MainWindow::NCM_MainWindow(QWidget *parent)
 NCM_MainWindow::~NCM_MainWindow()
 {
     settings_save();
+    delete competition;
     delete ui;
 }
 
@@ -53,15 +54,16 @@ void NCM_MainWindow::settings_save()
 
 void NCM_MainWindow::on_pushButton_CompetitionCreate_clicked()
 {
-    NCM_Competition comp(&DIR_Master);
-    comp.create_dialogue();
+    competition = new NCM_Competition(&DIR_Master);
+    competition->create_dialogue();
 
-    if(!comp.is_valid())
+    if(!competition->is_valid())
+    {
+        delete competition;
         return;
+    }
 
-    competition = comp;
-
-    ui->lineEdit_CompetitionPath->setText(competition.competition_dir().path());
+    ui->lineEdit_CompetitionPath->setText(competition->dir_competition().path());
     ui->groupBox_Competition->setEnabled(false);
     ui->groupBox_Modules->setEnabled(true);
 
@@ -70,15 +72,17 @@ void NCM_MainWindow::on_pushButton_CompetitionCreate_clicked()
 
 void NCM_MainWindow::on_pushButton_CompetitionLoad_clicked()
 {
-    NCM_Competition comp(&DIR_Master);
-    comp.load_dialogue();
+    competition = new NCM_Competition(&DIR_Master);
+    competition->load_dialogue();
 
-    if(!comp.is_valid())
+    qDebug() << "comp valid?" << competition->is_valid();
+    if(!competition->is_valid())
+    {
+        delete competition;
         return;
+    }
 
-    competition = comp;
-
-    ui->lineEdit_CompetitionPath->setText(competition.competition_dir().path());
+    ui->lineEdit_CompetitionPath->setText(competition->dir_competition().path());
     ui->groupBox_Competition->setEnabled(false);
     ui->groupBox_Modules->setEnabled(true);
 
@@ -87,7 +91,13 @@ void NCM_MainWindow::on_pushButton_CompetitionLoad_clicked()
 
 void NCM_MainWindow::on_pushButton_EditStages_clicked()
 {
+    if(!competition->is_valid())
+        return;
 
+    NCM_Stage stage(competition->dir_competition(), competition->competitor_classes());
+    this->close();
+    stage.exec();
+    this->show();
 }
 
 void NCM_MainWindow::on_pushButton_Checkin_clicked()

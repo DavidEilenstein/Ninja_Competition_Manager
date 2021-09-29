@@ -20,20 +20,16 @@ NCM_Competition::NCM_Competition()
 
 }
 
-NCM_Competition::NCM_Competition(NCM_Competition &competition_to_copy)
-{
 
-}
+
+
 
 NCM_Competition::~NCM_Competition()
 {
     delete ui;
 }
 
-NCM_Competition NCM_Competition::operator=(NCM_Competition &to_copy)
-{
-    return to_copy;
-}
+
 
 void NCM_Competition::create_dialogue()
 {
@@ -157,6 +153,8 @@ bool NCM_Competition::save()
     if(SavePath.isEmpty())
         return false;
 
+    //----------------------------------------------------- dir pathes
+
     DIR_Competition.setPath(SavePath + "/" + QS_CompetitionName);
     if(DIR_Competition.exists())
     {
@@ -176,6 +174,8 @@ bool NCM_Competition::save()
         QDir().mkdir(vDIR_CompetitionSubdirs[i].path());
     }
 
+    //----------------------------------------------------- competitor classes
+
     ofstream OF_competitorclasses;
     OF_competitorclasses.open(QString(vDIR_CompetitionSubdirs[COMP_DIR_GENERAL].path() + "/" + QS_FileName_CompetitorClasses).toStdString());
     if(!OF_competitorclasses.is_open())
@@ -190,6 +190,8 @@ bool NCM_Competition::save()
         OF_competitorclasses << QSL_CompetitorClasses[i].toStdString() << "\n";
     OF_competitorclasses.close();
 
+    //----------------------------------------------------- stages count
+
     ofstream OF_stages_count;
     OF_stages_count.open(QString(vDIR_CompetitionSubdirs[COMP_DIR_GENERAL].path() + "/" + QS_FileName_StagesCount).toStdString());
     if(!OF_stages_count.is_open())
@@ -202,6 +204,13 @@ bool NCM_Competition::save()
     }
     OF_stages_count << stages_count << "\n";
     OF_stages_count.close();
+
+    //----------------------------------------------------- run dirs
+
+    for(int i = 0; i < stages_count; i++)
+        QDir().mkdir(vDIR_CompetitionSubdirs[COMP_DIR_RUNS].path() + "/Stage_" + QString::number(i+1));
+
+    //----------------------------------------------------- finish stuff
 
     pDIR_Master->setPath(DIR_Competition.path());
     pDIR_Master->cdUp();
@@ -227,3 +236,4 @@ void NCM_Competition::on_plainTextEdit_CompetitorCalsses_textChanged()
         if(!QSL_Lines[i].isEmpty())
             QSL_CompetitorClasses.append(QSL_Lines[i]);
 }
+

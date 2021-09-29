@@ -24,17 +24,21 @@ class NCM_Competition : public QDialog
 public:
     explicit NCM_Competition(QDir *pMasterDir, QWidget *parent = nullptr);
     NCM_Competition();
-    NCM_Competition(NCM_Competition &competition_to_copy);
     ~NCM_Competition();
-
-    NCM_Competition operator=(NCM_Competition &to_copy);
 
     void create_dialogue();
     bool load_dialogue();
 
-    bool is_valid() {return valid;}
+    void set_dir_master(QDir *master_dir)       {pDIR_Master = master_dir;}
 
-    QDir competition_dir() {return DIR_Competition;}
+    bool is_valid()                             {return valid;}
+    QDir dir_competition()                      {return DIR_Competition;}
+    QDir *pdir_master()                         {return pDIR_Master;}
+    vector<QDir> vdir_competition_subdirs()     {return vDIR_CompetitionSubdirs;}
+    int number_of_stages()                      {return stages_count;}
+    QStringList competitor_classes()            {return QSL_CompetitorClasses;}
+    QString name()                              {return QS_CompetitionName;}
+
 
 private slots:
     void on_pushButton_Create_clicked();

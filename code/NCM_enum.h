@@ -20,8 +20,54 @@ const QStringList QSL_CompDirs = {
     "Runs"
 };
 
+enum STAGE_KEYWORDS {
+    STAGE_KEYWORD_NAME,
+    STAGE_KEYWORD_COMPETITOR_CLASSES,
+    STAGE_KEYWORD_QUALI,
+    STAGE_KEYWORD_QUALI_GUARANTEE_CLASS,
+    STAGE_KEYWORD_QUALI_GUARANTEE_SPEED,
+    STAGE_KEYWORD_OBSTACLES,
+    STAGE_KEYWORD_NUMBER_OF
+};
+const QStringList QSL_Stage_Keywords = {
+    "NAME",
+    "CLASSES",
+    "QUALI",
+    "QUALI_GUARANTEE_CLASS",
+    "QUALI_GUARANTEE_SPEED",
+    "CHECKPOINTS"
+};
+
+enum QUALI_MODE {
+    QUALI_ALL,
+    QUALI_BUZZER,
+    QUALI_NUMBER,
+    QUALI_FINAL,
+    QUALI_NUMBER_OF
+};
+const QStringList QSL_Quali = {
+    "ALL_TO_NEXT",
+    "BUZZER_TO_NEXT",
+    "NUMBER_TO_NEXT",
+    "FINAL_ROUND"
+};
+
+enum QUALI_GUARANTEE {
+    QUALI_GUARANTEE_INCLUSIVE,
+    QUALI_GUARANTEE_EXCLUSIVE,
+    QUALI_GUARANTEE_NUMBER_OF
+};
+const QStringList QSL_QualiGuaranteeMode = {
+    "inclusive",
+    "exclusive"
+};
+
 const QString QS_FileName_CompetitorClasses = "Competitor_Classes.txt";
 const QString QS_FileName_StagesCount = "Stages_Count.txt";
+
+const QString QS_Separator = ";";
+const QString QS_NewLine = "\n";
+const QString QS_LineSpace = "----------------";
 
 const QStringList QSl_AlphabetSmall {
     "a",

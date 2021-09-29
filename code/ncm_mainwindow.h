@@ -50,6 +50,6 @@ private:
     QDir DIR_Settings;
     QFileInfo FI_Settings;
 
-    NCM_Competition competition;
+    NCM_Competition *competition;
 };
 #endif // NCM_MAINWINDOW_H
