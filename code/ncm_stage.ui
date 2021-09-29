@@ -21,9 +21,9 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
       <item row="0" column="2">
-       <widget class="QPushButton" name="pushButton_Cancel">
+       <widget class="QPushButton" name="pushButton_Close">
         <property name="text">
-         <string>Cancel</string>
+         <string>Close</string>
         </property>
        </widget>
       </item>
@@ -41,13 +41,6 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="3">
-       <widget class="QPushButton" name="pushButton_Close">
-        <property name="text">
-         <string>Close</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
    </item>
@@ -58,30 +51,16 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_4">
       <item row="0" column="0">
-       <widget class="QPushButton" name="pushButton_AddObstacle">
+       <widget class="QLabel" name="label">
         <property name="text">
-         <string>Add obstacle</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QPushButton" name="pushButton_MoveObstacle">
-        <property name="text">
-         <string>Move Obstacle</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QPushButton" name="pushButton_ClearStage">
-        <property name="text">
-         <string>Clear stage</string>
+         <string>Please enter the checkpoints in the stage line by line in the text editor above.</string>
         </property>
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QPushButton" name="pushButton_RemoveObstacle">
+       <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>Remove Obstacle</string>
+         <string>A run is measured by two parameters: 1) Last checkpoint reached, 2) time of failure/finish</string>
         </property>
        </widget>
       </item>
@@ -91,17 +70,30 @@
    <item row="0" column="0">
     <widget class="QPlainTextEdit" name="plainTextEdit_StageCode">
      <property name="plainText">
-      <string>Name;Example Stage Name
-Competitor_Classes;female;male
-quali_next_stage;number_to_next;20
-Guaranteed_to_next;female;3;exclusive
-obstacles
-0;start
-1;first obstacle
-first element in first obstacle
-second element in first obstacle
-plattform after first obstacle
-2; buzzer</string>
+      <string>NAME;Stage 2
+----------------
+QUALI;NUMBER_TO_NEXT;20
+QUALI_GUARANTEE_CLASS;female;3;exclusive
+QUALI_GUARANTEE_SPEED;3;inclusive
+----------------
+CHECKPOINTS
+----------------
+Start
+5 Step (1)
+5 Step (2)
+5 Step (3)
+5 Step (4)
+5 Step (5)
+5 Step (Plattform)
+Double Salmon Ladder (1st trasfer)
+Double Salmon Ladder (4th ladder rung)
+Double Salmon Ladder (2nd transfer)
+Bar after Double Salmon Ladder
+Ringslider (holded safely)
+Ringslider (started sliding)
+Ringslider (Plattform)
+Wall (tired)
+Buzzer</string>
      </property>
     </widget>
    </item>
@@ -111,24 +103,17 @@ plattform after first obstacle
       <string>Qualification for next stage</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="1" column="0">
-       <widget class="QPushButton" name="pushButton_EditCompetitorClasses">
-        <property name="text">
-         <string>Add competitor class</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QPushButton" name="pushButton_AddGuaranteeRule">
-        <property name="text">
-         <string>Add gurateed qualification to next stage rule</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0" colspan="2">
+      <item row="0" column="0">
        <widget class="QPushButton" name="pushButton_ChangeQualiMode">
         <property name="text">
          <string>Change qualification mode for next stage</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="pushButton_AddGuaranteeRule">
+        <property name="text">
+         <string>Add gurateed qualification to next stage rule</string>
         </property>
        </widget>
       </item>

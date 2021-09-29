@@ -4,10 +4,13 @@
 #include <QDialog>
 #include <QInputDialog>
 #include <QFileDialog>
+#include <QFileDialog>
+#include <QMessageBox>
 #include <QStringList>
 #include <QDir>
 #include <ncm_rankingscheme.h>
 #include <NCM_enum.h>
+#include <fstream>
 
 using namespace std;
 
@@ -33,29 +36,11 @@ public:
 
 private slots:
     void on_plainTextEdit_StageCode_textChanged();
-
     void on_pushButton_EditStageName_clicked();
-
-    void on_pushButton_AddObstacle_clicked();
-
-    void on_pushButton_MoveObstacle_clicked();
-
-    void on_pushButton_RemoveObstacle_clicked();
-
-    void on_pushButton_ClearStage_clicked();
-
     void on_pushButton_ChangeQualiMode_clicked();
-
-    void on_pushButton_EditCompetitorClasses_clicked();
-
     void on_pushButton_AddGuaranteeRule_clicked();
-
     void on_pushButton_Load_clicked();
-
     void on_pushButton_Save_clicked();
-
-    void on_pushButton_Cancel_clicked();
-
     void on_pushButton_Close_clicked();
 
 private:

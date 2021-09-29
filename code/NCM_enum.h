@@ -51,6 +51,12 @@ const QStringList QSL_Quali = {
     "NUMBER_TO_NEXT",
     "FINAL_ROUND"
 };
+const QStringList QSL_QualiDetailed = {
+    "All competitors qualify",
+    "Only buzzers qualify",
+    "Choosen number of competitors qualify",
+    "Final round, so no qualification"
+};
 
 enum QUALI_GUARANTEE {
     QUALI_GUARANTEE_INCLUSIVE,
