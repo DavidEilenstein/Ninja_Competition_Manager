@@ -111,7 +111,12 @@ void NCM_MainWindow::on_pushButton_Checkin_clicked()
 
 void NCM_MainWindow::on_pushButton_ResultsEntering_clicked()
 {
+    if(!competition->is_valid())
+        return;
 
+    pResultEntering = new NCM_ResultEntering(competition->dir_competition());
+    this->close();
+    pResultEntering->show();
 }
 
 void NCM_MainWindow::on_pushButton_StarterList_clicked()

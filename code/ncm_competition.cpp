@@ -65,7 +65,8 @@ bool NCM_Competition::load_dialogue()
     for(int i = 0; i < COMP_DIR_NUMBER_OF; i++)
     {
         vDIR_CompetitionSubdirs[i].setPath(DIR_Competition.path() + "/" + QSL_CompDirs[i]);
-        QDir().mkdir(vDIR_CompetitionSubdirs[i].path());
+        if(!vDIR_CompetitionSubdirs[i].exists())
+            QDir().mkdir(vDIR_CompetitionSubdirs[i].path());
     }
 
     //----------------------------------------------------- load competitor classes
@@ -165,13 +166,15 @@ bool NCM_Competition::save()
         return false;
     }
 
-    QDir().mkdir(DIR_Competition.path());
+    if(!DIR_Competition.exists())
+        QDir().mkdir(DIR_Competition.path());
 
     vDIR_CompetitionSubdirs.resize(COMP_DIR_NUMBER_OF);
     for(int i = 0; i < COMP_DIR_NUMBER_OF; i++)
     {
         vDIR_CompetitionSubdirs[i].setPath(DIR_Competition.path() + "/" + QSL_CompDirs[i]);
-        QDir().mkdir(vDIR_CompetitionSubdirs[i].path());
+        if(!vDIR_CompetitionSubdirs[i].exists())
+            QDir().mkdir(vDIR_CompetitionSubdirs[i].path());
     }
 
     //----------------------------------------------------- competitor classes
@@ -204,11 +207,6 @@ bool NCM_Competition::save()
     }
     OF_stages_count << stages_count << "\n";
     OF_stages_count.close();
-
-    //----------------------------------------------------- run dirs
-
-    for(int i = 0; i < stages_count; i++)
-        QDir().mkdir(vDIR_CompetitionSubdirs[COMP_DIR_RUNS].path() + "/Stage_" + QString::number(i+1));
 
     //----------------------------------------------------- finish stuff
 

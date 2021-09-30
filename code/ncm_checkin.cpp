@@ -14,6 +14,10 @@ NCM_CheckIn::NCM_CheckIn(QDir CompetitionDir, QStringList competitor_classes, QW
     if(!DIR_Competitors.exists())
         QDir().mkdir(DIR_Competitors.path());
 
+    DIR_Competitors_CheckedIn.setPath(DIR_Competitors.path() + "/CheckedIn");
+    if(!DIR_Competitors_CheckedIn.exists())
+        QDir().mkdir(DIR_Competitors_CheckedIn.path());
+
     QStringList QSL_CompClasses_PlusUndefined = QSL_CompetitorClasses;
     QSL_CompClasses_PlusUndefined.append("[please select competitor class]");
     ui->comboBox_CompClass->addItems(QSL_CompClasses_PlusUndefined);
@@ -31,13 +35,13 @@ NCM_CheckIn::~NCM_CheckIn()
 void NCM_CheckIn::load()
 {
     vCompetitors.clear();
-    QFileInfoList FIL_Competitors = DIR_Competitors.entryInfoList(QDir::Filter::NoDotAndDotDot | QDir::Filter::NoSymLinks);
+    QFileInfoList FIL_Competitors = DIR_Competitors_CheckedIn.entryInfoList(QDir::Filter::NoDotAndDotDot | QDir::Filter::NoSymLinks);
     for(int i = 0; i < FIL_Competitors.size(); i++)
         if(FIL_Competitors[i].exists())
             if(FIL_Competitors[i].suffix() == "txt" || FIL_Competitors[i].suffix() == "TXT")
                 if(FIL_Competitors[i].baseName().startsWith("Competitor_"))
                 {
-                    NCM_Competitor *competitor = new NCM_Competitor(DIR_Competitors);
+                    NCM_Competitor *competitor = new NCM_Competitor(DIR_Competitors_CheckedIn);
                     if(competitor->load(FIL_Competitors[i].absoluteFilePath()))
                         vCompetitors.push_back(competitor);
                     else
@@ -54,7 +58,7 @@ void NCM_CheckIn::save()
 void NCM_CheckIn::on_pushButton_CheckIn_clicked()
 {
     NCM_Competitor *competitor = new NCM_Competitor(
-                DIR_Competitors,
+                DIR_Competitors_CheckedIn,
                 ui->lineEdit_Name->text(),
                 ui->comboBox_CompClass->currentText(),
                 ui->spinBox_StartNumber->value());

@@ -38,6 +38,7 @@ private:
     Ui::NCM_CheckIn *ui;
 
     QDir DIR_Competitors;
+    QDir DIR_Competitors_CheckedIn;
 
     QDir DIR_Competition;
     QStringList QSL_CompetitorClasses;

@@ -55,7 +55,7 @@ bool NCM_Run::save()
     else
         QS_StartNumber_6digits = QString::number(number());
 
-    QString QS_FileName = DIR_Competition.path() + "/Run_" + QS_StageName + "_" + QS_StartNumber_6digits + "_" + name() + ".txt";
+    QString QS_FileName = DIR_RunsThisStage.path() + "/Run_" + QS_StageName + "_" + QS_StartNumber_6digits + "_" + name() + ".txt";
 
     ofstream OF_Run;
     OF_Run.open(QS_FileName.toStdString());
@@ -90,7 +90,7 @@ bool NCM_Run::load()
     else
         QS_StartNumber_6digits = QString::number(number());
 
-    QString QS_FileName = DIR_Competition.path() + "/Run_" + QS_StageName + "_" + QS_StartNumber_6digits + "_" + name() + ".txt";
+    QString QS_FileName = DIR_RunsThisStage.path() + "/Run_" + QS_StageName + "_" + QS_StartNumber_6digits + "_" + name() + ".txt";
 
     return load(QS_FileName);
 }
