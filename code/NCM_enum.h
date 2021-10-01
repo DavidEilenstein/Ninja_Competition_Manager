@@ -68,6 +68,34 @@ const QStringList QSL_QualiGuaranteeMode = {
     "exclusive"
 };
 
+enum QUALI_STATE {
+    QUALI_STATE_UNDEFINED,
+    QUALI_STATE_SAFE_REGULAR,
+    QUALI_STATE_SAFE_CLASS,
+    QUALI_STATE_SAFE_SPEED,
+    QUALI_STATE_CURRENT_REGULAR,
+    QUALI_STATE_CURRENT_CLASS,
+    QUALI_STATE_OUT,
+    QUALI_STATE_END,
+    QUALI_STATE_END_1ST,
+    QUALI_STATE_END_2ND,
+    QUALI_STATE_END_3RD,
+    QUALI_STATE_NUMBER_OF
+};
+const QStringList QSL_QualiState = {
+    "😎",
+    "🤩",
+    "👽",
+    "🙂",
+    "😏",
+    "😅",
+    "😭",
+    "😴",
+    "🥇",
+    "🥈",
+    "🥉"
+};
+
 const QString QS_FileName_CompetitorClasses = "Competitor_Classes.txt";
 const QString QS_FileName_StagesCount = "Stages_Count.txt";
 

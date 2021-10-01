@@ -65,8 +65,6 @@ private:
 
     QString QS_StageName;
 
-    QStringList QSL_Checkpoints;
-
     vector<NCM_Competitor*> vCompetitorsAll;
     vector<NCM_Run*> vRunsCompleted;
     QStringList QSL_CompetitorsNotRunYet;

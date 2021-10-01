@@ -166,8 +166,9 @@ void NCM_StarterList::get_data_dialog()
 
 bool NCM_StarterList::load_competitors()
 {
-    if(state_data_loaded)
-        return false;
+    for(size_t i = 0; i < vCompetitorsAll.size(); i++)
+        delete vCompetitorsAll[i];
+    vCompetitorsAll.clear();
 
     vCompetitorsAll.clear();
     QFileInfoList FIL_Competitors = DIR_CompetitorsThisStage.entryInfoList();
@@ -237,11 +238,18 @@ bool NCM_StarterList::calc_competitors_not_run_yet()
 
 bool NCM_StarterList::update_starter_list()
 {
+    state_data_loaded = false;
+
+    if(!load_competitors())
+        return false;
+
     if(!load_runs())
         return false;
 
     if(!calc_competitors_not_run_yet())
         return false;
+
+    state_data_loaded = true;
 
     QStringList QSL_Names_Columns = {
         "Number",

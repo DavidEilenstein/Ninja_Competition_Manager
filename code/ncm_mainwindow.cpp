@@ -131,5 +131,10 @@ void NCM_MainWindow::on_pushButton_StarterList_clicked()
 
 void NCM_MainWindow::on_pushButton_Ranking_clicked()
 {
+    if(!competition->is_valid())
+        return;
 
+    pRanking = new NCM_Ranking(competition->dir_competition(), competition->competitor_classes());
+    this->close();
+    pRanking->show();
 }

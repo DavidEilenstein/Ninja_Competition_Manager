@@ -13,6 +13,7 @@
 #include <ncm_checkin.h>
 #include <ncm_resultentering.h>
 #include <ncm_starterlist.h>
+#include <ncm_ranking.h>
 
 using namespace std;
 
@@ -58,5 +59,6 @@ private:
     NCM_CheckIn *pCheckIn;
     NCM_ResultEntering *pResultEntering;
     NCM_StarterList *pStarterList;
+    NCM_Ranking *pRanking;
 };
 #endif // NCM_MAINWINDOW_H
