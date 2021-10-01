@@ -121,7 +121,12 @@ void NCM_MainWindow::on_pushButton_ResultsEntering_clicked()
 
 void NCM_MainWindow::on_pushButton_StarterList_clicked()
 {
+    if(!competition->is_valid())
+        return;
 
+    pStarterList = new NCM_StarterList(competition->dir_competition());
+    this->close();
+    pStarterList->show();
 }
 
 void NCM_MainWindow::on_pushButton_Ranking_clicked()

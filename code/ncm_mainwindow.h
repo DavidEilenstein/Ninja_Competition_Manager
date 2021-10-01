@@ -12,6 +12,7 @@
 #include <ncm_competition.h>
 #include <ncm_checkin.h>
 #include <ncm_resultentering.h>
+#include <ncm_starterlist.h>
 
 using namespace std;
 
@@ -56,5 +57,6 @@ private:
 
     NCM_CheckIn *pCheckIn;
     NCM_ResultEntering *pResultEntering;
+    NCM_StarterList *pStarterList;
 };
 #endif // NCM_MAINWINDOW_H

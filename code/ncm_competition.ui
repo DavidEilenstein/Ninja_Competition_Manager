@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>266</height>
+    <height>269</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -38,7 +38,8 @@
        <widget class="QPlainTextEdit" name="plainTextEdit_CompetitorCalsses">
         <property name="plainText">
          <string>female
-male</string>
+male
+divers</string>
         </property>
        </widget>
       </item>

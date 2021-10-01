@@ -25,7 +25,8 @@ SOURCES += \
     ncm_run.cpp \
     ncm_stage.cpp \
     ncm_stage.cpp \
-    ncm_starterlist.cpp
+    ncm_starterlist.cpp \
+    ncm_table.cpp
 
 HEADERS += \
     NCM_enum.h \
@@ -37,7 +38,8 @@ HEADERS += \
     ncm_run.h \
     ncm_stage.h \
     ncm_stage.h \
-    ncm_starterlist.h
+    ncm_starterlist.h \
+    ncm_table.h
 
 FORMS += \
     ncm_checkin.ui \
