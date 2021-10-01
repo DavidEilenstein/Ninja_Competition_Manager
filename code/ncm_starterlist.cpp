@@ -362,4 +362,5 @@ void NCM_StarterList::on_actionUpdate_automatically_triggered(bool checked)
 void NCM_StarterList::on_actionChange_table_settings_triggered()
 {
     table_dims_dialog();
+    update_starter_list();
 }

@@ -43,6 +43,10 @@ private:
     QDir DIR_CompetitorsThisStage;
     QDir DIR_Runs_Out;
 
+    QDir DIR_SpecialPrices;
+    QFileInfo FI_FailOfTheDay;
+    QFileInfo FI_SickestMove;
+
     QFileInfo FI_StageFile;
 
     QString QS_StageName;

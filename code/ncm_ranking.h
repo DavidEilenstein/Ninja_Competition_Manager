@@ -31,6 +31,7 @@ public:
     bool load_competitors();
     bool load_runs();
     bool load_stage();
+    bool load_special_prices();
     bool stage_code_parse();
     bool calc_competitors_not_run_yet();
     bool calc_ranking();
@@ -62,6 +63,10 @@ private:
     QDir DIR_CompetitorsThisStage;
     QDir DIR_Runs;
 
+    QDir DIR_SpecialPrices;
+    QFileInfo FI_FailOfTheDay;
+    QFileInfo FI_SickestMove;
+
     QStringList QSL_CompetitorClasses;
 
     QFileInfo FI_StageFile;
@@ -87,6 +92,25 @@ private:
     QStringList QSL_CompetitorsNotRunYet;
 
     bool state_data_loaded = false;
+
+    enum COLUMNS {
+        COLUMN_NAME,
+        COLUMN_CHECKPOINT,
+        COLUMN_TIME,
+        COLUMN_QUALI,
+        COLUMN_CLASS,
+        //COLUMN_SAFE_ALL,
+        //COLUMN_SAFE_CLASS
+    };
+    QStringList QSL_Names_Columns = {
+        "Name",
+        "Checkpoint",
+        "Time",
+        "Quali",
+        "Class",
+        //"Safe (all)",
+        //"Safe (class)"
+    };
 };
 
 #endif // NCM_RANKING_H

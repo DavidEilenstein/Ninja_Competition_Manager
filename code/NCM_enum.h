@@ -11,13 +11,15 @@ enum COMP_DIR {
     COMP_DIR_STAGES,
     COMP_DIR_COMPETITORS,
     COMP_DIR_RUNS,
+    COMP_DIR_SPECIAL_PRICES,
     COMP_DIR_NUMBER_OF
 };
 const QStringList QSL_CompDirs = {
     "General",
     "Stages",
     "Competitors",
-    "Runs"
+    "Runs",
+    "SpecialPrices"
 };
 
 enum STAGE_KEYWORDS {
@@ -83,12 +85,12 @@ enum QUALI_STATE {
     QUALI_STATE_NUMBER_OF
 };
 const QStringList QSL_QualiState = {
+    "😅",
     "😎",
     "🤩",
     "👽",
     "🙂",
     "😏",
-    "😅",
     "😭",
     "😴",
     "🥇",
@@ -98,6 +100,8 @@ const QStringList QSL_QualiState = {
 
 const QString QS_FileName_CompetitorClasses = "Competitor_Classes.txt";
 const QString QS_FileName_StagesCount = "Stages_Count.txt";
+const QString QS_FileName_SpecialPrice_FailOfTheDay = "FailOfTheDay.txt";
+const QString QS_FileName_SpecialPrice_SickestMove = "SickestMove.txt";
 
 const QString QS_Separator = ";";
 const QString QS_NewLine = "\n";

@@ -15,11 +15,18 @@ NCM_Ranking::NCM_Ranking(QDir competition_dir, QStringList competitor_classes, Q
     if(!DIR_Competitors.exists())
         QDir().mkdir(DIR_Competitors.path());
 
+    DIR_SpecialPrices.setPath(DIR_Competition.path() + "/" + QSL_CompDirs[COMP_DIR_SPECIAL_PRICES]);
+    if(!DIR_SpecialPrices.exists())
+        QDir().mkdir(DIR_SpecialPrices.path());
+
+    FI_SickestMove.setFile(DIR_SpecialPrices.path() + "/" + QS_FileName_SpecialPrice_SickestMove);
+    FI_FailOfTheDay.setFile(DIR_SpecialPrices.path() + "/" + QS_FileName_SpecialPrice_FailOfTheDay);
+
     init_tables();
 
     get_data_dialog();
 
-    connect(&timer_autoupdate, SIGNAL(timeout()), this, SLOT(update_starter_list()));
+    connect(&timer_autoupdate, SIGNAL(timeout()), this, SLOT(update_ranking()));
 }
 
 NCM_Ranking::~NCM_Ranking()
@@ -243,6 +250,41 @@ bool NCM_Ranking::load_stage()
     return true;
 }
 
+bool NCM_Ranking::load_special_prices()
+{
+    if(FI_FailOfTheDay.exists())
+    {
+        ifstream IS_FailOFTheDay;
+        IS_FailOFTheDay.open(FI_FailOfTheDay.absoluteFilePath().toStdString());
+
+        if(!IS_FailOFTheDay.is_open())
+            return false;
+
+        string ST_line;
+        getline(IS_FailOFTheDay, ST_line);
+        QString QS_Line = QString::fromStdString(ST_line);
+        ui->label_FailOfTheDay->setText(QS_Line);
+        IS_FailOFTheDay.close();
+    }
+
+    if(FI_SickestMove.exists())
+    {
+        ifstream IS_SickestMove;
+        IS_SickestMove.open(FI_SickestMove.absoluteFilePath().toStdString());
+
+        if(!IS_SickestMove.is_open())
+            return false;
+
+        string ST_line;
+        getline(IS_SickestMove, ST_line);
+        QString QS_Line = QString::fromStdString(ST_line);
+        ui->label_MostEpicMove->setText(QS_Line);
+        IS_SickestMove.close();
+    }
+
+    return true;
+}
+
 bool NCM_Ranking::stage_code_parse()
 {
     QSL_Checkpoints.clear();
@@ -449,13 +491,14 @@ bool NCM_Ranking::calc_ranking()
             vCompetitorCount_All_byCompClass[comp_class_index]++;
     }
 
-    //calc pos in ranking
+    //resize info containers
     vRankingOfRuns_All.resize(n_run);
     vRankingOfRuns_InClass.resize(n_run);
     vRankingOfRuns_WorstPossible_All.resize(n_run);
     vRankingOfRuns_WorstPossible_InClass.resize(n_run);
     vBuzzer.resize(n_run);
-    //loop runs
+
+    //loop runs and calc placement
     for(size_t run_calc = 0; run_calc < n_run; run_calc++)
     {
         int comp_class_index = -1;
@@ -569,9 +612,9 @@ bool NCM_Ranking::calc_ranking()
 
             //rank in last stage (according to starting order)
             int placement_last_stage_all = -1;
-            for(size_t ca = 0; ca < vCompetitorsAll.size(); ca++)
+            for(size_t ca = 0; ca < vCompetitorsAll.size() && placement_last_stage_all < 0; ca++)
                 if(vCompetitorsAll[ca]->name() == QS_CompetitorName)
-                    placement_last_stage_all = n_all - ca;
+                    placement_last_stage_all = int(ca);
 
             //speed rule applies?
             bool quali_speed_safe = (placement_last_stage_all <= QualiGuarantee_SpeedPreviousStage_Count);
@@ -695,23 +738,8 @@ bool NCM_Ranking::update_ranking()
     if(!calc_ranking())
         return false;
 
-    enum COLUMNS {
-        COLUMN_NAME,
-        COLUMN_CLASS,
-        COLUMN_CHECKPOINT,
-        COLUMN_TIME,
-        COLUMN_QUALI,
-        COLUMN_SAFE_ALL,
-        COLUMN_SAFE_CLASS
-    };
-    QStringList QSL_Names_Columns = {
-        "Name",
-        "Class",
-        "Checkpoint",
-        "Time",
-        "Quali",
-        "Safe (all)",
-        "Safe (class)"};
+    if(!load_special_prices())
+        return false;
 
     //row names
     //qDebug() << "row names";
@@ -734,29 +762,30 @@ bool NCM_Ranking::update_ranking()
         }
     }
 
-    //loop competitors
+    //loop runs
     //qDebug() << "loop competitors";
     for(size_t r = 0; r < vRunsCompleted.size(); r++)
     {
-        //qDebug() << "competitor" << i;
+        qDebug() << "run" << r << vRunsCompleted[r]->name() << "-------------";
 
         //placment all
         int placement_real = vRankingOfRuns_All[r];
         int placement_duplicate_appearance = 0;
         for(size_t d = 0; d < r; d++)
-            if(placement_real == vRankingOfRuns_All[r])
+            if(placement_real == vRankingOfRuns_All[d])
                 placement_duplicate_appearance++;
         int placement_used_for_table = placement_real + placement_duplicate_appearance;
+        qDebug() << "placement" << placement_real << placement_used_for_table;
 
         //target table
         size_t index_table = min(size_t(count_tables - 1), size_t(placement_used_for_table / count_rows_per_table));
-        //qDebug() << "table index" << index_table;
+        qDebug() << "table index" << index_table;
 
         //row index
-        size_t row_index = placement_used_for_table;
+        size_t row_index = placement_used_for_table - 1;
         for(size_t t = 0; t < index_table; t++)
             row_index -= vQSL_Names_Rows[t].size();
-        //qDebug() << "row index" << row_index;
+        qDebug() << "row index" << row_index;
 
         //write to table data
         if(row_index < vvvQS_Data[index_table][0].size())
@@ -768,16 +797,25 @@ bool NCM_Ranking::update_ranking()
             int time_display_min = time_min;
             int time_display_sec = time_s % 60;
             int time_display_ms = time_ms % 1000;
+            QString QS_time = QString::number(time_display_min) + ":";
+            if(time_display_sec < 10)
+                QS_time.append("0");
+            QS_time.append(QString::number(time_display_sec) + ".");
+            if(time_display_ms < 100)
+                QS_time.append("0");
+            if(time_display_ms < 10)
+                QS_time.append("0");
+            QS_time.append(QString::number(time_display_ms));
 
             //qDebug() << "write datat to table";
             vQSL_Names_Rows[index_table][row_index]                 = QString::number(placement_real);
             vvvQS_Data[index_table][COLUMN_NAME][row_index]         = vRunsCompleted[r]->name();
             vvvQS_Data[index_table][COLUMN_CLASS][row_index]        = vRunsCompleted[r]->competitor_class();
             vvvQS_Data[index_table][COLUMN_CHECKPOINT][row_index]   = vRunsCompleted[r]->checkpoint_reached();
-            vvvQS_Data[index_table][COLUMN_TIME][row_index]         = QString::number(time_display_min) + ":" + QString::number(time_display_sec) + "," + QString::number(time_display_ms, 'g', 3);
+            vvvQS_Data[index_table][COLUMN_TIME][row_index]         = QS_time;
             vvvQS_Data[index_table][COLUMN_QUALI][row_index]        = QSL_QualiState[vQualiStates[r]];
-            vvvQS_Data[index_table][COLUMN_SAFE_CLASS][row_index]   = QString::number(vRankingOfRuns_WorstPossible_InClass[r]);
-            vvvQS_Data[index_table][COLUMN_SAFE_ALL][row_index]     = QString::number(vRankingOfRuns_WorstPossible_All[r]);
+            //vvvQS_Data[index_table][COLUMN_SAFE_CLASS][row_index]   = QString::number(vRankingOfRuns_WorstPossible_InClass[r]);
+            //vvvQS_Data[index_table][COLUMN_SAFE_ALL][row_index]     = QString::number(vRankingOfRuns_WorstPossible_All[r]);
         }
     }
 
@@ -833,4 +871,5 @@ void NCM_Ranking::on_actionUpdate_automatically_triggered(bool checked)
 void NCM_Ranking::on_actionChange_table_layout_triggered()
 {
     table_dims_dialog();
+    update_ranking();
 }

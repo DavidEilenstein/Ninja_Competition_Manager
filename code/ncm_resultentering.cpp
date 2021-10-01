@@ -13,6 +13,13 @@ NCM_ResultEntering::NCM_ResultEntering(QDir competition_dir, QWidget *parent) :
     if(!DIR_Competitors.exists())
         QDir().mkdir(DIR_Competitors.path());
 
+    DIR_SpecialPrices.setPath(DIR_Competition.path() + "/" + QSL_CompDirs[COMP_DIR_SPECIAL_PRICES]);
+    if(!DIR_SpecialPrices.exists())
+        QDir().mkdir(DIR_SpecialPrices.path());
+
+    FI_SickestMove.setFile(DIR_SpecialPrices.path() + "/" + QS_FileName_SpecialPrice_SickestMove);
+    FI_FailOfTheDay.setFile(DIR_SpecialPrices.path() + "/" + QS_FileName_SpecialPrice_FailOfTheDay);
+
     get_data_dialog();
 }
 
@@ -232,6 +239,30 @@ void NCM_ResultEntering::on_pushButton_SaveRun_clicked()
 
     calc_competitors_not_run_yet();
 
+    if(ui->checkBox_SickestMove->isChecked())
+    {
+        ofstream OF_SickestMove;
+        OF_SickestMove.open(FI_SickestMove.absoluteFilePath().toStdString());
+        if(!OF_SickestMove.is_open())
+            return;
+
+        OF_SickestMove << run->name().toStdString();
+        OF_SickestMove.close();
+    }
+
+    if(ui->checkBox_FailOfTheDay->isChecked())
+    {
+        ofstream OF_FailOfTheDay;
+        OF_FailOfTheDay.open(FI_FailOfTheDay.absoluteFilePath().toStdString());
+        if(!OF_FailOfTheDay.is_open())
+            return;
+
+        OF_FailOfTheDay << run->name().toStdString();
+        OF_FailOfTheDay.close();
+    }
+
+    ui->checkBox_SickestMove->setChecked(false);
+    ui->checkBox_FailOfTheDay->setChecked(false);
     ui->comboBox_Competitor->setCurrentIndex(0);
     ui->comboBox_Checkpoint->setCurrentIndex(0);
     ui->doubleSpinBox_Minutes->setValue(0);
