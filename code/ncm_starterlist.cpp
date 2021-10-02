@@ -18,6 +18,14 @@ NCM_StarterList::NCM_StarterList(QDir competition_dir, QWidget *parent) :
     get_data_dialog();
 
     connect(&timer_autoupdate, SIGNAL(timeout()), this, SLOT(update_starter_list()));
+
+    setWindowTitle("Starter list - by David Eilenstein");
+    setWindowIcon(QIcon(":/logo/Logo_Final.jpg"));
+
+    int size_button = 80;
+    QSize RefIconSize(size_button, size_button);
+    ui->pushButton_DavidEilenstein->setIcon(QIcon(":/logo/Logo_Final.jpg"));
+    ui->pushButton_DavidEilenstein->setIconSize(RefIconSize);
 }
 
 NCM_StarterList::~NCM_StarterList()
@@ -27,6 +35,13 @@ NCM_StarterList::~NCM_StarterList()
 
 void NCM_StarterList::table_dims_dialog()
 {
+    //wait for update to finish
+    ui->actionUpdate_automatically->setChecked(false);
+    while (state_update_running)
+    {
+        //just chill
+    }
+
     bool ok;
 
     int n_tables = QInputDialog::getInt(
@@ -63,9 +78,12 @@ void NCM_StarterList::init_tables()
 {
     //qDebug() << "start init_tables";
 
-    //qDebug() << "stop timer_autoupdate";
-    if(timer_autoupdate.isActive())
-        timer_autoupdate.stop();
+    //wait for update to finish
+    ui->actionUpdate_automatically->setChecked(false);
+    while (state_update_running)
+    {
+        //just chill
+    }
 
     //qDebug() << "clear vTables";
     for(size_t i = 0; i < vTables.size(); i++)
@@ -99,6 +117,10 @@ void NCM_StarterList::init_tables()
         vTables[i] = new NCM_Table;
         vTables[i]->set_TW(vTableWidget[i]);
         vTables[i]->clear_data();
+
+        QHeaderView *verticalHeader = vTableWidget[i]->verticalHeader();
+        verticalHeader->setSectionResizeMode(QHeaderView::Fixed);
+        verticalHeader->setDefaultSectionSize(20);
     }
 
     //qDebug() << "finish init_tables";
@@ -106,9 +128,6 @@ void NCM_StarterList::init_tables()
 
 void NCM_StarterList::get_data_dialog()
 {
-    if(state_data_loaded)
-        return;
-
     //------------------------------- competitors
 
     QString QS_CompetitorsLoadPath = QFileDialog::getExistingDirectory(
@@ -238,16 +257,29 @@ bool NCM_StarterList::calc_competitors_not_run_yet()
 
 bool NCM_StarterList::update_starter_list()
 {
+    if(state_update_running)
+        return false;
+
     state_data_loaded = false;
+    state_update_running = true;
 
     if(!load_competitors())
+    {
         return false;
+        state_update_running = false;
+    }
 
     if(!load_runs())
+    {
         return false;
+        state_update_running = false;
+    }
 
     if(!calc_competitors_not_run_yet())
+    {
         return false;
+        state_update_running = false;
+    }
 
     state_data_loaded = true;
 
@@ -318,6 +350,9 @@ bool NCM_StarterList::update_starter_list()
                     QSL_Names_Columns,
                     vQSL_Names_Rows[t]);
 
+    ui->label_Time->setText(QDateTime::currentDateTime().time().toString());
+
+    state_update_running = false;
     return true;
 }
 
@@ -328,6 +363,13 @@ void NCM_StarterList::on_actionChose_competitors_and_stage_triggered()
 
 void NCM_StarterList::on_actionUpdate_now_triggered()
 {
+    //wait for update to finish
+    ui->actionUpdate_automatically->setChecked(false);
+    while (state_update_running)
+    {
+        //just chill
+    }
+
     update_starter_list();
 }
 
@@ -363,4 +405,9 @@ void NCM_StarterList::on_actionChange_table_settings_triggered()
 {
     table_dims_dialog();
     update_starter_list();
+}
+
+void NCM_StarterList::on_pushButton_DavidEilenstein_clicked()
+{
+    QDesktopServices::openUrl(QUrl("www.instagram.com/davideilenstein"));
 }

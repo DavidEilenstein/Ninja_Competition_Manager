@@ -21,6 +21,9 @@ NCM_ResultEntering::NCM_ResultEntering(QDir competition_dir, QWidget *parent) :
     FI_FailOfTheDay.setFile(DIR_SpecialPrices.path() + "/" + QS_FileName_SpecialPrice_FailOfTheDay);
 
     get_data_dialog();
+
+    setWindowTitle("Result entering - by David Eilenstein");
+    setWindowIcon(QIcon(":/logo/Logo_Final.jpg"));
 }
 
 NCM_ResultEntering::~NCM_ResultEntering()

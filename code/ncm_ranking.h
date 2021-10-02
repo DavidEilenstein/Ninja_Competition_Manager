@@ -11,6 +11,9 @@
 #include <QInputDialog>
 #include <QTableWidget>
 #include <QTableView>
+#include <QDesktopServices>
+#include <QUrl>
+#include <QHeaderView>
 
 namespace Ui {
 class NCM_Ranking;
@@ -48,6 +51,11 @@ private slots:
 
     void on_actionChange_table_layout_triggered();
 
+
+    void on_actionExport_Competitor_List_from_current_ranking_triggered();
+
+    void on_pushButton_DavidEilenstein_clicked();
+
 private:
     Ui::NCM_Ranking *ui;
 
@@ -61,6 +69,7 @@ private:
     QDir DIR_Competition;
     QDir DIR_Competitors;
     QDir DIR_CompetitorsThisStage;
+    QDir DIR_CompetitorsNextStage;
     QDir DIR_Runs;
 
     QDir DIR_SpecialPrices;
@@ -92,6 +101,7 @@ private:
     QStringList QSL_CompetitorsNotRunYet;
 
     bool state_data_loaded = false;
+    bool state_update_running = false;
 
     enum COLUMNS {
         COLUMN_NAME,

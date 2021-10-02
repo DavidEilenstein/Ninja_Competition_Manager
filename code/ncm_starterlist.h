@@ -11,6 +11,10 @@
 #include <QInputDialog>
 #include <QTableWidget>
 #include <QTableView>
+#include <QHeaderView>
+#include <QDesktopServices>
+#include <QUrl>
+#include <QDateTime>
 
 using namespace std;
 
@@ -46,6 +50,8 @@ private slots:
 
     void on_actionChange_table_settings_triggered();
 
+    void on_pushButton_DavidEilenstein_clicked();
+
 private:
     Ui::NCM_StarterList *ui;
 
@@ -70,6 +76,7 @@ private:
     QStringList QSL_CompetitorsNotRunYet;
 
     bool state_data_loaded = false;
+    bool state_update_running = false;
 };
 
 #endif // NCM_STARTERLIST_H

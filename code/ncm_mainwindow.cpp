@@ -11,6 +11,18 @@ NCM_MainWindow::NCM_MainWindow(QWidget *parent)
     DIR_Master.setPath(DIR_Settings.path());
     FI_Settings.setFile(DIR_Settings.path() + "/Settings.txt");
     settings_load();
+
+    setWindowTitle("Ninja competition manager - by David Eilenstein");
+    setWindowIcon(QIcon(":/logo/Logo_Final.jpg"));
+
+    int size_button = 95;
+    QSize RefIconSize(size_button, size_button);
+    ui->pushButton_DavidEilenstein->setIcon(QIcon(":/logo/Logo_Final.jpg"));
+    ui->pushButton_DavidEilenstein->setIconSize(RefIconSize);
+    ui->pushButton_Tutorial->setIcon(QIcon(":/logo/YT.jpg"));
+    ui->pushButton_Tutorial->setIconSize(RefIconSize);
+    ui->pushButton_Updates->setIcon(QIcon(":/logo/icon_github.png"));
+    ui->pushButton_Updates->setIconSize(RefIconSize);
 }
 
 NCM_MainWindow::~NCM_MainWindow()
@@ -66,6 +78,7 @@ void NCM_MainWindow::on_pushButton_CompetitionCreate_clicked()
     ui->lineEdit_CompetitionPath->setText(competition->dir_competition().path());
     ui->groupBox_Competition->setEnabled(false);
     ui->groupBox_Modules->setEnabled(true);
+    ui->pushButton_DavidEilenstein->setStyleSheet("background-color: black;");
 
     settings_save();
 }
@@ -85,6 +98,7 @@ void NCM_MainWindow::on_pushButton_CompetitionLoad_clicked()
     ui->lineEdit_CompetitionPath->setText(competition->dir_competition().path());
     ui->groupBox_Competition->setEnabled(false);
     ui->groupBox_Modules->setEnabled(true);
+    ui->pushButton_DavidEilenstein->setStyleSheet("background-color: black;");
 
     settings_save();
 }
@@ -137,4 +151,19 @@ void NCM_MainWindow::on_pushButton_Ranking_clicked()
     pRanking = new NCM_Ranking(competition->dir_competition(), competition->competitor_classes());
     this->close();
     pRanking->show();
+}
+
+void NCM_MainWindow::on_pushButton_DavidEilenstein_clicked()
+{
+    QDesktopServices::openUrl(QUrl("www.instagram.com/davideilenstein"));
+}
+
+void NCM_MainWindow::on_pushButton_Tutorial_clicked()
+{
+    QDesktopServices::openUrl(QUrl("https://www.youtube.com/"));
+}
+
+void NCM_MainWindow::on_pushButton_Updates_clicked()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/DavidEilenstein/Ninja_Competition_Manager/releases"));
 }

@@ -27,6 +27,14 @@ NCM_Ranking::NCM_Ranking(QDir competition_dir, QStringList competitor_classes, Q
     get_data_dialog();
 
     connect(&timer_autoupdate, SIGNAL(timeout()), this, SLOT(update_ranking()));
+
+    setWindowTitle("Ranking - by David Eilenstein");
+    setWindowIcon(QIcon(":/logo/Logo_Final.jpg"));
+
+    int size_button = 80;
+    QSize RefIconSize(size_button, size_button);
+    ui->pushButton_DavidEilenstein->setIcon(QIcon(":/logo/Logo_Final.jpg"));
+    ui->pushButton_DavidEilenstein->setIconSize(RefIconSize);
 }
 
 NCM_Ranking::~NCM_Ranking()
@@ -36,6 +44,13 @@ NCM_Ranking::~NCM_Ranking()
 
 void NCM_Ranking::table_dims_dialog()
 {
+    //wait for update to finish
+    ui->actionUpdate_automatically->setChecked(false);
+    while (state_update_running)
+    {
+        //just chill
+    }
+
     bool ok;
 
     int n_tables = QInputDialog::getInt(
@@ -70,6 +85,13 @@ void NCM_Ranking::table_dims_dialog()
 
 void NCM_Ranking::init_tables()
 {
+    //wait for update to finish
+    ui->actionUpdate_automatically->setChecked(false);
+    while (state_update_running)
+    {
+        //just chill
+    }
+
     //qDebug() << "start init_tables";
 
     //qDebug() << "stop timer_autoupdate";
@@ -108,7 +130,12 @@ void NCM_Ranking::init_tables()
         vTables[i] = new NCM_Table;
         vTables[i]->set_TW(vTableWidget[i]);
         vTables[i]->clear_data();
+
+        QHeaderView *verticalHeader = vTableWidget[i]->verticalHeader();
+        verticalHeader->setSectionResizeMode(QHeaderView::Fixed);
+        verticalHeader->setDefaultSectionSize(20);
     }
+
 
     //qDebug() << "finish init_tables";
 }
@@ -157,6 +184,8 @@ void NCM_Ranking::get_data_dialog()
     if(!DIR_Runs.exists())
         QDir().mkdir(DIR_Runs.path());
 
+    DIR_CompetitorsNextStage.setPath(DIR_Competitors.path() + "/" + QS_StageName + "_Survivors");
+
     //------------------------------- load if everything is correct
 
     if(!load_stage())
@@ -171,6 +200,7 @@ void NCM_Ranking::get_data_dialog()
     ui->actionUpdate_now->setEnabled(true);
     ui->actionUpdate_automatically->setEnabled(true);
     ui->actionChange_table_layout->setEnabled(true);
+    ui->actionExport_Competitor_List_from_current_ranking->setEnabled(true);
 }
 
 bool NCM_Ranking::load_competitors()
@@ -722,24 +752,43 @@ bool NCM_Ranking::calc_ranking()
 
 bool NCM_Ranking::update_ranking()
 {
+    if(state_update_running)
+        return false;
+
+    state_update_running = true;
     state_data_loaded = false;
 
     if(!load_competitors())
+    {
         return false;
+        state_update_running = false;
+    }
 
     if(!load_runs())
+    {
         return false;
+        state_update_running = false;
+    }
 
     if(!calc_competitors_not_run_yet())
+    {
         return false;
+        state_update_running = false;
+    }
 
     state_data_loaded = true;
 
     if(!calc_ranking())
+    {
         return false;
+        state_update_running = false;
+    }
 
     if(!load_special_prices())
+    {
         return false;
+        state_update_running = false;
+    }
 
     //row names
     //qDebug() << "row names";
@@ -827,6 +876,7 @@ bool NCM_Ranking::update_ranking()
                     QSL_Names_Columns,
                     vQSL_Names_Rows[t]);
 
+    state_update_running = false;
     return true;
 }
 
@@ -837,6 +887,13 @@ void NCM_Ranking::on_actionSelect_Data_triggered()
 
 void NCM_Ranking::on_actionUpdate_now_triggered()
 {
+    //wait for update to finish
+    ui->actionUpdate_automatically->setChecked(false);
+    while (state_update_running)
+    {
+        //just chill
+    }
+
     update_ranking();
 }
 
@@ -870,6 +927,93 @@ void NCM_Ranking::on_actionUpdate_automatically_triggered(bool checked)
 
 void NCM_Ranking::on_actionChange_table_layout_triggered()
 {
+    //wait for update to finish
+    ui->actionUpdate_automatically->setChecked(false);
+    while (state_update_running)
+    {
+        //just chill
+    }
+
     table_dims_dialog();
     update_ranking();
+}
+
+
+
+void NCM_Ranking::on_actionExport_Competitor_List_from_current_ranking_triggered()
+{
+    if(!state_data_loaded)
+        return;
+
+    //wait for update to finish
+    ui->actionUpdate_automatically->setChecked(false);
+    while (state_update_running)
+    {
+        //just chill
+    }
+
+
+    //target dir
+    QDir DIR_Target = DIR_CompetitorsNextStage;
+    int number = 2;
+    while(DIR_Target.exists())
+    {
+        DIR_Target.setPath(DIR_CompetitorsNextStage.path() + "_Save" + QString::number(number));
+        number++;
+    }
+    QDir().mkdir(DIR_Target.path());
+    if(DIR_Target.path() != DIR_CompetitorsNextStage.path())
+        QMessageBox::information(
+                    this,
+                    "Save directory correction",
+                    DIR_CompetitorsNextStage.path() + "\n\nThis directory allready exists.\nThe new competitor list is saved here instead:\n\n" + DIR_Target.path());
+
+    //run count
+    size_t n_runs = vRunsCompleted.size();
+
+    //sort runs by placement (best to worst)
+    vector<int> vRunIndices_SortedByPlacement(n_runs, 0);
+    vector<int> vRunExported(n_runs, int(false));
+    for(int place = 1; place <= int(n_runs); place++)
+    {
+        bool place_found = false;
+        for(size_t run = 0; run < n_runs && !place_found; run++)
+        {
+            if(vRunExported[run] == int(false))
+            {
+                if(vRankingOfRuns_All[run] <= place)
+                {
+                    vRunIndices_SortedByPlacement[place - 1] = run;
+                    place_found = true;
+                    vRunExported[run] = int(true);
+                }
+            }
+        }
+    }
+
+    //loop sorted runs, check quali state and export
+    int starting_number_next_stage = 1;
+    for(int r_by_place = n_runs - 1; r_by_place >= 0; r_by_place--)  //worst run to best run
+    {
+        qDebug() << "-------------------";
+        qDebug() << r_by_place;
+        size_t r = vRunIndices_SortedByPlacement[r_by_place];
+        qDebug() << r;
+
+        if(vQualiStates[r] == QUALI_STATE_SAFE_CLASS || vQualiStates[r] == QUALI_STATE_SAFE_SPEED || vQualiStates[r] == QUALI_STATE_SAFE_REGULAR || vQualiStates[r] == QUALI_STATE_CURRENT_CLASS || vQualiStates[r] == QUALI_STATE_CURRENT_REGULAR)
+        {
+            NCM_Competitor competitor(DIR_Target);
+            competitor.set_name(vRunsCompleted[r]->name());
+            competitor.set_competitor_class(vRunsCompleted[r]->competitor_class());
+            competitor.set_starter_number(starting_number_next_stage);
+            competitor.save();
+
+            starting_number_next_stage++;
+        }
+    }
+}
+
+void NCM_Ranking::on_pushButton_DavidEilenstein_clicked()
+{
+    QDesktopServices::openUrl(QUrl("www.instagram.com/davideilenstein"));
 }

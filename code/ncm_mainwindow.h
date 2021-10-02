@@ -14,6 +14,8 @@
 #include <ncm_resultentering.h>
 #include <ncm_starterlist.h>
 #include <ncm_ranking.h>
+#include <QDesktopServices>
+#include <QUrl>
 
 using namespace std;
 
@@ -46,6 +48,12 @@ private slots:
     void on_pushButton_StarterList_clicked();
 
     void on_pushButton_Ranking_clicked();
+
+    void on_pushButton_DavidEilenstein_clicked();
+
+    void on_pushButton_Tutorial_clicked();
+
+    void on_pushButton_Updates_clicked();
 
 private:
     Ui::NCM_MainWindow *ui;

@@ -11,6 +11,9 @@ NCM_Stage::NCM_Stage(QDir CompetitionDir, QStringList competitor_classes, QWidge
     QSL_CompetitorClasses = competitor_classes;
 
     stage_code_update();
+
+    setWindowTitle("Stage editor - by David Eilenstein");
+    setWindowIcon(QIcon(":/logo/Logo_Final.jpg"));
 }
 
 NCM_Stage::~NCM_Stage()

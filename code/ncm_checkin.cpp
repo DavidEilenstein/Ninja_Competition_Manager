@@ -24,6 +24,9 @@ NCM_CheckIn::NCM_CheckIn(QDir CompetitionDir, QStringList competitor_classes, QW
     ui->comboBox_CompClass->setCurrentIndex(QSL_CompetitorClasses.size());
 
     load();
+
+    setWindowTitle("Competitor checkin - by David Eilenstein");
+    setWindowIcon(QIcon(":/logo/Logo_Final.jpg"));
 }
 
 NCM_CheckIn::~NCM_CheckIn()

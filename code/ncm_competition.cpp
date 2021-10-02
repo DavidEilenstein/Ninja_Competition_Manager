@@ -13,6 +13,9 @@ NCM_Competition::NCM_Competition(QDir *pMasterDir, QWidget *parent) :
     vDIR_CompetitionSubdirs.resize(COMP_DIR_NUMBER_OF);
     for(int i = 0; i < COMP_DIR_NUMBER_OF; i++)
         vDIR_CompetitionSubdirs[i].setPath(DIR_Competition.path() + QSL_CompDirs[i]);
+
+    setWindowTitle("Competiton creator - by David Eilenstein");
+    setWindowIcon(QIcon(":/logo/Logo_Final.jpg"));
 }
 
 NCM_Competition::NCM_Competition()
