@@ -320,8 +320,8 @@ bool NCM_Ranking::stage_code_parse()
     QSL_Checkpoints.clear();
     vQualiGuarantee_CompetitorClasses.clear();
     vQualiGuarantee_GuranteeCount.clear();
-    vQualiGuarantee_GuaranteeMode.clear();
-    QualiGuarantee_SpeedPreviousStage_Mode = QUALI_GUARANTEE_INCLUSIVE;
+    //vQualiGuarantee_GuaranteeMode.clear();
+    //QualiGuarantee_SpeedPreviousStage_Mode = QUALI_GUARANTEE_INCLUSIVE;
     QualiGuarantee_SpeedPreviousStage_Count = 0;
     quali_mode = QUALI_ALL;
     quali_number = 0;
@@ -410,6 +410,10 @@ bool NCM_Ranking::stage_code_parse()
 
                                         if(ok && number >= 0)
                                         {
+                                            vQualiGuarantee_CompetitorClasses.push_back(class_index);
+                                            vQualiGuarantee_GuranteeCount.push_back(number);
+
+                                            /*
                                             int inclusion_index = -1;
                                             for(int j = 0; j < QSL_QualiGuaranteeMode.size() && inclusion_index < 0; j++)
                                                 if(QSL_Blocks[3] == QSL_QualiGuaranteeMode[j])
@@ -421,6 +425,7 @@ bool NCM_Ranking::stage_code_parse()
                                                 vQualiGuarantee_GuranteeCount.push_back(number);
                                                 vQualiGuarantee_GuaranteeMode.push_back(inclusion_index);
                                             }
+                                            */
                                         }
                                     }
                                 }
@@ -437,6 +442,9 @@ bool NCM_Ranking::stage_code_parse()
 
                                 if(ok && number >= 0)
                                 {
+                                    QualiGuarantee_SpeedPreviousStage_Count = number;
+
+                                    /*
                                     int inclusion_index = -1;
                                     for(int j = 0; j < QSL_QualiGuaranteeMode.size() && inclusion_index < 0; j++)
                                         if(QSL_Blocks[2] == QSL_QualiGuaranteeMode[j])
@@ -447,6 +455,7 @@ bool NCM_Ranking::stage_code_parse()
                                         QualiGuarantee_SpeedPreviousStage_Mode = inclusion_index;
                                         QualiGuarantee_SpeedPreviousStage_Count = number;
                                     }
+                                    */
                                 }
                             }
                         }
@@ -618,6 +627,7 @@ bool NCM_Ranking::calc_ranking()
         vCompetitorCount_ToGo_byCompClass[cc] = vCompetitorCount_All_byCompClass[cc] - vCompetitorCount_Runs_byCompClass[cc];
 
     //calc quali state
+    int guarantee_rules_inclusive_used = 0;
     vQualiStates.clear();
     vQualiStates.resize(n_run, QUALI_STATE_UNDEFINED);
     for(size_t r = 0; r < vRunsCompleted.size(); r++)
@@ -676,16 +686,16 @@ bool NCM_Ranking::calc_ranking()
             //check if there are guarantee rules for this class
             bool guaranatee_rule_by_class = false;
             int guaranteed_count = 0;
-            int guarantee_mode = 0;
+            //int guarantee_mode = 0;
             for(size_t grc = 0; grc < vQualiGuarantee_CompetitorClasses.size(); grc++)
                 if(QS_CompClassName == vQualiGuarantee_CompetitorClasses[grc])
                 {
                     guaranatee_rule_by_class = true;
                     guaranteed_count = vQualiGuarantee_GuranteeCount[grc];
-                    guarantee_mode = vQualiGuarantee_GuaranteeMode[grc];
+                    //guarantee_mode = vQualiGuarantee_GuaranteeMode[grc];
                 }
 
-            //regular quali
+            //--------------------------------- regular quali
             bool quali_class_safe = false;
             bool quali_class_current = false;
             if(guaranatee_rule_by_class)
@@ -735,7 +745,7 @@ bool NCM_Ranking::calc_ranking()
             {
                 if(worst_possible_placement_class <= 1)         vQualiStates[r] = QUALI_STATE_END_1ST;
                 else if(worst_possible_placement_class <= 2)    vQualiStates[r] = QUALI_STATE_END_2ND;
-                else if(worst_possible_placement_class <= 2)    vQualiStates[r] = QUALI_STATE_END_2ND;
+                else if(worst_possible_placement_class <= 3)    vQualiStates[r] = QUALI_STATE_END_3RD;
                 else                                            vQualiStates[r] = QUALI_STATE_END;
             }
                 break;

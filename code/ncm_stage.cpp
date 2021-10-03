@@ -56,8 +56,8 @@ void NCM_Stage::stage_code_parse()
     QSL_CheckpointNames.clear();
     vQualiGuarantee_CompetitorClasses.clear();
     vQualiGuarantee_GuranteeCount.clear();
-    vQualiGuarantee_GuaranteeMode.clear();
-    QualiGuarantee_SpeedPreviousStage_Mode = QUALI_GUARANTEE_INCLUSIVE;
+    //vQualiGuarantee_GuaranteeMode.clear();
+    //QualiGuarantee_SpeedPreviousStage_Mode = QUALI_GUARANTEE_INCLUSIVE;
     QualiGuarantee_SpeedPreviousStage_Count = 0;
     QS_Name = "Example Name";
     quali_mode = QUALI_ALL;
@@ -147,6 +147,10 @@ void NCM_Stage::stage_code_parse()
 
                                         if(ok && number >= 0)
                                         {
+                                            vQualiGuarantee_CompetitorClasses.push_back(class_index);
+                                            vQualiGuarantee_GuranteeCount.push_back(number);
+
+                                            /*
                                             int inclusion_index = -1;
                                             for(int j = 0; j < QSL_QualiGuaranteeMode.size() && inclusion_index < 0; j++)
                                                 if(QSL_Blocks[3] == QSL_QualiGuaranteeMode[j])
@@ -158,6 +162,7 @@ void NCM_Stage::stage_code_parse()
                                                 vQualiGuarantee_GuranteeCount.push_back(number);
                                                 vQualiGuarantee_GuaranteeMode.push_back(inclusion_index);
                                             }
+                                            */
                                         }
                                     }
                                 }
@@ -174,6 +179,9 @@ void NCM_Stage::stage_code_parse()
 
                                 if(ok && number >= 0)
                                 {
+                                    QualiGuarantee_SpeedPreviousStage_Count = number;
+
+                                    /*
                                     int inclusion_index = -1;
                                     for(int j = 0; j < QSL_QualiGuaranteeMode.size() && inclusion_index < 0; j++)
                                         if(QSL_Blocks[2] == QSL_QualiGuaranteeMode[j])
@@ -184,6 +192,7 @@ void NCM_Stage::stage_code_parse()
                                         QualiGuarantee_SpeedPreviousStage_Mode = inclusion_index;
                                         QualiGuarantee_SpeedPreviousStage_Count = number;
                                     }
+                                    */
                                 }
                             }
                         }
@@ -241,26 +250,26 @@ void NCM_Stage::stage_code_update()
     //guaranteed quali (class)
     for(size_t i = 0; i < vQualiGuarantee_CompetitorClasses.size(); i++)
         if(i < vQualiGuarantee_GuranteeCount.size())
-            if(i < vQualiGuarantee_GuaranteeMode.size())
+            //if(i < vQualiGuarantee_GuaranteeMode.size())
                 if(vQualiGuarantee_CompetitorClasses[i] < QSL_CompetitorClasses.size())
-                    if(vQualiGuarantee_GuaranteeMode[i] < QSL_QualiGuaranteeMode.size())
+                    //if(vQualiGuarantee_GuaranteeMode[i] < QSL_QualiGuaranteeMode.size())
                         QSL_Stage_Code.append(
                                     QSL_Stage_Keywords[STAGE_KEYWORD_QUALI_GUARANTEE_CLASS] +
                                     QS_Separator +
                                     QSL_CompetitorClasses[vQualiGuarantee_CompetitorClasses[i]] +
                                     QS_Separator +
-                                    QString::number(vQualiGuarantee_GuranteeCount[i]) +
-                                    QS_Separator +
-                                    QSL_QualiGuaranteeMode[vQualiGuarantee_GuaranteeMode[i]]);
+                                    QString::number(vQualiGuarantee_GuranteeCount[i]));// +
+                                    //QS_Separator +
+                                    //QSL_QualiGuaranteeMode[vQualiGuarantee_GuaranteeMode[i]]);
 
     //guaranteed quali (speed)
     if(QualiGuarantee_SpeedPreviousStage_Count > 0)
         QSL_Stage_Code.append(
                     QSL_Stage_Keywords[STAGE_KEYWORD_QUALI_GUARANTEE_SPEED] +
                     QS_Separator +
-                    QString::number(QualiGuarantee_SpeedPreviousStage_Count) +
-                    QS_Separator +
-                    QSL_QualiGuaranteeMode[QualiGuarantee_SpeedPreviousStage_Mode]);
+                    QString::number(QualiGuarantee_SpeedPreviousStage_Count));// +
+                    //QS_Separator +
+                    //QSL_QualiGuaranteeMode[QualiGuarantee_SpeedPreviousStage_Mode]);
 
     QSL_Stage_Code.append(QS_LineSpace);
 
@@ -468,6 +477,7 @@ void NCM_Stage::on_pushButton_AddGuaranteeRule_clicked()
         if(!ok)
             return;
 
+        /*
         int include_mode = QMessageBox::question(
                     this,
                     "Inclusion mode",
@@ -484,10 +494,11 @@ void NCM_Stage::on_pushButton_AddGuaranteeRule_clicked()
                     2);
         if(include_mode != QUALI_GUARANTEE_INCLUSIVE && include_mode != QUALI_GUARANTEE_EXCLUSIVE)
             return;
+            */
 
         vQualiGuarantee_CompetitorClasses.push_back(index_comp_class);
         vQualiGuarantee_GuranteeCount.push_back(count_guaranteed);
-        vQualiGuarantee_GuaranteeMode.push_back(include_mode);
+        //vQualiGuarantee_GuaranteeMode.push_back(include_mode);
     }
         break;
 
@@ -507,6 +518,7 @@ void NCM_Stage::on_pushButton_AddGuaranteeRule_clicked()
         if(count_guaranteed < 1 || !ok)
             return;
 
+        /*
         int include_mode = QMessageBox::question(
                     this,
                     "Inclusion mode",
@@ -523,9 +535,10 @@ void NCM_Stage::on_pushButton_AddGuaranteeRule_clicked()
                     2);
         if(include_mode != QUALI_GUARANTEE_INCLUSIVE && include_mode != QUALI_GUARANTEE_EXCLUSIVE)
             return;
+            */
 
         QualiGuarantee_SpeedPreviousStage_Count = count_guaranteed;
-        QualiGuarantee_SpeedPreviousStage_Mode = include_mode;
+        //QualiGuarantee_SpeedPreviousStage_Mode = include_mode;
     }
         break;
 

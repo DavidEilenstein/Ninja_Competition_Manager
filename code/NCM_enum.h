@@ -60,6 +60,7 @@ const QStringList QSL_QualiDetailed = {
     "Final round, so no qualification"
 };
 
+/*
 enum QUALI_GUARANTEE {
     QUALI_GUARANTEE_INCLUSIVE,
     QUALI_GUARANTEE_EXCLUSIVE,
@@ -69,6 +70,7 @@ const QStringList QSL_QualiGuaranteeMode = {
     "inclusive",
     "exclusive"
 };
+*/
 
 enum QUALI_STATE {
     QUALI_STATE_UNDEFINED,

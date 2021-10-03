@@ -58,10 +58,10 @@ private:
 
     vector<int> vQualiGuarantee_CompetitorClasses = {0};
     vector<int> vQualiGuarantee_GuranteeCount = {3};
-    vector<int> vQualiGuarantee_GuaranteeMode = {QUALI_GUARANTEE_EXCLUSIVE};
+    //vector<int> vQualiGuarantee_GuaranteeMode = {QUALI_GUARANTEE_EXCLUSIVE};
 
     int QualiGuarantee_SpeedPreviousStage_Count = 3;
-    int QualiGuarantee_SpeedPreviousStage_Mode = QUALI_GUARANTEE_INCLUSIVE;
+    //int QualiGuarantee_SpeedPreviousStage_Mode = QUALI_GUARANTEE_INCLUSIVE;
 
     QStringList QSL_CheckpointNames = {
         "Start",

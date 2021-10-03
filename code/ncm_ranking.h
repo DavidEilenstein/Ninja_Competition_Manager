@@ -85,9 +85,9 @@ private:
     int quali_number = 20;
     vector<int> vQualiGuarantee_CompetitorClasses = {0};
     vector<int> vQualiGuarantee_GuranteeCount = {0};
-    vector<int> vQualiGuarantee_GuaranteeMode = {QUALI_GUARANTEE_EXCLUSIVE};
+    //vector<int> vQualiGuarantee_GuaranteeMode = {QUALI_GUARANTEE_EXCLUSIVE};
     int QualiGuarantee_SpeedPreviousStage_Count = 0;
-    int QualiGuarantee_SpeedPreviousStage_Mode = QUALI_GUARANTEE_INCLUSIVE;
+    //int QualiGuarantee_SpeedPreviousStage_Mode = QUALI_GUARANTEE_INCLUSIVE;
     QStringList QSL_Checkpoints;
 
     vector<NCM_Competitor*> vCompetitorsAll;
