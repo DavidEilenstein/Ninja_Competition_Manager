@@ -30,7 +30,7 @@ public:
 
     //setter
     void            set_TW(QTableWidget *TW);
-    void            set_data(vector<vector<QString>> vv_data, QStringList column_names, QStringList row_names);
+    void            set_data(vector<vector<QString>> vv_data, QStringList column_names, QStringList row_names, bool autosize_rows, bool autosize_cols);
 
     void            clear_data();
 

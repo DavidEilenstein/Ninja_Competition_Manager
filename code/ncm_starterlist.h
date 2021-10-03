@@ -46,6 +46,7 @@ private slots:
 
     void on_actionUpdate_now_triggered();
 
+    void auto_update(bool activate);
     void on_actionUpdate_automatically_triggered(bool checked);
 
     void on_actionChange_table_settings_triggered();

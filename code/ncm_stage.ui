@@ -73,8 +73,8 @@
       <string>NAME;Stage 2
 ----------------
 QUALI;NUMBER_TO_NEXT;20
-QUALI_GUARANTEE_CLASS;female;3;exclusive
-QUALI_GUARANTEE_SPEED;3;inclusive
+QUALI_GUARANTEE_CLASS;female;3
+QUALI_GUARANTEE_SPEED;3
 ----------------
 CHECKPOINTS
 ----------------
@@ -103,6 +103,27 @@ Buzzer</string>
       <string>Qualification for next stage</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="1">
+       <widget class="QPushButton" name="pushButton_AddGuaranteeRule">
+        <property name="text">
+         <string>Add gurateed qualification to next stage rule</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" colspan="2">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>All special quali rules may generate extra spots for the next stage, if a competitor reaches the</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="2">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Special quali rules only play a role if &quot;number&quot; quali mode is chosen.</string>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="0">
        <widget class="QPushButton" name="pushButton_ChangeQualiMode">
         <property name="text">
@@ -110,10 +131,10 @@ Buzzer</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QPushButton" name="pushButton_AddGuaranteeRule">
+      <item row="3" column="0" colspan="2">
+       <widget class="QLabel" name="label_5">
         <property name="text">
-         <string>Add gurateed qualification to next stage rule</string>
+         <string>next stage only by the rule but not regularly. That means if number=20, at least 20 qualify. </string>
         </property>
        </widget>
       </item>

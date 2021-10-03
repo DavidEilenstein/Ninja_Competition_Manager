@@ -126,7 +126,7 @@ void NCM_Stage::stage_code_parse()
 
                         case STAGE_KEYWORD_QUALI_GUARANTEE_CLASS:
                         {
-                            if(QSL_Blocks.size() == 4)
+                            if(QSL_Blocks.size() == 3)
                             {
                                 int class_index = -1;
                                 for(int c = 0; c < QSL_CompetitorClasses.size() && class_index < 0; c++)
@@ -172,7 +172,7 @@ void NCM_Stage::stage_code_parse()
 
                         case STAGE_KEYWORD_QUALI_GUARANTEE_SPEED:
                         {
-                            if(QSL_Blocks.size() == 3)
+                            if(QSL_Blocks.size() == 2)
                             {
                                 bool ok;
                                 int number = QSL_Blocks[1].toInt(&ok);

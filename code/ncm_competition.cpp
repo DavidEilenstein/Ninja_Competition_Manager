@@ -182,6 +182,13 @@ bool NCM_Competition::save()
 
     //----------------------------------------------------- competitor classes
 
+    QStringList QSL_CompClassFromUi = ui->plainTextEdit_CompetitorCalsses->toPlainText().split("\n");
+    QSL_CompetitorClasses.clear();
+    for(int i = 0; i < QSL_CompClassFromUi.size(); i++)
+        if(QSL_CompClassFromUi[i] != "")
+            QSL_CompetitorClasses.append(QSL_CompClassFromUi[i]);
+
+
     ofstream OF_competitorclasses;
     OF_competitorclasses.open(QString(vDIR_CompetitionSubdirs[COMP_DIR_GENERAL].path() + "/" + QS_FileName_CompetitorClasses).toStdString());
     if(!OF_competitorclasses.is_open())

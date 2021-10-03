@@ -39,6 +39,7 @@ public:
     bool calc_competitors_not_run_yet();
     bool calc_ranking();
 
+
 private slots:
 
     bool update_ranking();
@@ -47,6 +48,7 @@ private slots:
 
     void on_actionUpdate_now_triggered();
 
+    void auto_update(bool activate);
     void on_actionUpdate_automatically_triggered(bool checked);
 
     void on_actionChange_table_layout_triggered();

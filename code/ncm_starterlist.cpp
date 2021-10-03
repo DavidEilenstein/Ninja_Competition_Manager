@@ -181,6 +181,8 @@ void NCM_StarterList::get_data_dialog()
     ui->actionUpdate_now->setEnabled(true);
     ui->actionUpdate_automatically->setEnabled(true);
     ui->actionChange_table_settings->setEnabled(true);
+
+    auto_update(true);
 }
 
 bool NCM_StarterList::load_competitors()
@@ -188,6 +190,8 @@ bool NCM_StarterList::load_competitors()
     for(size_t i = 0; i < vCompetitorsAll.size(); i++)
         delete vCompetitorsAll[i];
     vCompetitorsAll.clear();
+
+    DIR_CompetitorsThisStage.setPath(DIR_CompetitorsThisStage.path());
 
     vCompetitorsAll.clear();
     QFileInfoList FIL_Competitors = DIR_CompetitorsThisStage.entryInfoList();
@@ -216,6 +220,8 @@ bool NCM_StarterList::load_runs()
         delete vRunsCompleted[i];
     vRunsCompleted.clear();
 
+    DIR_Runs_Out.setPath(DIR_Runs_Out.path());
+
     QFileInfoList FIL_Runs = DIR_Runs_Out.entryInfoList();
     for(int i = 0; i < FIL_Runs.size(); i++)
         if(FIL_Runs[i].exists())
@@ -229,7 +235,7 @@ bool NCM_StarterList::load_runs()
                         delete run;
                 }
 
-    //qDebug() << vRunsCompleted.size() << "runs loaded";
+    qDebug() << vRunsCompleted.size() << "runs loaded";
     return true;
 }
 
@@ -265,20 +271,20 @@ bool NCM_StarterList::update_starter_list()
 
     if(!load_competitors())
     {
-        return false;
         state_update_running = false;
+        return false;
     }
 
     if(!load_runs())
     {
-        return false;
         state_update_running = false;
+        return false;
     }
 
     if(!calc_competitors_not_run_yet())
     {
-        return false;
         state_update_running = false;
+        return false;
     }
 
     state_data_loaded = true;
@@ -348,7 +354,9 @@ bool NCM_StarterList::update_starter_list()
         vTables[t]->set_data(
                     vvvQS_Data[t],
                     QSL_Names_Columns,
-                    vQSL_Names_Rows[t]);
+                    vQSL_Names_Rows[t],
+                    false,
+                    true);
 
     ui->label_Time->setText(QDateTime::currentDateTime().time().toString());
 
@@ -373,9 +381,9 @@ void NCM_StarterList::on_actionUpdate_now_triggered()
     update_starter_list();
 }
 
-void NCM_StarterList::on_actionUpdate_automatically_triggered(bool checked)
+void NCM_StarterList::auto_update(bool activate)
 {
-    if(checked)
+    if(activate)
     {
         bool ok;
         double time_s = QInputDialog::getDouble(
@@ -398,7 +406,12 @@ void NCM_StarterList::on_actionUpdate_automatically_triggered(bool checked)
         timer_autoupdate.stop();
     }
 
-    ui->actionUpdate_now->setEnabled(!checked);
+    ui->actionUpdate_now->setEnabled(!activate);
+}
+
+void NCM_StarterList::on_actionUpdate_automatically_triggered(bool checked)
+{
+    auto_update(checked);
 }
 
 void NCM_StarterList::on_actionChange_table_settings_triggered()

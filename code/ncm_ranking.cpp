@@ -201,6 +201,8 @@ void NCM_Ranking::get_data_dialog()
     ui->actionUpdate_automatically->setEnabled(true);
     ui->actionChange_table_layout->setEnabled(true);
     ui->actionExport_Competitor_List_from_current_ranking->setEnabled(true);
+
+    auto_update(true);
 }
 
 bool NCM_Ranking::load_competitors()
@@ -208,6 +210,8 @@ bool NCM_Ranking::load_competitors()
     for(size_t i = 0; i < vCompetitorsAll.size(); i++)
         delete vCompetitorsAll[i];
     vCompetitorsAll.clear();
+
+    DIR_CompetitorsThisStage.setPath(DIR_CompetitorsThisStage.path());
 
     QFileInfoList FIL_Competitors = DIR_CompetitorsThisStage.entryInfoList();
     for(int i = 0; i < FIL_Competitors.size(); i++)
@@ -234,6 +238,8 @@ bool NCM_Ranking::load_runs()
     for(size_t i = 0; i < vRunsCompleted.size(); i++)
         delete vRunsCompleted[i];
     vRunsCompleted.clear();
+
+    DIR_Runs.setPath(DIR_Runs.path());
 
     QFileInfoList FIL_Runs = DIR_Runs.entryInfoList();
     for(int i = 0; i < FIL_Runs.size(); i++)
@@ -389,7 +395,7 @@ bool NCM_Ranking::stage_code_parse()
 
                         case STAGE_KEYWORD_QUALI_GUARANTEE_CLASS:
                         {
-                            if(QSL_Blocks.size() == 4)
+                            if(QSL_Blocks.size() == 3)
                             {
                                 int class_index = -1;
                                 for(int c = 0; c < QSL_CompetitorClasses.size() && class_index < 0; c++)
@@ -435,7 +441,7 @@ bool NCM_Ranking::stage_code_parse()
 
                         case STAGE_KEYWORD_QUALI_GUARANTEE_SPEED:
                         {
-                            if(QSL_Blocks.size() == 3)
+                            if(QSL_Blocks.size() == 2)
                             {
                                 bool ok;
                                 int number = QSL_Blocks[1].toInt(&ok);
@@ -627,7 +633,6 @@ bool NCM_Ranking::calc_ranking()
         vCompetitorCount_ToGo_byCompClass[cc] = vCompetitorCount_All_byCompClass[cc] - vCompetitorCount_Runs_byCompClass[cc];
 
     //calc quali state
-    int guarantee_rules_inclusive_used = 0;
     vQualiStates.clear();
     vQualiStates.resize(n_run, QUALI_STATE_UNDEFINED);
     for(size_t r = 0; r < vRunsCompleted.size(); r++)
@@ -654,10 +659,11 @@ bool NCM_Ranking::calc_ranking()
             int placement_last_stage_all = -1;
             for(size_t ca = 0; ca < vCompetitorsAll.size() && placement_last_stage_all < 0; ca++)
                 if(vCompetitorsAll[ca]->name() == QS_CompetitorName)
-                    placement_last_stage_all = int(ca);
+                    placement_last_stage_all = int(n_all) - int(ca);
 
             //speed rule applies?
             bool quali_speed_safe = (placement_last_stage_all <= QualiGuarantee_SpeedPreviousStage_Count);
+            //qDebug() << QS_CompetitorName << QS_CompClassName << placement_last_stage_all << QualiGuarantee_SpeedPreviousStage_Count << quali_speed_safe;
 
 
             //------------------------------- buzzer
@@ -687,22 +693,25 @@ bool NCM_Ranking::calc_ranking()
             bool guaranatee_rule_by_class = false;
             int guaranteed_count = 0;
             //int guarantee_mode = 0;
+            qDebug() << vQualiGuarantee_CompetitorClasses.size() << QS_CompClassName;
             for(size_t grc = 0; grc < vQualiGuarantee_CompetitorClasses.size(); grc++)
-                if(QS_CompClassName == vQualiGuarantee_CompetitorClasses[grc])
+                if(QS_CompClassName == QSL_CompetitorClasses[vQualiGuarantee_CompetitorClasses[grc]])
                 {
                     guaranatee_rule_by_class = true;
                     guaranteed_count = vQualiGuarantee_GuranteeCount[grc];
                     //guarantee_mode = vQualiGuarantee_GuaranteeMode[grc];
                 }
 
-            //--------------------------------- regular quali
+            //class quali
             bool quali_class_safe = false;
             bool quali_class_current = false;
+            qDebug() << "rule found class" << guaranatee_rule_by_class;
             if(guaranatee_rule_by_class)
             {
-                int class_quali_spots_worse_than_current_placement = guaranteed_count - placement_all;
+                int class_quali_spots_worse_than_current_placement = guaranteed_count - placement_in_class;
                 quali_class_safe = class_quali_spots_worse_than_current_placement >= int(class_to_go);
                 quali_class_current = placement_in_class <= guaranteed_count;
+                qDebug() << QS_CompetitorName << QS_CompClassName << class_quali_spots_worse_than_current_placement << placement_in_class << guaranteed_count << class_to_go << quali_class_safe << quali_class_current;
             }
 
 
@@ -727,7 +736,7 @@ bool NCM_Ranking::calc_ranking()
             {
                 if(quali_speed_safe)            vQualiStates[r] = QUALI_STATE_SAFE_SPEED;
                 else if (quali_regular_safe)    vQualiStates[r] = QUALI_STATE_SAFE_REGULAR;
-                else if (quali_class_safe)      vQualiStates[r] = QUALI_STATE_SAFE_REGULAR;
+                else if (quali_class_safe)      vQualiStates[r] = QUALI_STATE_SAFE_CLASS;
                 else if (quali_regular_current) vQualiStates[r] = QUALI_STATE_CURRENT_REGULAR;
                 else if (quali_class_current)   vQualiStates[r] = QUALI_STATE_CURRENT_CLASS;
                 else                            vQualiStates[r] = QUALI_STATE_UNDEFINED;
@@ -770,34 +779,34 @@ bool NCM_Ranking::update_ranking()
 
     if(!load_competitors())
     {
-        return false;
         state_update_running = false;
+        return false;
     }
 
     if(!load_runs())
     {
-        return false;
         state_update_running = false;
+        return false;
     }
 
     if(!calc_competitors_not_run_yet())
     {
-        return false;
         state_update_running = false;
+        return false;
     }
 
     state_data_loaded = true;
 
     if(!calc_ranking())
     {
-        return false;
         state_update_running = false;
+        return false;
     }
 
     if(!load_special_prices())
     {
-        return false;
         state_update_running = false;
+        return false;
     }
 
     //row names
@@ -834,17 +843,17 @@ bool NCM_Ranking::update_ranking()
             if(placement_real == vRankingOfRuns_All[d])
                 placement_duplicate_appearance++;
         int placement_used_for_table = placement_real + placement_duplicate_appearance;
-        qDebug() << "placement" << placement_real << placement_used_for_table;
+        //qDebug() << "placement" << placement_real << placement_used_for_table;
 
         //target table
         size_t index_table = min(size_t(count_tables - 1), size_t(placement_used_for_table / count_rows_per_table));
-        qDebug() << "table index" << index_table;
+        //qDebug() << "table index" << index_table;
 
         //row index
         size_t row_index = placement_used_for_table - 1;
         for(size_t t = 0; t < index_table; t++)
             row_index -= vQSL_Names_Rows[t].size();
-        qDebug() << "row index" << row_index;
+        //qDebug() << "row index" << row_index;
 
         //write to table data
         if(row_index < vvvQS_Data[index_table][0].size())
@@ -884,7 +893,9 @@ bool NCM_Ranking::update_ranking()
         vTables[t]->set_data(
                     vvvQS_Data[t],
                     QSL_Names_Columns,
-                    vQSL_Names_Rows[t]);
+                    vQSL_Names_Rows[t],
+                    false,
+                    true);
 
     state_update_running = false;
     return true;
@@ -907,9 +918,9 @@ void NCM_Ranking::on_actionUpdate_now_triggered()
     update_ranking();
 }
 
-void NCM_Ranking::on_actionUpdate_automatically_triggered(bool checked)
+void NCM_Ranking::auto_update(bool activate)
 {
-    if(checked)
+    if(activate)
     {
         bool ok;
         double time_s = QInputDialog::getDouble(
@@ -927,12 +938,16 @@ void NCM_Ranking::on_actionUpdate_automatically_triggered(bool checked)
         timer_autoupdate.start(int(time_s * 1000));
     }
     else
-
     {
         timer_autoupdate.stop();
     }
 
-    ui->actionUpdate_now->setEnabled(!checked);
+    ui->actionUpdate_now->setEnabled(!activate);
+}
+
+void NCM_Ranking::on_actionUpdate_automatically_triggered(bool checked)
+{
+    auto_update(checked);
 }
 
 void NCM_Ranking::on_actionChange_table_layout_triggered()
