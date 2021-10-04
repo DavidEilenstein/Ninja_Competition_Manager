@@ -12,7 +12,7 @@ NCM_MainWindow::NCM_MainWindow(QWidget *parent)
     FI_Settings.setFile(DIR_Settings.path() + "/Settings.txt");
     settings_load();
 
-    setWindowTitle("Ninja competition manager - by David Eilenstein");
+    setWindowTitle("Ninja competition manager - by David Eilenstein (" + QS_VersionNumber + ")");
     setWindowIcon(QIcon(":/logo/Logo_Final.jpg"));
 
     int size_button = 95;
@@ -155,7 +155,7 @@ void NCM_MainWindow::on_pushButton_Ranking_clicked()
 
 void NCM_MainWindow::on_pushButton_DavidEilenstein_clicked()
 {
-    QDesktopServices::openUrl(QUrl("www.instagram.com/davideilenstein"));
+    QDesktopServices::openUrl(QUrl("https://www.instagram.com/eilenstyle"));
 }
 
 void NCM_MainWindow::on_pushButton_Tutorial_clicked()

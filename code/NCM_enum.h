@@ -5,6 +5,7 @@
 
 using namespace std;
 
+const QString QS_VersionNumber = "v1.0";
 
 enum COMP_DIR {
     COMP_DIR_GENERAL,

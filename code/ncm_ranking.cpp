@@ -1040,5 +1040,5 @@ void NCM_Ranking::on_actionExport_Competitor_List_from_current_ranking_triggered
 
 void NCM_Ranking::on_pushButton_DavidEilenstein_clicked()
 {
-    QDesktopServices::openUrl(QUrl("www.instagram.com/davideilenstein"));
+    QDesktopServices::openUrl(QUrl("https://www.instagram.com/eilenstyle"));
 }
