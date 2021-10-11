@@ -59,7 +59,7 @@ private:
 
     vector<QTableWidget*> vTableWidget;
     vector<NCM_Table*> vTables;
-    int count_tables = 2;
+    int count_tables = 1;
     int count_rows_per_table = 30;
 
     QTimer timer_autoupdate;

@@ -490,6 +490,55 @@ bool NCM_Ranking::stage_code_parse()
     return true;
 }
 
+bool NCM_Ranking::calc_checkpoint_stats()
+{
+    int n_runs = vRunsCompleted.size();
+    int n_cp = QSL_Checkpoints.size();
+
+    vFailsAtCheckpoint.clear();
+    vFailsAtCheckpoint.resize(n_cp, 0);
+    QSL_CheckpointsClearRate.clear();
+    QSL_CheckpointsReachRate.clear();
+    QSL_CheckpointsWithRates.clear();
+
+    //count fails at checkpoints
+    for(int r = 0; r < n_runs; r++)
+    {
+        QString QS_Reached = vRunsCompleted[r]->checkpoint_reached();
+        bool checkpoint_identified = false;
+        for(int cp = 0; cp < n_cp && !checkpoint_identified; cp++)
+            if(QS_Reached == QSL_Checkpoints[cp])
+            {
+                checkpoint_identified = true;
+                vFailsAtCheckpoint[cp]++;
+            }
+    }
+
+    //calc clear and reach rates
+    int fails_until_cp = 0;
+    for(int cp = 0; cp < n_cp; cp++)
+    {
+        int fails_at_cp = vFailsAtCheckpoint[cp];
+        int cp_reached = n_runs - fails_until_cp;
+
+        if(n_runs > 0)
+            QSL_CheckpointsReachRate.append(QString::number((100 * cp_reached) / n_runs) + "%");
+        else
+            QSL_CheckpointsReachRate.append("-%");
+
+        if(cp_reached > 0)
+            QSL_CheckpointsClearRate.append(QString::number(100 - (100 * fails_at_cp) / cp_reached) + "%");
+        else
+            QSL_CheckpointsClearRate.append("-%");
+
+        QSL_CheckpointsWithRates.append(QSL_Checkpoints[cp] + " - " + QSL_CheckpointsReachRate[cp] + "/" + QSL_CheckpointsClearRate[cp]);
+
+        fails_until_cp += fails_at_cp;
+    }
+
+    return true;
+}
+
 bool NCM_Ranking::calc_competitors_not_run_yet()
 {
     QSL_CompetitorsNotRunYet.clear();
@@ -795,6 +844,12 @@ bool NCM_Ranking::update_ranking()
         return false;
     }
 
+    if(!calc_checkpoint_stats())
+    {
+        state_update_running = false;
+        return false;
+    }
+
     state_data_loaded = true;
 
     if(!calc_ranking())
@@ -835,6 +890,12 @@ bool NCM_Ranking::update_ranking()
     for(size_t r = 0; r < vRunsCompleted.size(); r++)
     {
         qDebug() << "run" << r << vRunsCompleted[r]->name() << "-------------";
+
+        //checkpoint reached
+        int checkpoint_reached = -1;
+        for(int c = 0; c < QSL_Checkpoints.size(); c++)
+            if(QSL_Checkpoints[c] == vRunsCompleted[r]->checkpoint_reached())
+                checkpoint_reached = c;
 
         //placment all
         int placement_real = vRankingOfRuns_All[r];
@@ -879,7 +940,9 @@ bool NCM_Ranking::update_ranking()
             vQSL_Names_Rows[index_table][row_index]                 = QString::number(placement_real);
             vvvQS_Data[index_table][COLUMN_NAME][row_index]         = vRunsCompleted[r]->name();
             vvvQS_Data[index_table][COLUMN_CLASS][row_index]        = vRunsCompleted[r]->competitor_class();
-            vvvQS_Data[index_table][COLUMN_CHECKPOINT][row_index]   = vRunsCompleted[r]->checkpoint_reached();
+            vvvQS_Data[index_table][COLUMN_CHECKPOINT][row_index]   = QSL_Checkpoints[checkpoint_reached];
+            vvvQS_Data[index_table][COLUMN_REACH][row_index]        = QSL_CheckpointsReachRate[checkpoint_reached];
+            vvvQS_Data[index_table][COLUMN_CLEAR][row_index]        = QSL_CheckpointsClearRate[checkpoint_reached];
             vvvQS_Data[index_table][COLUMN_TIME][row_index]         = QS_time;
             vvvQS_Data[index_table][COLUMN_QUALI][row_index]        = QSL_QualiState[vQualiStates[r]];
             //vvvQS_Data[index_table][COLUMN_SAFE_CLASS][row_index]   = QString::number(vRankingOfRuns_WorstPossible_InClass[r]);

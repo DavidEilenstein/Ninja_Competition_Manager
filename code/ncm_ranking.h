@@ -36,6 +36,7 @@ public:
     bool load_stage();
     bool load_special_prices();
     bool stage_code_parse();
+    bool calc_checkpoint_stats();
     bool calc_competitors_not_run_yet();
     bool calc_ranking();
 
@@ -63,7 +64,7 @@ private:
 
     vector<QTableWidget*> vTableWidget;
     vector<NCM_Table*> vTables;
-    int count_tables = 2;
+    int count_tables = 1;
     int count_rows_per_table = 30;
 
     QTimer timer_autoupdate;
@@ -90,7 +91,12 @@ private:
     //vector<int> vQualiGuarantee_GuaranteeMode = {QUALI_GUARANTEE_EXCLUSIVE};
     int QualiGuarantee_SpeedPreviousStage_Count = 0;
     //int QualiGuarantee_SpeedPreviousStage_Mode = QUALI_GUARANTEE_INCLUSIVE;
+
     QStringList QSL_Checkpoints;
+    vector<int> vFailsAtCheckpoint;
+    QStringList QSL_CheckpointsReachRate;
+    QStringList QSL_CheckpointsClearRate;
+    QStringList QSL_CheckpointsWithRates;
 
     vector<NCM_Competitor*> vCompetitorsAll;
     vector<NCM_Run*> vRunsCompleted;
@@ -108,18 +114,23 @@ private:
     enum COLUMNS {
         COLUMN_NAME,
         COLUMN_CHECKPOINT,
+        COLUMN_REACH,
+        COLUMN_CLEAR,
         COLUMN_TIME,
         COLUMN_QUALI,
         COLUMN_CLASS,
         //COLUMN_SAFE_ALL,
         //COLUMN_SAFE_CLASS
+        COLUMN_NUMBER_OF
     };
     QStringList QSL_Names_Columns = {
         "Name",
         "Checkpoint",
+        "Reach",
+        "Clear",
         "Time",
         "Quali",
-        "Class",
+        "Class"
         //"Safe (all)",
         //"Safe (class)"
     };
