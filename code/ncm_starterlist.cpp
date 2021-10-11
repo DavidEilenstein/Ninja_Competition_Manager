@@ -13,6 +13,8 @@ NCM_StarterList::NCM_StarterList(QDir competition_dir, QWidget *parent) :
     if(!DIR_Competitors.exists())
         QDir().mkdir(DIR_Competitors.path());
 
+    QDT_LastRun = QDateTime::currentDateTime();
+
     init_tables();
 
     get_data_dialog();
@@ -235,7 +237,11 @@ bool NCM_StarterList::load_runs()
                         delete run;
                 }
 
-    qDebug() << vRunsCompleted.size() << "runs loaded";
+    //measurement time of last run
+    if(vRunsCompleted.size() > 0)
+        QDT_LastRun = vRunsCompleted[vRunsCompleted.size() - 1]->TimeOfMeasurement();
+
+    //qDebug() << vRunsCompleted.size() << "runs loaded";
     return true;
 }
 
@@ -260,6 +266,38 @@ bool NCM_StarterList::calc_competitors_not_run_yet()
     //qDebug() << QSL_CompetitorsNotRunYet.size() << "competitors not run yet";
     return true;
 }
+
+bool NCM_StarterList::calc_mean_time_between_runs()
+{
+    //qDebug() << "calc_mean_time_between_runs" << "start";
+
+    valid_times_between_runs = 0;
+    int time_sum = 0;
+
+    //qDebug() << vRunsCompleted.size();
+    if(!vRunsCompleted.empty())
+        for(size_t r = 0; r < vRunsCompleted.size() - 1; r++)
+        {
+            int delta_time = vRunsCompleted[r]->Time_since_other_run_seconds(vRunsCompleted[r + 1]->TimeOfMeasurement());
+            qDebug() << vRunsCompleted[r]->TimeOfMeasurement() << vRunsCompleted[r + 1]->TimeOfMeasurement() << delta_time;
+            if(delta_time > 0)
+            {
+                valid_times_between_runs++;
+                time_sum += delta_time;
+            }
+        }
+
+    if(valid_times_between_runs > 0)
+        mean_time_between_runs_seconds = time_sum / valid_times_between_runs;
+    else
+        mean_time_between_runs_seconds = 0;
+
+    //qDebug() << "calc_mean_time_between_runs" << "end";
+    qDebug() << "calc_mean_time_between_runs" << "mean =" << mean_time_between_runs_seconds << ", n = " << valid_times_between_runs;
+    return true;
+}
+
+
 
 bool NCM_StarterList::update_starter_list()
 {
@@ -287,12 +325,19 @@ bool NCM_StarterList::update_starter_list()
         return false;
     }
 
+    if(!calc_mean_time_between_runs())
+    {
+        state_update_running = false;
+        return false;
+    }
+
     state_data_loaded = true;
 
     QStringList QSL_Names_Columns = {
         "Number",
         "Name",
-        "Class"};
+        "Class",
+        "est. Start"};
 
     //row names
     //qDebug() << "row names";
@@ -338,6 +383,10 @@ bool NCM_StarterList::update_starter_list()
             row_index -= vQSL_Names_Rows[t].size();
         //qDebug() << "row index" << row_index;
 
+        //est start time
+        QDateTime QDT_EstStartTime = QDT_LastRun.addSecs(mean_time_between_runs_seconds * i);
+        //qDebug() << "est time" << QDT_EstStartTime;
+
         //write to table data
         if(competitor_index >= 0 && row_index < vvvQS_Data[index_table][0].size())
         {
@@ -345,6 +394,11 @@ bool NCM_StarterList::update_starter_list()
             vvvQS_Data[index_table][0][row_index] = QString::number(vCompetitorsAll[competitor_index]->number());
             vvvQS_Data[index_table][1][row_index] = vCompetitorsAll[competitor_index]->name();
             vvvQS_Data[index_table][2][row_index] = vCompetitorsAll[competitor_index]->competitor_class();
+
+            if(valid_times_between_runs >= 3)
+                vvvQS_Data[index_table][3][row_index] = QDT_EstStartTime.time().toString("HH:mm");
+            else
+                vvvQS_Data[index_table][3][row_index] = "estimating";
         }
     }
 

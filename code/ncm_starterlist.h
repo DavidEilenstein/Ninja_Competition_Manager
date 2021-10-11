@@ -37,6 +37,7 @@ public:
     bool load_competitors();
     bool load_runs();
     bool calc_competitors_not_run_yet();
+    bool calc_mean_time_between_runs();
 
 private slots:
 
@@ -78,6 +79,10 @@ private:
 
     bool state_data_loaded = false;
     bool state_update_running = false;
+
+    int mean_time_between_runs_seconds = 0;
+    QDateTime QDT_LastRun;
+    int valid_times_between_runs = 0;
 };
 
 #endif // NCM_STARTERLIST_H

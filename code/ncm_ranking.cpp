@@ -540,7 +540,7 @@ bool NCM_Ranking::calc_ranking()
     vRankingOfRuns_All.resize(n_run);
     vRankingOfRuns_InClass.resize(n_run);
     vRankingOfRuns_WorstPossible_All.resize(n_run);
-    vRankingOfRuns_WorstPossible_InClass.resize(n_run);
+    vRankingOfRuns_WorstPossible_InClass.resize(n_run); //TO DO
     vBuzzer.resize(n_run);
 
     //loop runs and calc placement
@@ -739,7 +739,7 @@ bool NCM_Ranking::calc_ranking()
                 else if (quali_class_safe)      vQualiStates[r] = QUALI_STATE_SAFE_CLASS;
                 else if (quali_regular_current) vQualiStates[r] = QUALI_STATE_CURRENT_REGULAR;
                 else if (quali_class_current)   vQualiStates[r] = QUALI_STATE_CURRENT_CLASS;
-                else                            vQualiStates[r] = QUALI_STATE_UNDEFINED;
+                else                            vQualiStates[r] = QUALI_STATE_OUT;
             }
                 break;
 

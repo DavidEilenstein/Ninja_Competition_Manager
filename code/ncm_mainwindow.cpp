@@ -160,7 +160,7 @@ void NCM_MainWindow::on_pushButton_DavidEilenstein_clicked()
 
 void NCM_MainWindow::on_pushButton_Tutorial_clicked()
 {
-    QDesktopServices::openUrl(QUrl("https://www.youtube.com/"));
+    QDesktopServices::openUrl(QUrl("https://youtu.be/6AFUC44o_FA"));
 }
 
 void NCM_MainWindow::on_pushButton_Updates_clicked()

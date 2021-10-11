@@ -5,7 +5,7 @@
 
 using namespace std;
 
-const QString QS_VersionNumber = "v1.0";
+const QString QS_VersionNumber = "v1.1";
 
 enum COMP_DIR {
     COMP_DIR_GENERAL,
@@ -109,6 +109,8 @@ const QString QS_FileName_SpecialPrice_SickestMove = "SickestMove.txt";
 const QString QS_Separator = ";";
 const QString QS_NewLine = "\n";
 const QString QS_LineSpace = "----------------";
+
+const QString QS_DateTimeFormat = "yyyy.MM.dd hh:mm:ss";
 
 const QStringList QSl_AlphabetSmall {
     "a",

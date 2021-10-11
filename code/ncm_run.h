@@ -6,6 +6,8 @@
 #include <fstream>
 #include <ncm_competitor.h>
 #include <NCM_enum.h>
+#include <QDateTime>
+#include <QDebug>
 
 class NCM_Run : public NCM_Competitor
 {
@@ -27,6 +29,9 @@ public:
     bool load();
     bool load(QString QS_path);
 
+    QDateTime   TimeOfMeasurement()                                     {return QDT_Recorded;}
+    int         Time_since_other_run_seconds(QDateTime QDT_compare)     {return abs(QDT_compare.secsTo(QDT_Recorded));}
+
 signals:
 
 private:
@@ -37,6 +42,8 @@ private:
     int time_ms = 0;
     QString QS_CheckpointReached = "";
     QString QS_StageName = "";
+
+    QDateTime QDT_Recorded;
 };
 
 #endif // NCM_RUN_H

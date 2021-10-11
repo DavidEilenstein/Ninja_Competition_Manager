@@ -13,6 +13,8 @@ NCM_Run::NCM_Run(QDir competition_dir, QString stage_name, QObject *parent) :
     DIR_RunsThisStage.setPath(DIR_Runs.path() + "/" + QS_StageName);
     if(!DIR_RunsThisStage.exists())
         QDir().mkdir(DIR_RunsThisStage.path());
+
+    QDT_Recorded = QDateTime::currentDateTime();
 }
 
 void NCM_Run::set_competitor(NCM_Competitor *competitor)
@@ -67,7 +69,8 @@ bool NCM_Run::save()
     OF_Run << competitor_class().toStdString() << "\n";
     OF_Run << QS_StageName.toStdString() << "\n";
     OF_Run << QS_CheckpointReached.toStdString() << "\n";
-    OF_Run << time_in_ms();
+    OF_Run << time_in_ms() << "\n";
+    OF_Run << QDT_Recorded.toString(QS_DateTimeFormat).toStdString();
 
     OF_Run.close();
 
@@ -179,6 +182,13 @@ bool NCM_Run::load(QString QS_path)
         }
             break;
 
+        case 6:
+        {
+            QDT_Recorded = QDT_Recorded.fromString(QS_Line, QS_DateTimeFormat);
+            qDebug() << QS_Line << QDT_Recorded;
+        }
+            break;
+
         default:
             break;
         }
@@ -188,4 +198,6 @@ bool NCM_Run::load(QString QS_path)
 
     return true;
 }
+
+
 
