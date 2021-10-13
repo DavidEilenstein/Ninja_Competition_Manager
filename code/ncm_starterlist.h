@@ -54,6 +54,8 @@ private slots:
 
     void on_pushButton_DavidEilenstein_clicked();
 
+    void on_actionSave_Screenshot_triggered();
+
 private:
     Ui::NCM_StarterList *ui;
 
@@ -68,6 +70,7 @@ private:
     QDir DIR_Competitors;
     QDir DIR_CompetitorsThisStage;
     QDir DIR_Runs_Out;
+    QDir DIR_Screenshots;
 
     QFileInfo FI_StageFile;
 

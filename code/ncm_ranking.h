@@ -59,6 +59,8 @@ private slots:
 
     void on_pushButton_DavidEilenstein_clicked();
 
+    void on_actionSave_Screenshot_triggered();
+
 private:
     Ui::NCM_Ranking *ui;
 
@@ -74,6 +76,7 @@ private:
     QDir DIR_CompetitorsThisStage;
     QDir DIR_CompetitorsNextStage;
     QDir DIR_Runs;
+    QDir DIR_Screenshots;
 
     QDir DIR_SpecialPrices;
     QFileInfo FI_FailOfTheDay;

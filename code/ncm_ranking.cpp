@@ -19,6 +19,10 @@ NCM_Ranking::NCM_Ranking(QDir competition_dir, QStringList competitor_classes, Q
     if(!DIR_SpecialPrices.exists())
         QDir().mkdir(DIR_SpecialPrices.path());
 
+    DIR_Screenshots.setPath(DIR_Competition.path() + "/" + QSL_CompDirs[COMP_DIR_SCREENSHOTS]);
+    if(!DIR_Screenshots.exists())
+        QDir().mkdir(DIR_Screenshots.path());
+
     FI_SickestMove.setFile(DIR_SpecialPrices.path() + "/" + QS_FileName_SpecialPrice_SickestMove);
     FI_FailOfTheDay.setFile(DIR_SpecialPrices.path() + "/" + QS_FileName_SpecialPrice_FailOfTheDay);
 
@@ -418,20 +422,6 @@ bool NCM_Ranking::stage_code_parse()
                                         {
                                             vQualiGuarantee_CompetitorClasses.push_back(class_index);
                                             vQualiGuarantee_GuranteeCount.push_back(number);
-
-                                            /*
-                                            int inclusion_index = -1;
-                                            for(int j = 0; j < QSL_QualiGuaranteeMode.size() && inclusion_index < 0; j++)
-                                                if(QSL_Blocks[3] == QSL_QualiGuaranteeMode[j])
-                                                    inclusion_index = j;
-
-                                            if(inclusion_index >= 0 && inclusion_index < QUALI_GUARANTEE_NUMBER_OF)
-                                            {
-                                                vQualiGuarantee_CompetitorClasses.push_back(class_index);
-                                                vQualiGuarantee_GuranteeCount.push_back(number);
-                                                vQualiGuarantee_GuaranteeMode.push_back(inclusion_index);
-                                            }
-                                            */
                                         }
                                     }
                                 }
@@ -526,9 +516,11 @@ bool NCM_Ranking::calc_checkpoint_stats()
         else
             QSL_CheckpointsReachRate.append("-%");
 
-        if(cp_reached > 0)
+        if(cp == n_cp - 1)//Buzzer / last checkpoint
+            QSL_CheckpointsClearRate.append(QS_Buzzer);
+        else if(cp_reached > 0)//clear rate can be calced
             QSL_CheckpointsClearRate.append(QString::number(100 - (100 * fails_at_cp) / cp_reached) + "%");
-        else
+        else//no one reached the checkpoint
             QSL_CheckpointsClearRate.append("-%");
 
         QSL_CheckpointsWithRates.append(QSL_Checkpoints[cp] + " - " + QSL_CheckpointsReachRate[cp] + "/" + QSL_CheckpointsClearRate[cp]);
@@ -907,7 +899,7 @@ bool NCM_Ranking::update_ranking()
         //qDebug() << "placement" << placement_real << placement_used_for_table;
 
         //target table
-        size_t index_table = min(size_t(count_tables - 1), size_t(placement_used_for_table / count_rows_per_table));
+        size_t index_table = min(size_t(count_tables - 1), size_t((placement_used_for_table - 1) / count_rows_per_table));
         //qDebug() << "table index" << index_table;
 
         //row index
@@ -1099,9 +1091,24 @@ void NCM_Ranking::on_actionExport_Competitor_List_from_current_ranking_triggered
             starting_number_next_stage++;
         }
     }
+
+    QMessageBox::information(
+                this,
+                "Saved competitor list",
+                "The competitor list for the next stage was saved succsessfully in:\n" + DIR_Target.path());
 }
 
 void NCM_Ranking::on_pushButton_DavidEilenstein_clicked()
 {
     QDesktopServices::openUrl(QUrl("https://www.instagram.com/eilenstyle"));
+}
+
+void NCM_Ranking::on_actionSave_Screenshot_triggered()
+{
+    QString QS_SavePath = DIR_Screenshots.path() + "/" + QS_StageName + "_Ranking.png";
+    ui->centralwidget->grab().save(QS_SavePath);
+    QMessageBox::information(
+                this,
+                "Screenshot saved",
+                "Screenshot of current ranking saved as:\n" + QS_SavePath);
 }

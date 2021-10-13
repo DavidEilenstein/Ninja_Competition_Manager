@@ -13,6 +13,10 @@ NCM_StarterList::NCM_StarterList(QDir competition_dir, QWidget *parent) :
     if(!DIR_Competitors.exists())
         QDir().mkdir(DIR_Competitors.path());
 
+    DIR_Screenshots.setPath(DIR_Competition.path() + "/" + QSL_CompDirs[COMP_DIR_SCREENSHOTS]);
+    if(!DIR_Screenshots.exists())
+        QDir().mkdir(DIR_Screenshots.path());
+
     QDT_LastRun = QDateTime::currentDateTime();
 
     init_tables();
@@ -477,4 +481,14 @@ void NCM_StarterList::on_actionChange_table_settings_triggered()
 void NCM_StarterList::on_pushButton_DavidEilenstein_clicked()
 {
     QDesktopServices::openUrl(QUrl("https://www.instagram.com/eilenstyle"));
+}
+
+void NCM_StarterList::on_actionSave_Screenshot_triggered()
+{
+    QString QS_SavePath = DIR_Screenshots.path() + "/" + QS_StageName + "_Starterlist.png";
+    ui->centralwidget->grab().save(QS_SavePath);
+    QMessageBox::information(
+                this,
+                "Screenshot saved",
+                "Screenshot of current starter list saved as:\n" + QS_SavePath);
 }

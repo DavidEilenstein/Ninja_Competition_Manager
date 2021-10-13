@@ -5,7 +5,7 @@
 
 using namespace std;
 
-const QString QS_VersionNumber = "v1.1";
+const QString QS_VersionNumber = "v1.3 - 2021_10_13";
 
 enum COMP_DIR {
     COMP_DIR_GENERAL,
@@ -13,6 +13,7 @@ enum COMP_DIR {
     COMP_DIR_COMPETITORS,
     COMP_DIR_RUNS,
     COMP_DIR_SPECIAL_PRICES,
+    COMP_DIR_SCREENSHOTS,
     COMP_DIR_NUMBER_OF
 };
 const QStringList QSL_CompDirs = {
@@ -20,7 +21,8 @@ const QStringList QSL_CompDirs = {
     "Stages",
     "Competitors",
     "Runs",
-    "SpecialPrices"
+    "SpecialPrices",
+    "Screenshots"
 };
 
 enum STAGE_KEYWORDS {
@@ -111,6 +113,8 @@ const QString QS_NewLine = "\n";
 const QString QS_LineSpace = "----------------";
 
 const QString QS_DateTimeFormat = "yyyy.MM.dd hh:mm:ss";
+
+const QString QS_Buzzer = "🛎️";
 
 const QStringList QSl_AlphabetSmall {
     "a",
