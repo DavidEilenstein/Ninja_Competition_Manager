@@ -17,47 +17,66 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
-    ncm_checkin.cpp \
-    ncm_competition.cpp \
-    ncm_competitor.cpp \
-    ncm_mainwindow.cpp \
-    ncm_ranking.cpp \
-    ncm_resultentering.cpp \
-    ncm_run.cpp \
-    ncm_stage.cpp \
-    ncm_stage.cpp \
-    ncm_starterlist.cpp \
-    ncm_table.cpp
+    ncm_obj_challenge.cpp \
+    ncm_obj_challenge_list.cpp \
+    ncm_obj_competition.cpp \
+    ncm_obj_competitor.cpp \
+    ncm_obj_competitor_list.cpp \
+    ncm_obj_ranking_challenge.cpp \
+    ncm_obj_ranking_combi.cpp \
+    ncm_obj_ranking_stage.cpp \
+    ncm_obj_run.cpp \
+    ncm_obj_run_list.cpp \
+    ncm_obj_stage.cpp \
+    ncm_obj_try.cpp \
+    ncm_obj_try_list.cpp \
+    ncm_win_checkin.cpp \
+    ncm_win_edit_challenge.cpp \
+    ncm_win_edit_stage.cpp \
+    ncm_win_main.cpp \
+    ncm_win_ranking_challenge.cpp \
+    ncm_win_ranking_stage.cpp \
+    ncm_win_resultentering_challenge.cpp \
+    ncm_win_resultentering_stage.cpp \
+    ncm_win_starterlist.cpp
 
 HEADERS += \
-    NCM_enum.h \
-    ncm_checkin.h \
-    ncm_competition.h \
-    ncm_competitor.h \
-    ncm_mainwindow.h \
-    ncm_ranking.h \
-    ncm_resultentering.h \
-    ncm_run.h \
-    ncm_stage.h \
-    ncm_stage.h \
-    ncm_starterlist.h \
-    ncm_table.h
+    NCM_Enum.h \
+    ncm_obj_challenge.h \
+    ncm_obj_challenge_list.h \
+    ncm_obj_competition.h \
+    ncm_obj_competitor.h \
+    ncm_obj_competitor_list.h \
+    ncm_obj_ranking_challenge.h \
+    ncm_obj_ranking_combi.h \
+    ncm_obj_ranking_stage.h \
+    ncm_obj_run.h \
+    ncm_obj_run_list.h \
+    ncm_obj_stage.h \
+    ncm_obj_try.h \
+    ncm_obj_try_list.h \
+    ncm_win_checkin.h \
+    ncm_win_edit_challenge.h \
+    ncm_win_edit_stage.h \
+    ncm_win_main.h \
+    ncm_win_ranking_challenge.h \
+    ncm_win_ranking_stage.h \
+    ncm_win_resultentering_challenge.h \
+    ncm_win_resultentering_stage.h \
+    ncm_win_starterlist.h
 
 FORMS += \
-    ncm_checkin.ui \
-    ncm_competition.ui \
-    ncm_mainwindow.ui \
-    ncm_ranking.ui \
-    ncm_resultentering.ui \
-    ncm_stage.ui \
-    ncm_starterlist.ui
+    ncm_win_checkin.ui \
+    ncm_win_edit_challenge.ui \
+    ncm_win_edit_stage.ui \
+    ncm_win_main.ui \
+    ncm_win_ranking_challenge.ui \
+    ncm_win_ranking_stage.ui \
+    ncm_win_resultentering_challenge.ui \
+    ncm_win_resultentering_stage.ui \
+    ncm_win_starterlist.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
-
-DISTFILES +=
-
-RESOURCES += \
-    ../img/img.qrc
