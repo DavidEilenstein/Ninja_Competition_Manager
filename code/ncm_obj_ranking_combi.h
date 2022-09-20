@@ -24,11 +24,11 @@
 //namespaces
 using namespace std;
 
-class NCM_OBJ_Ranking_Combi : public QObject
+class NCM_OBJ_Ranking_Combi
 {
-    Q_OBJECT
+
 public:
-    NCM_OBJ_Ranking_Combi(QObject *parent = nullptr);
+    NCM_OBJ_Ranking_Combi();
 };
 
 #endif // NCM_OBJ_RANKING_COMBI_H

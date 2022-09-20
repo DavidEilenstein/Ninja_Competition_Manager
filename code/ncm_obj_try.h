@@ -23,11 +23,10 @@
 //namespaces
 using namespace std;
 
-class NCM_OBJ_Try : public QObject
+class NCM_OBJ_Try
 {
-    Q_OBJECT
 public:
-    explicit NCM_OBJ_Try(QObject *parent = nullptr);
+    explicit NCM_OBJ_Try();
 
 signals:
 

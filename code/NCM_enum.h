@@ -31,33 +31,26 @@ const QStringList QSL_CompDirs = {
     "SideChallengeTries"
 };
 
-enum COMP_CLASSES {
-    COMP_CLASS_FEMALE,
-    COMP_CLASS_MALE
-};
-const QStringList QSL_CompClasses_Symbol = {
-    "♀",
-    "♂"
-};
-const QStringList QSL_CompClasses_Text = {
-    "female",
-    "male"
-};
+const QString QS_FemaleSymbol = "♀";
+const QString QS_MaleSymbol = "♂";
+
+const QString QS_Female = "female";
+const QString QS_Male = "male";
 
 enum STAGE_KEYWORDS {
     STAGE_KEYWORD_NAME,
-    STAGE_KEYWORD_IS_FINAL,
-    STAGE_KEYWORD_QUALI_THIS_STAGE_FEMALE,
-    STAGE_KEYWORD_QUALI_THIS_STAGE_MALE,
-    STAGE_KEYWORD_QUALI_PREVIOUS_STAGE_FEMALE,
-    STAGE_KEYWORD_QUALI_PREVIOUS_STAGE_MALE,
+    STAGE_KEYWORD_FINAL,
+    STAGE_KEYWORD_QUALI_THIS_STAGE_F,
+    STAGE_KEYWORD_QUALI_THIS_STAGE_M,
+    STAGE_KEYWORD_QUALI_PREVIOUS_STAGE_F,
+    STAGE_KEYWORD_QUALI_PREVIOUS_STAGE_M,
     STAGE_KEYWORD_CHALLENGE_LIST,
     STAGE_KEYWORD_CHECKPOINTS,
     STAGE_KEYWORD_NUMBER_OF
 };
 const QStringList QSL_Stage_Keywords = {
     "NAME",
-    "IS_FINAL",
+    "FINAL",
     "QUALI_THIS_STAGE_FEMALE",
     "QUALI_THIS_STAGE_MALE",
     "QUALI_PREVIOUS_STAGE_FEMALE",
@@ -65,6 +58,9 @@ const QStringList QSL_Stage_Keywords = {
     "CHALLENGE_LIST",
     "CHECKPOINTS"
 };
+
+const QString QS_IsFinal = "Final";
+const QString QS_IsNotFinal = "IsNotFinal";
 
 enum CHALLENGE_KEYWORDS {
     CHALLENGE_KEYWORD_NAME,
@@ -84,14 +80,8 @@ const QStringList QSL_Challenge_Keywords = {
     "UNIT"
 };
 
-enum ORDER {
-    ORDER_MORE_IS_BETTER,
-    ORDER_LESS_IS_BETTER
-};
-const QStringList QSL_Order = {
-    "MoreIsBetter",
-    "LessIsBetter"
-};
+const QString QS_OrderMoreIsBetter = "MoreIsBetter";
+const QString QS_OrderLessIsBetter = "LessIsBetter";
 
 enum QUALI_STATE {
     QUALI_STATE_QUALI_STAGE_PREVIOUS_SAFE,

@@ -24,11 +24,11 @@
 //namespaces
 using namespace std;
 
-class NCM_OBJ_Ranking_Stage : public QObject
+class NCM_OBJ_Ranking_Stage
 {
-    Q_OBJECT
+
 public:
-    explicit NCM_OBJ_Ranking_Stage(QObject *parent = nullptr);
+    explicit NCM_OBJ_Ranking_Stage();
 
 signals:
 

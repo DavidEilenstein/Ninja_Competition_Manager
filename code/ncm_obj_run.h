@@ -23,11 +23,10 @@
 //namespaces
 using namespace std;
 
-class NCM_OBJ_Run : public QObject
+class NCM_OBJ_Run
 {
-    Q_OBJECT
 public:
-    explicit NCM_OBJ_Run(QObject *parent = nullptr);
+    explicit NCM_OBJ_Run();
 
 signals:
 

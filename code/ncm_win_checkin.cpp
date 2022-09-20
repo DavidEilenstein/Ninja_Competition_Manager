@@ -87,11 +87,11 @@ void NCM_WIN_CheckIn::on_pushButton_Checkin_clicked()
 
     //class
 
-    int competitor_class = ui->radioButton_Class_F->isChecked() ? COMP_CLASS_FEMALE : COMP_CLASS_MALE;
+    bool female = ui->radioButton_Class_F->isChecked();
 
     //new competitor
 
-    NCM_OBJ_Competitor competitor(name_alphanumeric, competitor_class, number);
+    NCM_OBJ_Competitor competitor(name_alphanumeric, female, number);
 
     if(!CompetitorList.add_competitor(competitor))
     {
@@ -105,4 +105,10 @@ void NCM_WIN_CheckIn::on_pushButton_Checkin_clicked()
     //save
 
     CompetitorList.save();
+
+    //reset ui
+    ui->lineEdit_Name->setText("");
+    ui->radioButton_Class_M->setChecked(true);
+    ui->radioButton_Class_F->setChecked(false);
+    ui->spinBox_Number->setValue(0);
 }

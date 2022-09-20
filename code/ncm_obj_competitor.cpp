@@ -33,9 +33,9 @@ bool NCM_OBJ_Competitor::save(QDir DIR_competitors)
     if(!OF_Competitor.is_open())
         return false;
 
-    OF_Competitor << starter_number << "\n";            //number
-    OF_Competitor << QS_Name.toStdString() << "\n";     //name
-    OF_Competitor << CompClass;                         //class
+    OF_Competitor << starter_number << "\n";                        //number
+    OF_Competitor << QS_Name.toStdString() << "\n";                 //name
+    OF_Competitor << (Female ? QS_Female : QS_Male).toStdString();  //class
 
     OF_Competitor.close();
 
@@ -94,17 +94,7 @@ bool NCM_OBJ_Competitor::load(QString QS_path)
 
         case 2://class
         {
-            bool ok;
-            int class_index = QS_Line.toInt(&ok);
-            if(ok)
-            {
-                CompClass = class_index;
-            }
-            else
-            {
-                return false;
-                IS_Competitor.close();
-            }
+            Female = QS_Line == QS_Female;
         }
             break;
 

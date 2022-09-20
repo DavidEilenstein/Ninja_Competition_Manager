@@ -26,15 +26,10 @@ using namespace std;
 class NCM_OBJ_Challenge_List
 {
 public:
-    explicit NCM_OBJ_Challenge_List(NCM_OBJ_Competition comp);
-
-signals:
-
+    explicit    NCM_OBJ_Challenge_List();
 
 private:
-    NCM_OBJ_Competition Competition;
 
-signals:
 
 };
 
