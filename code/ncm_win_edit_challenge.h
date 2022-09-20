@@ -32,7 +32,7 @@ class NCM_WIN_Edit_Challenge : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit NCM_WIN_Edit_Challenge(QWidget *parent = nullptr);
+    explicit NCM_WIN_Edit_Challenge(NCM_OBJ_Competition comp, QWidget *parent = nullptr);
     ~NCM_WIN_Edit_Challenge();
 
 private:

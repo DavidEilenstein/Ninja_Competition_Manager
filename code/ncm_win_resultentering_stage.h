@@ -33,7 +33,7 @@ class NCM_WIN_ResultEntering_Stage : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit NCM_WIN_ResultEntering_Stage(QWidget *parent = nullptr);
+    explicit NCM_WIN_ResultEntering_Stage(NCM_OBJ_Competition comp, QWidget *parent = nullptr);
     ~NCM_WIN_ResultEntering_Stage();
 
 private:

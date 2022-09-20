@@ -19,6 +19,7 @@
 #include <NCM_Enum.h>
 #include <ncm_obj_competition.h>
 #include <ncm_obj_competitor.h>
+#include <ncm_obj_competitor_list.h>
 
 //namespaces
 using namespace std;
@@ -32,11 +33,17 @@ class NCM_WIN_CheckIn : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit NCM_WIN_CheckIn(QWidget *parent = nullptr);
+    explicit NCM_WIN_CheckIn(NCM_OBJ_Competition comp, QWidget *parent = nullptr);
     ~NCM_WIN_CheckIn();
+
+private slots:
+
+    void on_pushButton_Checkin_clicked();
 
 private:
     Ui::NCM_WIN_CheckIn *ui;
+
+    NCM_OBJ_Competitor_List CompetitorList;
 };
 
 #endif // NCM_WIN_CHECKIN_H

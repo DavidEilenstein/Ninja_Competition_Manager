@@ -42,7 +42,49 @@ public:
     NCM_WIN_Main(QWidget *parent = nullptr);
     ~NCM_WIN_Main();
 
+    void settings_load();
+    void settings_save();
+
+private:
+
+    void enable_ui();
+
+private slots:
+
+    void on_pushButton_Comp_Create_clicked();
+    void on_pushButton_Comp_Select_clicked();
+    void on_pushButton_Comp_Load_clicked();
+
+    void on_pushButton_Checkin_clicked();
+
+    void on_pushButton_Stage_Edit_clicked();
+    void on_pushButton_Stage_StarterList_clicked();
+    void on_pushButton_Stage_ResultEntering_clicked();
+    void on_pushButton_Stage_Ranking_clicked();
+
+    void on_pushButton_Challenges_Edit_clicked();
+    void on_pushButton_Challenges_ResultEntering_clicked();
+    void on_pushButton_Challenges_Ranking_clicked();
+
 private:
     Ui::NCM_WIN_Main *ui;
+
+    QDir                                DIR_Settings;
+    QFileInfo                           FI_Settings;
+
+
+    NCM_OBJ_Competition                 Competition;
+
+
+    NCM_WIN_CheckIn*                    win_checkin;
+
+    NCM_WIN_Edit_Stage*                 win_edit_stage;
+    NCM_WIN_StarterList*                win_starterlist;
+    NCM_WIN_ResultEntering_Stage*       win_resultentering_stage;
+    NCM_WIN_Ranking_Stage*              win_ranking_stage;
+
+    NCM_WIN_Edit_Challenge*             win_edit_challenge;
+    NCM_WIN_ResultEntering_Challenge*   win_resultentering_challenge;
+    NCM_WIN_Ranking_Challenge*          win_ranking_challenge;
 };
 #endif // NCM_WIN_MAIN_H

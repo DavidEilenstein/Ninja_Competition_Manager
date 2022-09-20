@@ -32,7 +32,7 @@ class NCM_WIN_StarterList : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit NCM_WIN_StarterList(QWidget *parent = nullptr);
+    explicit NCM_WIN_StarterList(NCM_OBJ_Competition comp, QWidget *parent = nullptr);
     ~NCM_WIN_StarterList();
 
 private:

@@ -1,7 +1,7 @@
 #include "ncm_win_ranking_stage.h"
 #include "ui_ncm_win_ranking_stage.h"
 
-NCM_WIN_Ranking_Stage::NCM_WIN_Ranking_Stage(QWidget *parent) :
+NCM_WIN_Ranking_Stage::NCM_WIN_Ranking_Stage(NCM_OBJ_Competition comp, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::NCM_WIN_Ranking_Stage)
 {

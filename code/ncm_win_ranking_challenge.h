@@ -32,7 +32,7 @@ class NCM_WIN_Ranking_Challenge : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit NCM_WIN_Ranking_Challenge(QWidget *parent = nullptr);
+    explicit NCM_WIN_Ranking_Challenge(NCM_OBJ_Competition comp, QWidget *parent = nullptr);
     ~NCM_WIN_Ranking_Challenge();
 
 private:

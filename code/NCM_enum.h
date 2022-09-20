@@ -32,8 +32,8 @@ const QStringList QSL_CompDirs = {
 };
 
 enum COMP_CLASSES {
-    CLASS_FEMALE,
-    CLASS_MALE
+    COMP_CLASS_FEMALE,
+    COMP_CLASS_MALE
 };
 const QStringList QSL_CompClasses_Symbol = {
     "♀",
@@ -129,7 +129,7 @@ const QString QS_DateTimeFormat = "yyyy.MM.dd hh:mm:ss";
 
 const QString QS_Buzzer = "🛎️";
 
-const QStringList QSl_AlphabetSmall {
+const QStringList QSl_AllowedChars {
     "a",
     "b",
     "c",
@@ -155,10 +155,7 @@ const QStringList QSl_AlphabetSmall {
     "w",
     "x",
     "y",
-    "z"
-};
-
-const QStringList QSl_AlphabetBig {
+    "z",
     "A",
     "B",
     "C",
@@ -184,7 +181,20 @@ const QStringList QSl_AlphabetBig {
     "W",
     "X",
     "Y",
-    "Z"
+    "Z",
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    " ",
+    "-",
+    "_"
 };
 
 #endif // NCM_ENUM_H

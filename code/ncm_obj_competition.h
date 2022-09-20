@@ -10,6 +10,7 @@
 #include <QMessageBox>
 #include <QIcon>
 #include <QDateEdit>
+#include <QDebug>
 
 //c++
 #include <vector>
@@ -21,14 +22,25 @@
 //namespaces
 using namespace std;
 
-class NCM_OBJ_Competition : public QObject
+class NCM_OBJ_Competition
 {
-    Q_OBJECT
 public:
-    explicit NCM_OBJ_Competition(QObject *parent = nullptr);
+    explicit NCM_OBJ_Competition();
 
-signals:
+    void    create();
+    void    load();
 
+    void    set_path_competition(QString path)  {DIR_Competition.setPath(path);}
+
+    QString name()                              {return DIR_Competition.path().split("/").last();}
+    QDir    dir_competition()                   {return DIR_Competition;}
+    QDir    dir(int index)                      {return vDIR_CompetitionSubdirs[index];}
+    bool    is_valid();
+
+private:
+
+    QDir DIR_Competition;
+    vector<QDir> vDIR_CompetitionSubdirs;
 };
 
 #endif // NCM_OBJ_COMPETITION_H

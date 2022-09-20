@@ -1,7 +1,7 @@
 #include "ncm_win_starterlist.h"
 #include "ui_ncm_win_starterlist.h"
 
-NCM_WIN_StarterList::NCM_WIN_StarterList(QWidget *parent) :
+NCM_WIN_StarterList::NCM_WIN_StarterList(NCM_OBJ_Competition comp, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::NCM_WIN_StarterList)
 {
