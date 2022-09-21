@@ -41,12 +41,21 @@ public:
     NCM_OBJ_Competitor  competitor()                        {return Competitor;}
     int                 time_ms()                           {return Time_ms;}
     int                 checkpoint_reached()                {return CheckpointReached;}
+    QDateTime           recorded()                          {return QDT_Recorded;}
+
+    int                 time_to_ms(QDateTime QDT_other)     {return QDT_Recorded.msecsTo(QDT_other);}
+    int                 time_since_ms(QDateTime QDT_other)  {return -QDT_Recorded.msecsTo(QDT_other);}
+
+    bool                better_then(NCM_OBJ_Run run_other);
+    bool                worse_then(NCM_OBJ_Run run_other)   {return run_other.better_then(*this);}
+    bool                equal(NCM_OBJ_Run run_other)        {return !better_then(run_other) && !worse_then(run_other);}
+
+    bool                earlier_then(NCM_OBJ_Run run_other) {return time_to_ms(run_other.recorded()) < 0;}
+    bool                later_then(NCM_OBJ_Run run_other)   {return time_to_ms(run_other.recorded()) > 0;}
+
 
     bool save(QDir DIR_Runs);
     bool load(QString QS_path);
-
-    bool operator < (NCM_OBJ_Run run_other);
-    bool operator > (NCM_OBJ_Run run_other)                 {return !(*this < run_other);}
 
 private:
 

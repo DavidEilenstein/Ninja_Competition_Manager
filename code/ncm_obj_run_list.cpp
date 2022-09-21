@@ -47,6 +47,42 @@ NCM_OBJ_Competitor_List NCM_OBJ_Run_List::competitors_list()
     return competitors;
 }
 
+NCM_OBJ_Run NCM_OBJ_Run_List::run_earliest()
+{
+    if(size() == 0)
+        return NCM_OBJ_Run();
+
+    NCM_OBJ_Run run_earliest = vRuns[0];
+    for(size_t r = 1; r < size(); r++)
+        if(vRuns[r].earlier_then(run_earliest))
+            run_earliest = vRuns[r];
+
+    return run_earliest;
+}
+
+NCM_OBJ_Run NCM_OBJ_Run_List::run_latest()
+{
+    if(size() == 0)
+        return NCM_OBJ_Run();
+
+    NCM_OBJ_Run run_latest = vRuns[0];
+    for(size_t r = 1; r < size(); r++)
+        if(vRuns[r].later_then(run_latest))
+            run_latest = vRuns[r];
+
+    return run_latest;
+}
+
+int NCM_OBJ_Run_List::average_time_start_to_start_ms()
+{
+    if(size() < 2)
+        return 0;
+
+    int dt_ms = run_earliest().time_to_ms(run_latest().recorded());
+
+    return dt_ms / int(size() - 1);
+}
+
 bool NCM_OBJ_Run_List::load()
 {
     if(!DIR_SavedIn.exists())

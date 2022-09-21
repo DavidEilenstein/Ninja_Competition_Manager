@@ -14,6 +14,21 @@ NCM_OBJ_Run::NCM_OBJ_Run(NCM_OBJ_Stage stage, NCM_OBJ_Competitor competitor, int
     set_time(t_min, t_s, t_ms);
 }
 
+bool NCM_OBJ_Run::better_then(NCM_OBJ_Run run_other)
+{
+    if(run_other.checkpoint_reached() < checkpoint_reached())
+        return true;
+    if(run_other.checkpoint_reached() > checkpoint_reached())
+        return false;
+
+    if(run_other.time_ms() > time_ms())
+        return true;
+    if(run_other.time_ms() < time_ms())
+        return false;
+
+    return false;
+}
+
 bool NCM_OBJ_Run::save(QDir DIR_Runs)
 {
     QString QS_StartNumber_6digits;
@@ -160,17 +175,3 @@ bool NCM_OBJ_Run::load(QString QS_path)
     return true;
 }
 
-bool NCM_OBJ_Run::operator <(NCM_OBJ_Run run_other)
-{
-    if(run_other.checkpoint_reached() < checkpoint_reached())
-        return true;
-    if(run_other.checkpoint_reached() > checkpoint_reached())
-        return false;
-
-    if(run_other.time_ms() > time_ms())
-        return true;
-    if(run_other.time_ms() < time_ms())
-        return false;
-
-    return false;
-}

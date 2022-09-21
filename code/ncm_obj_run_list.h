@@ -42,6 +42,10 @@ public:
 
     NCM_OBJ_Competitor_List competitors_list();
 
+    NCM_OBJ_Run             run_earliest();
+    NCM_OBJ_Run             run_latest();
+    int                     average_time_start_to_start_ms();
+
     void                    set_dir(QDir dir)                                           {DIR_SavedIn = dir;}
     bool                    load(QDir dir)                                              {set_dir(dir); return load();}
     bool                    load();
