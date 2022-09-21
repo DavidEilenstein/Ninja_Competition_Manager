@@ -37,6 +37,7 @@ public:
     bool                        add_competitor(NCM_OBJ_Competitor competitor);
     NCM_OBJ_Competitor          get_competitor(size_t c)                            {return c < size() ? vCompetitors[c] : NCM_OBJ_Competitor();}
 
+    QStringList                 names();
     size_t                      size()                                              {return vCompetitors.size();}
 
     NCM_OBJ_Competitor_List     subtract(NCM_OBJ_Competitor_List list);

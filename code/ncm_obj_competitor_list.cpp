@@ -38,6 +38,15 @@ bool NCM_OBJ_Competitor_List::add_competitor(NCM_OBJ_Competitor competitor)
     return true;
 }
 
+QStringList NCM_OBJ_Competitor_List::names()
+{
+    QStringList names;
+    for(size_t c = 0; c < size(); c++)
+        names.push_back(vCompetitors[c].name());
+
+    return names;
+}
+
 NCM_OBJ_Competitor_List NCM_OBJ_Competitor_List::subtract(NCM_OBJ_Competitor_List list)
 {
     NCM_OBJ_Competitor_List list_difference;

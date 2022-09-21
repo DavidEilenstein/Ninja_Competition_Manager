@@ -30,6 +30,8 @@ SOURCES += \
     ncm_obj_stage.cpp \
     ncm_obj_try.cpp \
     ncm_obj_try_list.cpp \
+    ncm_wid_table.cpp \
+    ncm_wid_table_multi.cpp \
     ncm_win_checkin.cpp \
     ncm_win_edit_challenge.cpp \
     ncm_win_edit_stage.cpp \
@@ -55,6 +57,8 @@ HEADERS += \
     ncm_obj_stage.h \
     ncm_obj_try.h \
     ncm_obj_try_list.h \
+    ncm_wid_table.h \
+    ncm_wid_table_multi.h \
     ncm_win_checkin.h \
     ncm_win_edit_challenge.h \
     ncm_win_edit_stage.h \

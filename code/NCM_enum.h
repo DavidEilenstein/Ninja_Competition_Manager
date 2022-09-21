@@ -109,8 +109,8 @@ const QStringList QSL_QualiState = {
     "💀",
 };
 
-const QString QS_FileName_SpecialPrice_FailOfTheDay = "FailOfTheDay.txt";
-const QString QS_FileName_SpecialPrice_SickestMove = "SickestMove.txt";
+const QString QS_FileName_SpecialPrice_BestTrick = "BestTrick.txt";
+const QString QS_FileName_SpecialPrice_WorstFail = "WorstFail.txt";
 
 const QString QS_Separator = ";";
 const QString QS_NewLine = "\n";

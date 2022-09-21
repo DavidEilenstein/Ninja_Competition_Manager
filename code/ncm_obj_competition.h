@@ -25,17 +25,19 @@ using namespace std;
 class NCM_OBJ_Competition
 {
 public:
-    explicit NCM_OBJ_Competition();
+    explicit    NCM_OBJ_Competition();
 
-    void    create();
-    void    load();
+    void        create();
+    void        load();
 
-    void    set_path_competition(QString path)  {DIR_Competition.setPath(path);}
+    void        set_path_competition(QString path)  {DIR_Competition.setPath(path);}
 
-    QString name()                              {return DIR_Competition.path().split("/").last();}
-    QDir    dir_competition()                   {return DIR_Competition;}
-    QDir    dir(int index)                      {return vDIR_CompetitionSubdirs[index];}
-    bool    is_valid();
+    QString     name()                              {return DIR_Competition.path().split("/").last();}
+    QDir        dir_competition()                   {return DIR_Competition;}
+    QDir        dir(int index)                      {return vDIR_CompetitionSubdirs[index];}
+    QString     path_best_trick()                   {return dir(COMP_DIR_SPECIAL_PRICES).path() + "/" + QS_FileName_SpecialPrice_BestTrick;}
+    QString     path_worst_fail()                   {return dir(COMP_DIR_SPECIAL_PRICES).path() + "/" + QS_FileName_SpecialPrice_WorstFail;}
+    bool        is_valid();
 
 private:
 

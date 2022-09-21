@@ -205,7 +205,56 @@ void NCM_OBJ_Stage::code_parse()
                         case STAGE_KEYWORD_QUALI_THIS_STAGE_F:
                         {
                             if(QSL_Blocks.size() >= 2)
-                                QS_Name = QSL_Blocks[1];
+                            {
+                                bool ok;
+                                int count = QSL_Blocks[1].toInt(&ok);
+                                if(ok)
+                                    QualiThisF = count;
+                                else
+                                    return;
+                            }
+                        }
+                            break;
+
+                        case STAGE_KEYWORD_QUALI_THIS_STAGE_M:
+                        {
+                            if(QSL_Blocks.size() >= 2)
+                            {
+                                bool ok;
+                                int count = QSL_Blocks[1].toInt(&ok);
+                                if(ok)
+                                    QualiThisM = count;
+                                else
+                                    return;
+                            }
+                        }
+                            break;
+
+                        case STAGE_KEYWORD_QUALI_PREVIOUS_STAGE_F:
+                        {
+                            if(QSL_Blocks.size() >= 2)
+                            {
+                                bool ok;
+                                int count = QSL_Blocks[1].toInt(&ok);
+                                if(ok)
+                                    QualiPreviousF = count;
+                                else
+                                    return;
+                            }
+                        }
+                            break;
+
+                        case STAGE_KEYWORD_QUALI_PREVIOUS_STAGE_M:
+                        {
+                            if(QSL_Blocks.size() >= 2)
+                            {
+                                bool ok;
+                                int count = QSL_Blocks[1].toInt(&ok);
+                                if(ok)
+                                    QualiPreviousM = count;
+                                else
+                                    return;
+                            }
                         }
                             break;
 

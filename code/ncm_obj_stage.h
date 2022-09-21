@@ -42,6 +42,7 @@ public:
     int                     quali_count_this_m()                                    {return QualiThisM;}
     int                     quali_count_previous_f()                                {return QualiPreviousF;}
     int                     quali_count_previous_m()                                {return QualiPreviousM;}
+    QStringList             checkpoints()                                           {return QSL_Checkpoints;}
     QString                 checkpoints_as_string_line_by_line();
     QString                 challenge_names_as_string_line_by_line();
 
