@@ -19,6 +19,7 @@
 #include <NCM_Enum.h>
 #include <ncm_obj_competition.h>
 #include <ncm_obj_competitor.h>
+#include <ncm_obj_run_list.h>
 
 //namespaces
 using namespace std;
