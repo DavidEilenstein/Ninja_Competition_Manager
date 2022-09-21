@@ -17,7 +17,6 @@
 
 //own
 #include <NCM_Enum.h>
-#include <ncm_obj_competition.h>
 
 //namespaces
 using namespace std;
@@ -26,7 +25,7 @@ using namespace std;
 class NCM_OBJ_Challenge
 {
 public:
-    explicit NCM_OBJ_Challenge(NCM_OBJ_Competition comp);
+    explicit NCM_OBJ_Challenge();
 
     void set_name(QString name)             {QS_Name = name;}
     void set_quali_count(int f, int m)      {QualiCount_F = f; QualiCount_M = m;}
@@ -49,8 +48,6 @@ private:
     bool code_load();
     bool code_parse();
     bool code_update();
-
-    NCM_OBJ_Competition Competition;
 
     QString QS_Name = "ChallengeExample";
     int QualiCount_F = 1;

@@ -12,21 +12,16 @@ NCM_OBJ_Competitor_List::NCM_OBJ_Competitor_List(QDir dir_saved_in)
 
 bool NCM_OBJ_Competitor_List::contains_name(QString name)
 {
-    for(size_t c = 0; c < count(); c++)
-    {
+    for(size_t c = 0; c < size(); c++)
         if(name == vCompetitors[c].name())
-        {
-            qDebug() << name << "equals" << vCompetitors[c].name();
             return true;
-        }
-    }
 
     return false;
 }
 
 bool NCM_OBJ_Competitor_List::contains_number(int number)
 {
-    for(size_t c = 0; c < count(); c++)
+    for(size_t c = 0; c < size(); c++)
         if(number == vCompetitors[c].number())
             return true;
 
@@ -41,6 +36,17 @@ bool NCM_OBJ_Competitor_List::add_competitor(NCM_OBJ_Competitor competitor)
     vCompetitors.push_back(competitor);
 
     return true;
+}
+
+NCM_OBJ_Competitor_List NCM_OBJ_Competitor_List::subtract(NCM_OBJ_Competitor_List list)
+{
+    NCM_OBJ_Competitor_List list_difference;
+
+    for(size_t c = 0; c < size(); c++)
+        if(!list.contains_duplicate(get_competitor(c)))
+            list_difference.add_competitor(get_competitor(c));
+
+    return list_difference;
 }
 
 bool NCM_OBJ_Competitor_List::load()
@@ -80,7 +86,7 @@ bool NCM_OBJ_Competitor_List::save()
     if(!DIR_SavedIn.exists())
         return false;
 
-    for(size_t c = 0; c < count(); c++)
+    for(size_t c = 0; c < size(); c++)
         vCompetitors[c].save(DIR_SavedIn);
 
     return false;

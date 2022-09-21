@@ -1,8 +1,8 @@
 #include "ncm_obj_challenge.h"
 
-NCM_OBJ_Challenge::NCM_OBJ_Challenge(NCM_OBJ_Competition comp)
+NCM_OBJ_Challenge::NCM_OBJ_Challenge()
 {
-    Competition = comp;
+
 }
 
 bool NCM_OBJ_Challenge::load()

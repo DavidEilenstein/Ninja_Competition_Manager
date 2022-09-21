@@ -28,17 +28,25 @@ class NCM_OBJ_Run
 {
 public:
     explicit NCM_OBJ_Run();
-    explicit NCM_OBJ_Run(NCM_OBJ_Stage stage, NCM_OBJ_Competitor competitor, QString cp, int t_min, int t_s, int t_ms);
+    explicit NCM_OBJ_Run(NCM_OBJ_Stage stage, NCM_OBJ_Competitor competitor, int cp_index, int t_min, int t_s, int t_ms);
 
     void set_stage(NCM_OBJ_Stage stage)                     {Stage = stage;}
     void set_competitor(NCM_OBJ_Competitor competitor)      {Competitor = competitor;}
     void set_time(int t_min, int t_s, int t_ms)             {set_time(t_min * 60 + t_s, t_ms);}
     void set_time(int t_s, int t_ms)                        {set_time(t_s * 1000 + t_ms);}
     void set_time(int t_ms)                                 {Time_ms = t_ms;}
-    void set_checkpoint_reached(QString cp)                 {QS_CheckpointReached = cp;}
+    void set_checkpoint_reached(int cp_index)               {CheckpointReached = cp_index;}
+
+    NCM_OBJ_Stage       stage()                             {return Stage;}
+    NCM_OBJ_Competitor  competitor()                        {return Competitor;}
+    int                 time_ms()                           {return Time_ms;}
+    int                 checkpoint_reached()                {return CheckpointReached;}
 
     bool save(QDir DIR_Runs);
     bool load(QString QS_path);
+
+    bool operator < (NCM_OBJ_Run run_other);
+    bool operator > (NCM_OBJ_Run run_other)                 {return !(*this < run_other);}
 
 private:
 
@@ -46,7 +54,7 @@ private:
     NCM_OBJ_Stage Stage;
 
     int Time_ms = 0;
-    QString QS_CheckpointReached;
+    int CheckpointReached = 0;
 
     QDateTime QDT_Recorded;
 };

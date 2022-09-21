@@ -5,12 +5,12 @@ NCM_OBJ_Run::NCM_OBJ_Run()
     QDT_Recorded = QDateTime::currentDateTime();
 }
 
-NCM_OBJ_Run::NCM_OBJ_Run(NCM_OBJ_Stage stage, NCM_OBJ_Competitor competitor, QString cp, int t_min, int t_s, int t_ms)
+NCM_OBJ_Run::NCM_OBJ_Run(NCM_OBJ_Stage stage, NCM_OBJ_Competitor competitor, int cp_index, int t_min, int t_s, int t_ms)
 {
     QDT_Recorded = QDateTime::currentDateTime();
     set_stage(stage);
     set_competitor(competitor);
-    set_checkpoint_reached(cp);
+    set_checkpoint_reached(cp_index);
     set_time(t_min, t_s, t_ms);
 }
 
@@ -41,7 +41,7 @@ bool NCM_OBJ_Run::save(QDir DIR_Runs)
     OF_Run << Competitor.name().toStdString() << "\n";
     OF_Run << (Competitor.female() ? QS_Female : QS_Male).toStdString() << "\n";
     OF_Run << Stage.name().toStdString() << "\n";
-    OF_Run << QS_CheckpointReached.toStdString() << "\n";
+    OF_Run << CheckpointReached << "\n";
     OF_Run << Time_ms << "\n";
     OF_Run << QDT_Recorded.toString(QS_DateTimeFormat).toStdString();
 
@@ -88,8 +88,8 @@ bool NCM_OBJ_Run::load(QString QS_path)
             }
             else
             {
-                return false;
                 IS_Competitor.close();
+                return false;
             }
         }
             break;
@@ -114,22 +114,32 @@ bool NCM_OBJ_Run::load(QString QS_path)
 
         case 4:
         {
-            QS_CheckpointReached = QS_Line;
+            bool ok;
+            int cp = QS_Line.toInt(&ok);
+            if(ok)
+            {
+                CheckpointReached = cp;
+            }
+            else
+            {
+                IS_Competitor.close();
+                return false;
+            }
         }
             break;
 
         case 5:
         {
             bool ok;
-            int number = QS_Line.toInt(&ok);
+            int t = QS_Line.toInt(&ok);
             if(ok)
             {
-                Time_ms = number;
+                Time_ms = t;
             }
             else
             {
-                return false;
                 IS_Competitor.close();
+                return false;
             }
         }
             break;
@@ -137,7 +147,6 @@ bool NCM_OBJ_Run::load(QString QS_path)
         case 6:
         {
             QDT_Recorded = QDT_Recorded.fromString(QS_Line, QS_DateTimeFormat);
-            //qDebug() << QS_Line << QDT_Recorded;
         }
             break;
 
@@ -149,4 +158,19 @@ bool NCM_OBJ_Run::load(QString QS_path)
     }
 
     return true;
+}
+
+bool NCM_OBJ_Run::operator <(NCM_OBJ_Run run_other)
+{
+    if(run_other.checkpoint_reached() < checkpoint_reached())
+        return true;
+    if(run_other.checkpoint_reached() > checkpoint_reached())
+        return false;
+
+    if(run_other.time_ms() > time_ms())
+        return true;
+    if(run_other.time_ms() < time_ms())
+        return false;
+
+    return false;
 }
