@@ -12,6 +12,7 @@
 #include <QTableView>
 #include <QTableWidget>
 #include <QTableWidgetItem>
+#include <QDebug>
 
 //c++
 #include <vector>
@@ -29,7 +30,7 @@ public:
     NCM_WID_Table();
 
     void set_TW(QTableWidget *TW);
-    void set_data(vector<vector<QString>> vv_data, QStringList column_names, QStringList row_names, bool autosize_rows, bool autosize_cols);
+    void set_data(vector<vector<QString>> vv_data_c_r, QStringList col_names, QStringList row_names, bool autosize_rows, bool autosize_cols);
 
     void clear_data();
 

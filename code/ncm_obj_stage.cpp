@@ -275,7 +275,7 @@ void NCM_OBJ_Stage::code_parse()
                     if(QS_1stBlock != QSL_Stage_Keywords[STAGE_KEYWORD_CHECKPOINTS])
                     {
                         QSL_ChallengeNames.push_back(QS_1stBlock);
-                        qDebug() << "Challenge:" << QS_1stBlock;
+                        //qDebug() << "Challenge:" << QS_1stBlock;
                     }
                     else
                     {
@@ -286,7 +286,7 @@ void NCM_OBJ_Stage::code_parse()
                 else if(chekpoint_section_started)//-----------------------------------------------------
                 {
                     QSL_Checkpoints.push_back(QS_1stBlock);
-                    qDebug() << "Checkpoint:" << QS_1stBlock;
+                    //qDebug() << "Checkpoint:" << QS_1stBlock;
                 }
             }
         }

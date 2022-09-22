@@ -19,7 +19,7 @@ NCM_WIN_ResultEntering_Stage::~NCM_WIN_ResultEntering_Stage()
 
 void NCM_WIN_ResultEntering_Stage::get_data()
 {
-    if(valid)
+    if(data_loaded)
         return;
 
     //------------------------------- competitors
@@ -77,7 +77,7 @@ void NCM_WIN_ResultEntering_Stage::get_data()
     load_runs();
     calc_competitors_allowed();
 
-    valid = true;
+    data_loaded = true;
     ui->centralwidget->setEnabled(true);
     ui->actionData_Dialog->setEnabled(false);
 }

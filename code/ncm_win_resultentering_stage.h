@@ -58,7 +58,7 @@ private:
     NCM_OBJ_Competitor_List Competitors_Allowed;
     NCM_OBJ_Run_List        Runs;
 
-    bool valid = false;
+    bool data_loaded = false;
 
 };
 
