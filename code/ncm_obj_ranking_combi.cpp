@@ -12,7 +12,7 @@ void NCM_OBJ_Ranking_Combi::update()
     RankingStagePrevious.update();
 
     //clear competitor categories
-    Competitors_Qualified_Stage_Previous_Safe.clear();
+    Competitors_Qualified_Stage_Previous.clear();
     Competitors_Qualified_Challenges.clear();
 
     //sizes
@@ -39,13 +39,13 @@ void NCM_OBJ_Ranking_Combi::update()
 
             if(competitor.female() && safe_f < safe_max_f)
             {
-                Competitors_Qualified_Stage_Previous_Safe.add_competitor(competitor);
+                Competitors_Qualified_Stage_Previous.add_competitor(competitor);
                 safe_f++;
             }
 
             if(!competitor.female() && safe_m < safe_max_m)
             {
-                Competitors_Qualified_Stage_Previous_Safe.add_competitor(competitor);
+                Competitors_Qualified_Stage_Previous.add_competitor(competitor);
                 safe_m++;
             }
         }
@@ -60,7 +60,7 @@ void NCM_OBJ_Ranking_Combi::update()
         bool got_quali_state = false;
 
         //stage previous
-        if(Competitors_Qualified_Stage_Previous_Safe.contains_duplicate(competitor))
+        if(Competitors_Qualified_Stage_Previous.contains_duplicate(competitor))
         {
             vQualiStates[c] = QUALI_STATE_QUALI_STAGE_PREVIOUS_SAFE;
             got_quali_state = true;
@@ -72,6 +72,7 @@ void NCM_OBJ_Ranking_Combi::update()
             //safe?
             if(!got_quali_state && RankingStageThis.pos_worst_class(competitor) <= RankingStageThis.stage().quali_count_this(competitor.female()))
             {
+                Competitors_Qualified_Stage_This.add_competitor(competitor);
                 vQualiStates[c] = QUALI_STATE_QUALI_STAGE_THIS_SAFE;
                 got_quali_state = true;
             }
@@ -79,6 +80,7 @@ void NCM_OBJ_Ranking_Combi::update()
             //current?
             if(!got_quali_state && RankingStageThis.pos_current_class(competitor) <= RankingStageThis.stage().quali_count_this(competitor.female()))
             {
+                Competitors_Qualified_Stage_This.add_competitor(competitor);
                 vQualiStates[c] = QUALI_STATE_QUALI_STAGE_THIS_CURRENT;
                 got_quali_state = true;
             }
@@ -98,31 +100,13 @@ void NCM_OBJ_Ranking_Combi::update()
     }
 }
 
-/*
-size_t NCM_OBJ_Ranking_Combi::quali_state(size_t i)
+size_t NCM_OBJ_Ranking_Combi::quali_state(NCM_OBJ_Competitor competitor)
 {
-    NCM_OBJ_Competitor competitor = RankingStageThis.competitor(i);
+    for(size_t c = 0; c < Competitors_All.size(); c++)
+        if(competitor.is_duplicate(Competitors_All.get_competitor(c)))
+            return vQualiStates[c];
 
-    if(RankingStagePrevious.pos_current_class(competitor) <= RankingStageThis.stage().quali_count_previous(competitor.female()))
+    return QUALI_STATE_UNKNOWN;
 }
 
-bool NCM_OBJ_Ranking_Combi::is_quali_state_stage_previous_safe(size_t i)
-{
 
-}
-
-bool NCM_OBJ_Ranking_Combi::is_quali_state_stage_this_safe(size_t i)
-{
-
-}
-
-bool NCM_OBJ_Ranking_Combi::is_quali_state_stage_this_current(size_t i)
-{
-
-}
-
-bool NCM_OBJ_Ranking_Combi::is_quali_state_stage_challenge(size_t i)
-{
-
-}
-*/
