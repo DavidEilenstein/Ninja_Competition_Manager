@@ -52,13 +52,9 @@ private slots:
     void update_auto(bool activate);
 
     void on_actionget_data_triggered();
-
     void on_actionreload_competitors_and_runs_triggered();
-
     void on_actionUpdate_triggered();
-
     void on_actionAutoupdate_triggered(bool checked);
-
     void on_actionChange_Table_Settings_triggered();
 
 private:

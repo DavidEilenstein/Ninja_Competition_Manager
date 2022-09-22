@@ -78,9 +78,32 @@ int NCM_OBJ_Run_List::average_time_start_to_start_ms()
     if(size() < 2)
         return 0;
 
-    int dt_ms = run_earliest().time_to_ms(run_latest().recorded());
+    int dt_ms = abs(run_earliest().time_to_ms(run_latest().recorded()));
 
-    return dt_ms / int(size() - 1);
+    int t_mean = dt_ms / int(size() - 1);
+    //qDebug() << "average time start to start" << t_mean << "ms";
+    return t_mean;
+}
+
+void NCM_OBJ_Run_List::sort()
+{
+    vector<NCM_OBJ_Run> vRunsSorted;
+
+    for(size_t r = 0; r < size(); r++)
+    {
+        bool found_worse_run = false;
+        size_t pos;
+        for(pos = 0; pos < vRunsSorted.size() && !found_worse_run; pos++)
+            if(vRunsSorted[pos].worse_then(vRuns[r]))
+                found_worse_run = true;
+
+        if(found_worse_run)
+            vRunsSorted.insert(vRunsSorted.begin() + pos, vRuns[r]);
+        else
+            vRunsSorted.push_back(vRuns[r]);
+    }
+
+    vRuns = vRunsSorted;
 }
 
 bool NCM_OBJ_Run_List::load()

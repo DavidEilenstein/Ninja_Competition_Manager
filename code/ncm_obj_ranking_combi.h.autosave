@@ -45,11 +45,14 @@ public:
 
     void                update();
 
-    size_t              runs_count_stage_this()                                 {return RankingStageThis.count_runs();}
+    size_t              count_runs_this_stage()                                 {return RankingStageThis.count_runs();}
+    
+    /*
     size_t              pos_stage_current_overall(size_t i)                     {return RankingStageThis.pos_current_overall(i);}
     size_t              pos_stage_current_class(size_t i)                       {return RankingStageThis.pos_current_class(i);}
     size_t              pos_stage_worst_overall(size_t i)                       {return RankingStageThis.pos_worst_overall(i);}
     size_t              pos_stage_worst_class(size_t i)                         {return RankingStageThis.pos_worst_class(i);}
+    */
 
     /*
     size_t              quali_state(size_t i);

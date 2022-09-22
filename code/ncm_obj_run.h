@@ -43,8 +43,8 @@ public:
     int                 checkpoint_reached()                {return CheckpointReached;}
     QDateTime           recorded()                          {return QDT_Recorded;}
 
-    int                 time_to_ms(QDateTime QDT_other)     {return QDT_Recorded.msecsTo(QDT_other);}
-    int                 time_since_ms(QDateTime QDT_other)  {return -QDT_Recorded.msecsTo(QDT_other);}
+    int                 time_to_ms(QDateTime QDT_other)     {return -QDT_Recorded.msecsTo(QDT_other);}
+    int                 time_since_ms(QDateTime QDT_other)  {return QDT_Recorded.msecsTo(QDT_other);}
 
     bool                better_then(NCM_OBJ_Run run_other);
     bool                worse_then(NCM_OBJ_Run run_other)   {return run_other.better_then(*this);}

@@ -38,14 +38,19 @@ public:
 
     QString                 name()                                                  {return QS_Name;}
     bool                    is_final()                                              {return IsFinal;}
-    int                     quali_count_this_f()                                    {return QualiThisF;}
-    int                     quali_count_this_m()                                    {return QualiThisM;}
-    int                     quali_count_previous_f()                                {return QualiPreviousF;}
-    int                     quali_count_previous_m()                                {return QualiPreviousM;}
+
+    size_t                  quali_count_this(bool female)                           {return female ? quali_count_this_f() : quali_count_this_m();}
+    size_t                  quali_count_this_f()                                    {return QualiThisF;}
+    size_t                  quali_count_this_m()                                    {return QualiThisM;}
+    size_t                  quali_count_previous(bool female)                       {return female ? quali_count_previous_f() : quali_count_previous_m();}
+    size_t                  quali_count_previous_f()                                {return QualiPreviousF;}
+    size_t                  quali_count_previous_m()                                {return QualiPreviousM;}
+
     QStringList             checkpoints()                                           {return QSL_Checkpoints;}
     QString                 checkpoints_as_string_line_by_line();
     QString                 challenge_names_as_string_line_by_line();
 
+    bool                    load(QFileInfo file)                                    {set_file(file); return load();}
     bool                    load();
     bool                    save();
 
@@ -60,10 +65,10 @@ private:
 
     QString QS_Name = "StageExample";
     bool IsFinal = false;
-    int QualiThisF = 1;
-    int QualiThisM = 1;
-    int QualiPreviousF = 0;
-    int QualiPreviousM = 0;
+    size_t QualiThisF = 1;
+    size_t QualiThisM = 1;
+    size_t QualiPreviousF = 0;
+    size_t QualiPreviousM = 0;
 
     QStringList QSL_ChallengeNames = {
         "Challenge A",

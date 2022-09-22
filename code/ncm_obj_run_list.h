@@ -46,6 +46,8 @@ public:
     NCM_OBJ_Run             run_latest();
     int                     average_time_start_to_start_ms();
 
+    void                    sort();
+
     void                    set_dir(QDir dir)                                           {DIR_SavedIn = dir;}
     bool                    load(QDir dir)                                              {set_dir(dir); return load();}
     bool                    load();

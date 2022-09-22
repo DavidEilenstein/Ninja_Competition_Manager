@@ -39,6 +39,8 @@ public:
 
     QStringList                 names();
     size_t                      size()                                              {return vCompetitors.size();}
+    size_t                      count_in_class(bool female);
+    void                        clear()                                             {vCompetitors.clear();}
 
     NCM_OBJ_Competitor_List     subtract(NCM_OBJ_Competitor_List list);
 

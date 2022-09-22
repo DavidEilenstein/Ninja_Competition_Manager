@@ -46,22 +46,16 @@ public:
     size_t                  count_competitors_allowed()                 {return Competitors_Allowed.size();}
 
     size_t                  index_of_competitor(NCM_OBJ_Competitor c);
-    size_t                  pos_current_overall(NCM_OBJ_Competitor c)   {return pos_current_overall(index_of_competitor(c));}
-    size_t                  pos_current_class(NCM_OBJ_Competitor c)     {return pos_current_class(index_of_competitor(c));}
-    size_t                  pos_worst_overall(NCM_OBJ_Competitor c)     {return pos_worst_overall(index_of_competitor(c));}
-    size_t                  pos_worst_class(NCM_OBJ_Competitor c)       {return pos_worst_class(index_of_competitor(c));}
-    NCM_OBJ_Run             run(NCM_OBJ_Competitor c)                   {return run(index_of_competitor(c));}
 
-    size_t                  pos_current_overall(size_t i)               {return i + 1;}
-    size_t                  pos_current_class(size_t i);
-    size_t                  pos_worst_overall(size_t i)                 {return pos_current_overall(i) + Competitors_Allowed.size();}
-    size_t                  pos_worst_class(size_t i)                   {return pos_current_class(i) + Competitors_Allowed.count_in_class(competitor(i).female());}
+    size_t                  pos_current_overall(size_t r);
+    size_t                  pos_current_class(size_t r);
+    size_t                  pos_worst_overall(size_t r)                 {return pos_current_overall(r) + Competitors_Allowed.size();}
+    size_t                  pos_worst_class(size_t r)                   {return pos_current_class(r) + Competitors_Allowed.count_in_class(run(r).competitor().female());}
 
-    NCM_OBJ_Competitor      competitor(size_t i)                        {return Competitors_All.get_competitor(i);}
     NCM_OBJ_Competitor_List competitor_list_all()                       {return Competitors_All;}
     NCM_OBJ_Competitor_List competitor_list_allowed()                   {return Competitors_Allowed;}
-    NCM_OBJ_Run             run(size_t i)                               {return Runs.get_run(i);}
     NCM_OBJ_Run_List        runs()                                      {return Runs;}
+    NCM_OBJ_Run             run(size_t r)                               {return Runs.get_run(r);}
 
     NCM_OBJ_Stage           stage()                                     {return Stage;}
 

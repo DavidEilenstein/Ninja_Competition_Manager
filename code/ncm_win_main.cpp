@@ -65,7 +65,7 @@ void NCM_WIN_Main::enable_ui()
 
     ui->groupBox_Checkin->setEnabled(true);
     ui->groupBox_Satges->setEnabled(true);
-    ui->groupBox_Challenges->setEnabled(true);
+    //ui->groupBox_Challenges->setEnabled(true);
     ui->groupBox_Comp->setEnabled(false);
 
     settings_save();

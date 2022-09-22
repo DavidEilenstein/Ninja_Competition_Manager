@@ -47,6 +47,16 @@ QStringList NCM_OBJ_Competitor_List::names()
     return names;
 }
 
+size_t NCM_OBJ_Competitor_List::count_in_class(bool female)
+{
+    size_t n = 0;
+    for(size_t c = 0; c < size(); c++)
+        if(vCompetitors[c].female() == female)
+            n++;
+
+    return n;
+}
+
 NCM_OBJ_Competitor_List NCM_OBJ_Competitor_List::subtract(NCM_OBJ_Competitor_List list)
 {
     NCM_OBJ_Competitor_List list_difference;

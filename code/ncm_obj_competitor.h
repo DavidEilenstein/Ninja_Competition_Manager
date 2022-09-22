@@ -38,6 +38,7 @@ public:
     QString name()                                                  {return QS_Name;}
     bool    female()                                                {return Female;}
     bool    male()                                                  {return !Female;}
+    QString competitor_class()                                      {return Female ? QS_Female : QS_Male;}
 
     bool    is_name(QString name_other)                             {return name_other == name();}
     bool    is_number(int number_other)                             {return number_other == number();}
