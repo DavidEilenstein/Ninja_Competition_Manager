@@ -73,15 +73,15 @@ private:
     const QStringList QSL_NamesColumns = {
         "name",
         "pos",
-        "quali",
-        "point",
-        "time"};
+        "status",
+        "time",
+        "point"};
     enum COL_NAMES {
         COL_NAME,
         COL_POS,
         COL_QUALI,
-        COL_POINT,
         COL_TIME,
+        COL_POINT,
         COL_NUMBER_OF
     };
 };

@@ -22,15 +22,18 @@
      <widget class="QPushButton" name="pushButton_DE">
       <property name="minimumSize">
        <size>
-        <width>160</width>
+        <width>80</width>
         <height>80</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>160</width>
+        <width>80</width>
         <height>80</height>
        </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-size: 15px;</string>
       </property>
       <property name="text">
        <string/>
@@ -136,18 +139,18 @@
      <widget class="QPushButton" name="pushButton_BTN">
       <property name="minimumSize">
        <size>
-        <width>160</width>
+        <width>80</width>
         <height>80</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>160</width>
+        <width>80</width>
         <height>80</height>
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">font-size: 35px</string>
+       <string notr="true">font-size: 15px;</string>
       </property>
       <property name="text">
        <string>🐻🐯🐱‍👤</string>

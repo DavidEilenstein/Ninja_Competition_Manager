@@ -92,6 +92,7 @@ bool NCM_OBJ_Run_List::load()
     if(!DIR_SavedIn.exists())
         return false;
 
+    DIR_SavedIn.setPath(DIR_SavedIn.path());
     vRuns.clear();
 
     QFileInfoList FIL_Runs = DIR_SavedIn.entryInfoList();

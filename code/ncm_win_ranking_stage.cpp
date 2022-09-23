@@ -190,6 +190,8 @@ void NCM_WIN_Ranking_Stage::update()
     if(update_running)
         return;
 
+    update_running = true;
+
     //update
     Ranking.update();
 
@@ -300,6 +302,8 @@ void NCM_WIN_Ranking_Stage::update()
             IS_WorstFail.close();
         }
     }
+
+    update_running = false;
 }
 
 void NCM_WIN_Ranking_Stage::update_auto(bool activate)

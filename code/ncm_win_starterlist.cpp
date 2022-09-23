@@ -155,17 +155,38 @@ void NCM_WIN_StarterList::update()
     if(update_running)
         return;
 
+    update_running = true;
+
     //load stuff
     load_competitors();
     load_runs();
     calc_competitors_allowed();
 
-    //update times
+    //update time
     ui->label_Time->setText(QDateTime::currentDateTime().time().toString());
+
+    //stage end time
     if(Runs.size() >= 3)
-        ui->label_End->setText(Runs.run_latest().recorded().addMSecs(Runs.average_time_start_to_start_ms() * (Competitors_Allowed.size() + 1)).time().toString());
+    {
+        QTime start_time = Runs.run_latest().recorded().addMSecs(Runs.average_time_start_to_start_ms() * (Competitors_Allowed.size() + 1)).time();
+        QString QS_EndTime;
+
+        if(start_time.hour() < 10)
+            QS_EndTime.append("0");
+        QS_EndTime.append(QString::number(start_time.hour()));
+
+        QS_EndTime.append(":");
+
+        if(start_time.minute() < 10)
+            QS_EndTime.append("0");
+        QS_EndTime.append(QString::number(start_time.minute()));
+
+        ui->label_End->setText(QS_EndTime);
+    }
     else
-        ui->label_End->setText("wait");
+    {
+        ui->label_End->setText("please wait");
+    }
 
     //data
     size_t n_cols = COL_NUMBER_OF;
@@ -185,9 +206,26 @@ void NCM_WIN_StarterList::update()
 
         //estimate start time
         if(Runs.size() >= 3)
-            vvQS_TableContent_c_r[COL_EST_TIME][r] = Runs.run_latest().recorded().addMSecs(Runs.average_time_start_to_start_ms() * (r + 1)).time().toString();
+        {
+            QTime start_time = Runs.run_latest().recorded().addMSecs(Runs.average_time_start_to_start_ms() * (r + 1)).time();
+            QString QS_StartTime;
+
+            if(start_time.hour() < 10)
+                QS_StartTime.append("0");
+            QS_StartTime.append(QString::number(start_time.hour()));
+
+            QS_StartTime.append(":");
+
+            if(start_time.minute() < 10)
+                QS_StartTime.append("0");
+            QS_StartTime.append(QString::number(start_time.minute()));
+
+            vvQS_TableContent_c_r[COL_EST_TIME][r] = QS_StartTime;
+        }
         else
-            vvQS_TableContent_c_r[COL_EST_TIME][r] = "wait";
+        {
+            vvQS_TableContent_c_r[COL_EST_TIME][r] = "please wait";
+        }
     }
 
     //row names
@@ -197,6 +235,8 @@ void NCM_WIN_StarterList::update()
 
     //set table data
     Table.set_data(vvQS_TableContent_c_r, QSL_NamesColumns, QSL_NamesRows, true, true);
+
+    update_running = false;
 }
 
 void NCM_WIN_StarterList::update_auto(bool activate)

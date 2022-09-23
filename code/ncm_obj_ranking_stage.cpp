@@ -56,7 +56,7 @@ size_t NCM_OBJ_Ranking_Stage::pos_worst_class(NCM_OBJ_Competitor c)
 NCM_OBJ_Run NCM_OBJ_Ranking_Stage::run(NCM_OBJ_Competitor c)
 {
     for(size_t r = 0; r < Runs.size(); r++)
-        if(Runs.get_run(r).competitor().is_duplicate(c))
+        if(Runs.get_run(r).competitor().is_name(c.name()))
             return run(r);
 
     return NCM_OBJ_Run();

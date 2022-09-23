@@ -85,6 +85,7 @@ bool NCM_OBJ_Competitor_List::load()
     if(!DIR_SavedIn.exists())
         return false;
 
+    DIR_SavedIn.setPath(DIR_SavedIn.path());
     vCompetitors.clear();
 
     QFileInfoList FIL_Competitors = DIR_SavedIn.entryInfoList();
