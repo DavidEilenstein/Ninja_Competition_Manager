@@ -10,6 +10,7 @@
 #include <QMessageBox>
 #include <QIcon>
 #include <QDateEdit>
+#include <QTime>
 
 //c++
 #include <vector>
@@ -40,32 +41,35 @@ public:
     NCM_OBJ_Stage       stage()                             {return Stage;}
     NCM_OBJ_Competitor  competitor()                        {return Competitor;}
     int                 time_ms()                           {return Time_ms;}
-    int                 checkpoint_reached()                {return CheckpointReached;}
+    QString             time_ms_text();
+    size_t              checkpoint_reached()                {return CheckpointReached;}
     QDateTime           recorded()                          {return QDT_Recorded;}
 
     int                 time_to_ms(QDateTime QDT_other)     {return -QDT_Recorded.msecsTo(QDT_other);}
     int                 time_since_ms(QDateTime QDT_other)  {return QDT_Recorded.msecsTo(QDT_other);}
 
     bool                better_then(NCM_OBJ_Run run_other);
-    bool                worse_then(NCM_OBJ_Run run_other)   {return run_other.better_then(*this);}
-    bool                equal(NCM_OBJ_Run run_other)        {return !better_then(run_other) && !worse_then(run_other);}
+    bool                worse_then(NCM_OBJ_Run run_other);
+    bool                equal(NCM_OBJ_Run run_other);
+    bool                operator>(NCM_OBJ_Run run_other)    {return worse_then(run_other);}
+    bool                operator<(NCM_OBJ_Run run_other)    {return better_then(run_other);}
 
     bool                earlier_then(NCM_OBJ_Run run_other) {return time_to_ms(run_other.recorded()) < 0;}
     bool                later_then(NCM_OBJ_Run run_other)   {return time_to_ms(run_other.recorded()) > 0;}
 
 
-    bool save(QDir DIR_Runs);
-    bool load(QString QS_path);
+    bool                save(QDir DIR_Runs);
+    bool                load(QString QS_path);
 
 private:
 
-    NCM_OBJ_Competitor Competitor;
-    NCM_OBJ_Stage Stage;
+    NCM_OBJ_Competitor  Competitor;
+    NCM_OBJ_Stage       Stage;
 
-    int Time_ms = 0;
-    int CheckpointReached = 0;
+    int                 Time_ms = 0;
+    size_t              CheckpointReached = 0;
 
-    QDateTime QDT_Recorded;
+    QDateTime           QDT_Recorded;
 };
 
 #endif // NCM_OBJ_RUN_H

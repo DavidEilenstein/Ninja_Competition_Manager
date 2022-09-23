@@ -38,6 +38,18 @@ bool NCM_OBJ_Competitor_List::add_competitor(NCM_OBJ_Competitor competitor)
     return true;
 }
 
+bool NCM_OBJ_Competitor_List::change_starter_number(NCM_OBJ_Competitor competitor, int new_number)
+{
+    for(size_t c = 0; c < size(); c++)
+        if(get_competitor(c).is_name(competitor.name()))
+        {
+            vCompetitors[c].set_starter_number(new_number);
+            return true;
+        }
+
+    return false;
+}
+
 QStringList NCM_OBJ_Competitor_List::names()
 {
     QStringList names;

@@ -14,19 +14,70 @@ NCM_OBJ_Run::NCM_OBJ_Run(NCM_OBJ_Stage stage, NCM_OBJ_Competitor competitor, int
     set_time(t_min, t_s, t_ms);
 }
 
+QString NCM_OBJ_Run::time_ms_text()
+{
+    int time_s = Time_ms / 1000;
+    int time_min = time_s / 60;
+
+    int time_display_min = time_min;
+    int time_display_sec = time_s % 60;
+    int time_display_ms = Time_ms % 1000;
+
+    QString QS_time = QString::number(time_display_min) + ":";
+    if(time_display_sec < 10)
+        QS_time.append("0");
+
+    QS_time.append(QString::number(time_display_sec) + ".");
+    if(time_display_ms < 100)
+        QS_time.append("0");
+
+    if(time_display_ms < 10)
+        QS_time.append("0");
+
+    QS_time.append(QString::number(time_display_ms));
+
+    return QS_time;
+}
+
 bool NCM_OBJ_Run::better_then(NCM_OBJ_Run run_other)
 {
-    if(run_other.checkpoint_reached() < checkpoint_reached())
+    if(checkpoint_reached() > run_other.checkpoint_reached())
         return true;
-    if(run_other.checkpoint_reached() > checkpoint_reached())
+    if(checkpoint_reached() < run_other.checkpoint_reached())
         return false;
 
-    if(run_other.time_ms() > time_ms())
+    if(time_ms() < run_other.time_ms())
         return true;
-    if(run_other.time_ms() < time_ms())
+    if(time_ms() > run_other.time_ms())
         return false;
 
     return false;
+}
+
+bool NCM_OBJ_Run::worse_then(NCM_OBJ_Run run_other)
+{
+    if(checkpoint_reached() < run_other.checkpoint_reached())
+        return true;
+    if(checkpoint_reached() > run_other.checkpoint_reached())
+        return false;
+
+    if(time_ms() > run_other.time_ms())
+        return true;
+    if(time_ms() < run_other.time_ms())
+        return false;
+
+    return false;
+}
+
+bool NCM_OBJ_Run::equal(NCM_OBJ_Run run_other)
+{
+    if(checkpoint_reached() != run_other.checkpoint_reached())
+        return false;
+
+    if(time_ms() != run_other.time_ms())
+        return false;
+
+    return true;
 }
 
 bool NCM_OBJ_Run::save(QDir DIR_Runs)

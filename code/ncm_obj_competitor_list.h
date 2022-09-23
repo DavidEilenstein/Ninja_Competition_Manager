@@ -37,6 +37,8 @@ public:
     bool                        add_competitor(NCM_OBJ_Competitor competitor);
     NCM_OBJ_Competitor          get_competitor(size_t c)                            {return c < size() ? vCompetitors[c] : NCM_OBJ_Competitor();}
 
+    bool                        change_starter_number(NCM_OBJ_Competitor competitor, int new_number);
+
     QStringList                 names();
     size_t                      size()                                              {return vCompetitors.size();}
     size_t                      count_in_class(bool female);

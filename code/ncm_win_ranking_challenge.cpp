@@ -6,6 +6,9 @@ NCM_WIN_Ranking_Challenge::NCM_WIN_Ranking_Challenge(NCM_OBJ_Competition comp, Q
     ui(new Ui::NCM_WIN_Ranking_Challenge)
 {
     ui->setupUi(this);
+
+    setWindowTitle("Ranking Challenge - by David Eilenstein");
+    setWindowIcon(QIcon(":/img/Logo_Final.jpg"));
 }
 
 NCM_WIN_Ranking_Challenge::~NCM_WIN_Ranking_Challenge()

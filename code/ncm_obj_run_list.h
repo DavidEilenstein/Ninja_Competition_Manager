@@ -14,6 +14,7 @@
 //c++
 #include <vector>
 #include <fstream>
+#include <algorithm>
 
 //own
 #include <NCM_Enum.h>
@@ -46,7 +47,7 @@ public:
     NCM_OBJ_Run             run_latest();
     int                     average_time_start_to_start_ms();
 
-    void                    sort();
+    void                    sort()                                                      {std::sort(vRuns.begin(), vRuns.end());}
 
     void                    set_dir(QDir dir)                                           {DIR_SavedIn = dir;}
     bool                    load(QDir dir)                                              {set_dir(dir); return load();}
@@ -54,10 +55,13 @@ public:
     bool                    save(QDir dir)                                              {set_dir(dir); return save();}
     bool                    save();
 
+
 private:
 
-    vector<NCM_OBJ_Run> vRuns;
-    QDir                DIR_SavedIn;
+    vector<NCM_OBJ_Run>     vRuns;
+    QDir                    DIR_SavedIn;
+
+    void                    info_debug();
 
 };
 

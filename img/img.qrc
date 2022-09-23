@@ -1,7 +1,7 @@
 <RCC>
-    <qresource prefix="/logo">
-        <file>Logo_Final.jpg</file>
+    <qresource prefix="/img">
         <file>icon_github.png</file>
+        <file>Logo_Final.jpg</file>
         <file>YT.jpg</file>
     </qresource>
 </RCC>

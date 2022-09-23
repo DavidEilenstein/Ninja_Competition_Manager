@@ -6,6 +6,9 @@ NCM_WIN_Edit_Challenge::NCM_WIN_Edit_Challenge(NCM_OBJ_Competition comp, QWidget
     ui(new Ui::NCM_WIN_Edit_Challenge)
 {
     ui->setupUi(this);
+
+    setWindowTitle("Edit Challenge - by David Eilenstein");
+    setWindowIcon(QIcon(":/img/Logo_Final.jpg"));
 }
 
 NCM_WIN_Edit_Challenge::~NCM_WIN_Edit_Challenge()

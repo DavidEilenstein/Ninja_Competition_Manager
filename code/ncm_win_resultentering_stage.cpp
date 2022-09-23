@@ -10,6 +10,9 @@ NCM_WIN_ResultEntering_Stage::NCM_WIN_ResultEntering_Stage(NCM_OBJ_Competition c
     Competition = comp;
 
     get_data();
+
+    setWindowTitle("Result Entering Stage - by David Eilenstein");
+    setWindowIcon(QIcon(":/img/Logo_Final.jpg"));
 }
 
 NCM_WIN_ResultEntering_Stage::~NCM_WIN_ResultEntering_Stage()

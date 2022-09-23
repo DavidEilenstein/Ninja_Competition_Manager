@@ -85,26 +85,7 @@ int NCM_OBJ_Run_List::average_time_start_to_start_ms()
     return t_mean;
 }
 
-void NCM_OBJ_Run_List::sort()
-{
-    vector<NCM_OBJ_Run> vRunsSorted;
 
-    for(size_t r = 0; r < size(); r++)
-    {
-        bool found_worse_run = false;
-        size_t pos;
-        for(pos = 0; pos < vRunsSorted.size() && !found_worse_run; pos++)
-            if(vRunsSorted[pos].worse_then(vRuns[r]))
-                found_worse_run = true;
-
-        if(found_worse_run)
-            vRunsSorted.insert(vRunsSorted.begin() + pos, vRuns[r]);
-        else
-            vRunsSorted.push_back(vRuns[r]);
-    }
-
-    vRuns = vRunsSorted;
-}
 
 bool NCM_OBJ_Run_List::load()
 {
@@ -146,4 +127,10 @@ bool NCM_OBJ_Run_List::save()
         vRuns[c].save(DIR_SavedIn);
 
     return false;
+}
+
+void NCM_OBJ_Run_List::info_debug()
+{
+    for(size_t r = 0; r < size(); r++)
+        qDebug() << get_run(r).competitor().name() << "-" << get_run(r).checkpoint_reached() << "-" << get_run(r).time_ms_text();
 }

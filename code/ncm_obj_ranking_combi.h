@@ -46,6 +46,7 @@ public:
     void                    update();
 
     NCM_OBJ_Competitor_List competitors_all()                                       {return Competitors_All;}
+    NCM_OBJ_Competitor_List competitors_qualified();
     NCM_OBJ_Ranking_Stage   ranking_previous()                                      {return RankingStagePrevious;}
     NCM_OBJ_Ranking_Stage   ranking_this()                                          {return RankingStageThis;}
 

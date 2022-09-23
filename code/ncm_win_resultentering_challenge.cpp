@@ -6,6 +6,9 @@ NCM_WIN_ResultEntering_Challenge::NCM_WIN_ResultEntering_Challenge(NCM_OBJ_Compe
     ui(new Ui::NCM_WIN_ResultEntering_Challenge)
 {
     ui->setupUi(this);
+
+    setWindowTitle("Result Entering Challenge - by David Eilenstein");
+    setWindowIcon(QIcon(":/img/Logo_Final.jpg"));
 }
 
 NCM_WIN_ResultEntering_Challenge::~NCM_WIN_ResultEntering_Challenge()

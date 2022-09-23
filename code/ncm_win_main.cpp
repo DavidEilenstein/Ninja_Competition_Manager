@@ -12,7 +12,7 @@ NCM_WIN_Main::NCM_WIN_Main(QWidget *parent)
     settings_load();
 
     setWindowTitle("Ninja competition manager - by David Eilenstein (" + QS_VersionNumber + ")");
-    setWindowIcon(QIcon(":/logo/Logo_Final.jpg"));
+    setWindowIcon(QIcon(":/img/Logo_Final.jpg"));
 }
 
 NCM_WIN_Main::~NCM_WIN_Main()

@@ -12,7 +12,15 @@ NCM_WIN_StarterList::NCM_WIN_StarterList(NCM_OBJ_Competition comp, QWidget *pare
     get_data();
 
     connect(&TimerAutoupdate, SIGNAL(timeout()), this, SLOT(update()));
-    update_auto(true);
+    TimerAutoupdate.start(1000);
+
+    setWindowTitle("Starter List - by David Eilenstein");
+    setWindowIcon(QIcon(":/img/Logo_Final.jpg"));
+
+    int size_button = 80;
+    QSize RefIconSize(size_button, size_button);
+    ui->pushButton_DE->setIcon(QIcon(":/img/Logo_Final.jpg"));
+    ui->pushButton_DE->setIconSize(RefIconSize);
 }
 
 NCM_WIN_StarterList::~NCM_WIN_StarterList()
@@ -167,10 +175,13 @@ void NCM_WIN_StarterList::update()
     //loop competitors
     for(size_t r = 0; r < n_rows; r++)
     {
+        //competitor
+        NCM_OBJ_Competitor competitor = Competitors_Allowed.get_competitor(r);
+
         //competitor info
-        vvQS_TableContent_c_r[COL_NAME][r]   = Competitors_Allowed.get_competitor(r).name();
-        vvQS_TableContent_c_r[COL_NUMBER][r] = QString::number(Competitors_Allowed.get_competitor(r).number());
-        vvQS_TableContent_c_r[COL_CLASS][r]  = Competitors_Allowed.get_competitor(r).competitor_class();
+        vvQS_TableContent_c_r[COL_NAME][r]   = competitor.name();
+        vvQS_TableContent_c_r[COL_NUMBER][r] = QString::number(competitor.number());
+        vvQS_TableContent_c_r[COL_CLASS][r]  = competitor.competitor_class_symbol();
 
         //estimate start time
         if(Runs.size() >= 3)

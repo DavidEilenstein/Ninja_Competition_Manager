@@ -74,10 +74,10 @@ private:
 
     //col names
     const QStringList QSL_NamesColumns = {
-        "Number",
-        "Name",
-        "Class",
-        "est. Start"};
+        "#",
+        "name",
+        "♀/♂",
+        "~start"};
     enum COL_NAMES {
         COL_NUMBER,
         COL_NAME,
