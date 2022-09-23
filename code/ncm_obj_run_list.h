@@ -31,8 +31,6 @@ public:
     explicit                NCM_OBJ_Run_List();
     explicit                NCM_OBJ_Run_List(QDir dir_saved_in);
 
-    bool                    contains_runner_duplicate(NCM_OBJ_Competitor competitor)   {return contains_runner_duplicate(competitor.name(), competitor.number());}
-    bool                    contains_runner_duplicate(QString name, int number)        {return contains_runner_name(name) || contains_runner_number(number);}
     bool                    contains_runner_name(QString name);
     bool                    contains_runner_number(int number);
 

@@ -26,7 +26,7 @@ const QStringList QSL_CompDirs = {
     "Competitors",
     "Runs",
     "SpecialPrices",
-    "Screenshots",
+    "Competition_Status_Images",
     "SideChallenges",
     "SideChallengeTries"
 };
@@ -88,9 +88,9 @@ enum QUALI_STATE {
     QUALI_STATE_QUALI_STAGE_THIS_SAFE,
     QUALI_STATE_QUALI_STAGE_THIS_CURRENT,
     QUALI_STATE_QUALI_CHALLENGE,
-    QUALI_STATE_END_AT_LEAST_1ST,
-    QUALI_STATE_END_AT_LEAST_2ND,
-    QUALI_STATE_END_AT_LEAST_3RD,
+    QUALI_STATE_1ST,
+    QUALI_STATE_2ND,
+    QUALI_STATE_3RD,
     QUALI_STATE_END,
     QUALI_STATE_OUT,
     QUALI_STATE_UNKNOWN,

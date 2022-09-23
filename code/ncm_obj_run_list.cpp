@@ -30,7 +30,7 @@ bool NCM_OBJ_Run_List::contains_runner_number(int number)
 
 bool NCM_OBJ_Run_List::add_run(NCM_OBJ_Run run)
 {
-    if(contains_runner_duplicate(run.competitor()))
+    if(contains_runner_name(run.competitor().name()))
         return false;
 
     vRuns.push_back(run);

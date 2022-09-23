@@ -12,7 +12,7 @@ size_t NCM_OBJ_Ranking_Stage::pos_current_overall(NCM_OBJ_Competitor c)
 
     for(size_t r = 0; r < Runs.size(); r++)
     {
-        if(run(r).competitor().is_duplicate(c))
+        if(run(r).competitor().is_name(c.name()))
             return pos;
 
         if(run(r).better_then(c_run))
@@ -32,7 +32,7 @@ size_t NCM_OBJ_Ranking_Stage::pos_current_class(NCM_OBJ_Competitor c)
     {
         if(run(r).competitor().female() == female)
         {
-            if(run(r).competitor().is_duplicate(c))
+            if(run(r).competitor().is_name(c.name()))
                 return pos;
 
             if(run(r).better_then(c_run))

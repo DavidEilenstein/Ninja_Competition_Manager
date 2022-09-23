@@ -30,7 +30,7 @@ bool NCM_OBJ_Competitor_List::contains_number(int number)
 
 bool NCM_OBJ_Competitor_List::add_competitor(NCM_OBJ_Competitor competitor)
 {
-    if(contains_duplicate(competitor))
+    if(contains_name(competitor.name()))
         return false;
 
     vCompetitors.push_back(competitor);
@@ -74,7 +74,7 @@ NCM_OBJ_Competitor_List NCM_OBJ_Competitor_List::subtract(NCM_OBJ_Competitor_Lis
     NCM_OBJ_Competitor_List list_difference;
 
     for(size_t c = 0; c < size(); c++)
-        if(!list.contains_duplicate(get_competitor(c)))
+        if(!list.contains_name(get_competitor(c).name()))
             list_difference.add_competitor(get_competitor(c));
 
     return list_difference;

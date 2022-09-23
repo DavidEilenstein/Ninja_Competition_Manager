@@ -98,9 +98,12 @@ void NCM_WIN_ResultEntering_Stage::load_runs()
 void NCM_WIN_ResultEntering_Stage::calc_competitors_allowed()
 {
     Competitors_Allowed = ui->checkBox_Rerun->isChecked() ? Competitors_All : Competitors_All.subtract(Runs.competitors_list());
+
     ui->comboBox_Competitor->clear();
     ui->comboBox_Competitor->addItems(Competitors_Allowed.names());
     ui->comboBox_Competitor->setCurrentIndex(0);
+
+    ui->pushButton_SaveRun->setEnabled(Competitors_Allowed.size() > 0);
 }
 
 void NCM_WIN_ResultEntering_Stage::on_pushButton_SaveRun_clicked()

@@ -29,8 +29,6 @@ public:
     explicit                    NCM_OBJ_Competitor_List();
     explicit                    NCM_OBJ_Competitor_List(QDir dir_saved_in);
 
-    bool                        contains_duplicate(NCM_OBJ_Competitor competitor)   {return contains_duplicate(competitor.name(), competitor.number());}
-    bool                        contains_duplicate(QString name, int number)        {return contains_name(name) || contains_number(number);}
     bool                        contains_name(QString name);
     bool                        contains_number(int number);
 

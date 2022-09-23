@@ -236,6 +236,10 @@ void NCM_WIN_StarterList::update()
     //set table data
     Table.set_data(vvQS_TableContent_c_r, QSL_NamesColumns, QSL_NamesRows, true, true);
 
+    //take screenshot once per minute
+    if(QDateTime::currentDateTime().time().second() <= 1)
+        this->grab().save(Competition.dir(COMP_DIR_SCREENSHOTS).path() + "/StarterList - " + Stage.name() + ".png");
+
     update_running = false;
 }
 

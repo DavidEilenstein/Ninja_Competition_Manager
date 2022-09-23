@@ -216,6 +216,11 @@ void NCM_WIN_Ranking_Stage::update()
     //row names
     QStringList QSL_NamesRows;
 
+    //checkpoint names
+    QStringList QSL_Checkpoints = Ranking.ranking_this().stage().checkpoints();
+    if(QSL_Checkpoints.size() > 0)
+        QSL_Checkpoints[QSL_Checkpoints.size() - 1] = QS_Buzzer;
+
     //loop runs
     for(size_t r = 0; r < n_rows; r++)
     {
@@ -228,10 +233,10 @@ void NCM_WIN_Ranking_Stage::update()
 
         //competitor info
         vvQS_TableContent_c_r[COL_NAME][r]      = competitor.name();
-        //vvQS_TableContent_c_r[COL_CLASS][r]   = competitor.competitor_class_symbol();
 
         //run data
-        vvQS_TableContent_c_r[COL_POINT][r]     = Ranking.ranking_this().stage().checkpoints()[run.checkpoint_reached()];
+
+        vvQS_TableContent_c_r[COL_POINT][r]     = QSL_Checkpoints[run.checkpoint_reached()];
         vvQS_TableContent_c_r[COL_TIME][r]      = run.time_ms_text();
 
         //position
@@ -302,6 +307,10 @@ void NCM_WIN_Ranking_Stage::update()
             IS_WorstFail.close();
         }
     }
+
+    //take screenshot once per minute
+    if(QDateTime::currentDateTime().time().second() <= 1)
+        this->grab().save(Competition.dir(COMP_DIR_SCREENSHOTS).path() + "/Ranking - " + Ranking.ranking_this().stage().name() + ".png");
 
     update_running = false;
 }

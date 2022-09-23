@@ -43,7 +43,6 @@ public:
 
     bool    is_name(QString name_other)                             {return name_other == name();}
     bool    is_number(int number_other)                             {return number_other == number();}
-    bool    is_duplicate(NCM_OBJ_Competitor competitor_other)       {return is_name(competitor_other.name()) || is_number(competitor_other.number());}
 
     bool    save(QDir DIR_competitors);
     bool    load(QString QS_path);

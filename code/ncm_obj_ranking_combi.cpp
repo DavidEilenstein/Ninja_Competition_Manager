@@ -50,63 +50,71 @@ void NCM_OBJ_Ranking_Combi::update()
         NCM_OBJ_Run run_this = RankingStageThis.run(competitor);
         Competitors_All.add_competitor(competitor);
 
-        //quali spots
-        size_t quali_spots_this = RankingStageThis.stage().quali_count_this(competitor.female());
-
-        //count of safe from previous, that are better that this competitors run
-        size_t safe_prev_better = 0;
-        for(size_t c = 0; c < Competitors_Qualified_Stage_Previous.size(); c++)
+        if(RankingStageThis.stage().is_final())
         {
-            NCM_OBJ_Competitor competitor_safe_prev = Competitors_Qualified_Stage_Previous.get_competitor(c);
-            if(RankingStageThis.runs().competitors_list().contains_name(competitor_safe_prev.name()))
-                if(competitor_safe_prev.female() == competitor.female())
-                    if(RankingStageThis.run(competitor_safe_prev).better_then(run_this))
-                        safe_prev_better++;
+            vQualiStates[c] = QUALI_STATE_END;
+
+            if(RankingStageThis.pos_current_class(competitor) == 1)
+                vQualiStates[c] = QUALI_STATE_1ST;
+            else if(RankingStageThis.pos_current_class(competitor) == 2)
+                vQualiStates[c] = QUALI_STATE_2ND;
+            else if(RankingStageThis.pos_current_class(competitor) == 3)
+                vQualiStates[c] = QUALI_STATE_3RD;
         }
-
-        bool got_quali_state = false;
-
-        //stage previous
-        if(!got_quali_state && Competitors_Qualified_Stage_Previous.contains_name(competitor.name()))
+        else
         {
-            vQualiStates[c] = QUALI_STATE_QUALI_STAGE_PREVIOUS_SAFE;
-            got_quali_state = true;
-        }
+            //quali spots
+            size_t quali_spots_this = RankingStageThis.stage().quali_count_this(competitor.female());
 
-        //stage this qualified
-        if(!got_quali_state && RankingStageThis.runs().competitors_list().contains_name(competitor.name()))
-        {
-            //safe?
-            if(!got_quali_state && RankingStageThis.pos_worst_class(competitor) <= quali_spots_this + safe_prev_better)
+            //count of safe from previous, that are better that this competitors run
+            size_t safe_prev_better = 0;
+            for(size_t c = 0; c < Competitors_Qualified_Stage_Previous.size(); c++)
             {
-                qDebug() << "SAFE" << competitor.name() << RankingStageThis.pos_worst_class(competitor) << "<=" << quali_spots_this << "+" << safe_prev_better;
-                Competitors_Qualified_Stage_This.add_competitor(competitor);
-                vQualiStates[c] = QUALI_STATE_QUALI_STAGE_THIS_SAFE;
+                NCM_OBJ_Competitor competitor_safe_prev = Competitors_Qualified_Stage_Previous.get_competitor(c);
+                if(RankingStageThis.runs().competitors_list().contains_name(competitor_safe_prev.name()))
+                    if(competitor_safe_prev.female() == competitor.female())
+                        if(RankingStageThis.run(competitor_safe_prev).better_then(run_this))
+                            safe_prev_better++;
+            }
+
+            bool got_quali_state = false;
+
+            //stage previous
+            if(!got_quali_state && Competitors_Qualified_Stage_Previous.contains_name(competitor.name()))
+            {
+                vQualiStates[c] = QUALI_STATE_QUALI_STAGE_PREVIOUS_SAFE;
                 got_quali_state = true;
             }
 
-            //current?
-            if(!got_quali_state && RankingStageThis.pos_current_class(competitor) <= quali_spots_this + safe_prev_better)
+            //stage this qualified
+            if(!got_quali_state && RankingStageThis.runs().competitors_list().contains_name(competitor.name()))
             {
-                Competitors_Qualified_Stage_This.add_competitor(competitor);
-                vQualiStates[c] = QUALI_STATE_QUALI_STAGE_THIS_CURRENT;
+                //safe?
+                if(!got_quali_state && RankingStageThis.pos_worst_class(competitor) <= quali_spots_this + safe_prev_better)
+                {
+                    qDebug() << competitor.name();
+                    Competitors_Qualified_Stage_This.add_competitor(competitor);
+                    vQualiStates[c] = QUALI_STATE_QUALI_STAGE_THIS_SAFE;
+                    got_quali_state = true;
+                }
+
+                //current?
+                if(!got_quali_state && RankingStageThis.pos_current_class(competitor) <= quali_spots_this + safe_prev_better)
+                {
+                    Competitors_Qualified_Stage_This.add_competitor(competitor);
+                    vQualiStates[c] = QUALI_STATE_QUALI_STAGE_THIS_CURRENT;
+                    got_quali_state = true;
+                }
+            }
+
+            //challenges
+
+            //stage this not qualified
+            if(!got_quali_state && RankingStageThis.runs().competitors_list().contains_name(competitor.name()))
+            {
+                vQualiStates[c] = QUALI_STATE_OUT;
                 got_quali_state = true;
             }
-        }
-
-        //challenges
-
-        //stage this not qualified
-        if(!got_quali_state && RankingStageThis.runs().competitors_list().contains_name(competitor.name()))
-        {
-            vQualiStates[c] = QUALI_STATE_OUT;
-            got_quali_state = true;
-        }
-
-        //did nothing so far
-        if(!got_quali_state)
-        {
-            vQualiStates[c] = QUALI_STATE_UNKNOWN;
         }
     }
 }
@@ -124,7 +132,7 @@ NCM_OBJ_Competitor_List NCM_OBJ_Ranking_Combi::competitors_qualified()
 size_t NCM_OBJ_Ranking_Combi::quali_state(NCM_OBJ_Competitor competitor)
 {
     for(size_t c = 0; c < Competitors_All.size(); c++)
-        if(competitor.is_duplicate(Competitors_All.get_competitor(c)))
+        if(competitor.is_name(Competitors_All.get_competitor(c).name()))
             return vQualiStates[c];
 
     return QUALI_STATE_UNKNOWN;
