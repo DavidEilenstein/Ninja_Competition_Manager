@@ -203,9 +203,16 @@
     </property>
     <addaction name="actionChange_Table_Settings"/>
    </widget>
+   <widget class="QMenu" name="menuScreenshot">
+    <property name="title">
+     <string>Screenshot</string>
+    </property>
+    <addaction name="actionAutosave_Screenshot_once_per_minute"/>
+   </widget>
    <addaction name="menuData"/>
    <addaction name="menuUpdate"/>
    <addaction name="menuTable"/>
+   <addaction name="menuScreenshot"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionget_data">
@@ -240,6 +247,14 @@
   <action name="actionChange_Table_Settings">
    <property name="text">
     <string>Change Table Settings</string>
+   </property>
+  </action>
+  <action name="actionAutosave_Screenshot_once_per_minute">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Autosave Screenshot once per minute</string>
    </property>
   </action>
  </widget>

@@ -272,7 +272,7 @@ void NCM_WIN_Ranking_Stage::update()
     }
 
     //set table data
-    Table.set_data(vvQS_TableContent_c_r, QSL_NamesColumns, QSL_NamesRows, true, true);
+    Table.set_data(vvQS_TableContent_c_r, QSL_NamesColumns, QSL_NamesRows, false, true);
 
     //--------------------------------------------------------------------------------------- special prices
 
@@ -309,8 +309,9 @@ void NCM_WIN_Ranking_Stage::update()
     }
 
     //take screenshot once per minute
-    if(QDateTime::currentDateTime().time().second() <= 1)
-        this->grab().save(Competition.dir(COMP_DIR_SCREENSHOTS).path() + "/Ranking - " + Ranking.ranking_this().stage().name() + ".png");
+    if(ui->actionAutosave_Screenshot_once_per_minute->isChecked())
+        if(QDateTime::currentDateTime().time().second() <= 1)
+            this->grab().save(Competition.dir(COMP_DIR_SCREENSHOTS).path() + "/Ranking - " + Ranking.ranking_this().stage().name() + ".png");
 
     update_running = false;
 }

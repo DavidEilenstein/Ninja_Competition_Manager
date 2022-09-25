@@ -234,11 +234,12 @@ void NCM_WIN_StarterList::update()
         QSL_NamesRows.append(QString::number(r + 1));
 
     //set table data
-    Table.set_data(vvQS_TableContent_c_r, QSL_NamesColumns, QSL_NamesRows, true, true);
+    Table.set_data(vvQS_TableContent_c_r, QSL_NamesColumns, QSL_NamesRows, false, true);
 
     //take screenshot once per minute
-    if(QDateTime::currentDateTime().time().second() <= 1)
-        this->grab().save(Competition.dir(COMP_DIR_SCREENSHOTS).path() + "/StarterList - " + Stage.name() + ".png");
+    if(ui->actionAutosave_Screenshot_once_per_minute->isChecked())
+        if(QDateTime::currentDateTime().time().second() <= 1)
+            this->grab().save(Competition.dir(COMP_DIR_SCREENSHOTS).path() + "/StarterList - " + Stage.name() + ".png");
 
     update_running = false;
 }

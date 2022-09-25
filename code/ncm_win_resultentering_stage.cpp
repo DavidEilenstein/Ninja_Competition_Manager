@@ -116,7 +116,21 @@ void NCM_WIN_ResultEntering_Stage::on_pushButton_SaveRun_clicked()
                 ui->spinBox_s->value(),
                 ui->spinBox_ms->value());
 
-    Runs.add_run(run);
+    if(Runs.contains_runner_name(run.competitor().name()))
+    {
+        if(QMessageBox::question(
+                    this,
+                    "Replace Run?",
+                    "The previously entered run of " + run.competitor().name() + " will be replaced with no backup."
+                    "<br>Du you want to replace it?")
+                == QMessageBox::Yes)
+            Runs.replace_run(run);
+    }
+    else
+    {
+        Runs.add_run(run);
+    }
+
     Runs.save();
 
     if(ui->checkBox_BestTrick->isChecked())

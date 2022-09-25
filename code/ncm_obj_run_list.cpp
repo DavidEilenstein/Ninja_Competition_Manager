@@ -38,6 +38,20 @@ bool NCM_OBJ_Run_List::add_run(NCM_OBJ_Run run)
     return true;
 }
 
+bool NCM_OBJ_Run_List::replace_run(NCM_OBJ_Run run)
+{
+    for(size_t r = 0; r < size(); r++)
+    {
+        if(vRuns[r].competitor().is_name(run.competitor().name()))
+        {
+            vRuns[r] = run;
+            return true;
+        }
+    }
+
+    return false;
+}
+
 NCM_OBJ_Competitor_List NCM_OBJ_Run_List::competitors_list()
 {
     NCM_OBJ_Competitor_List competitors;

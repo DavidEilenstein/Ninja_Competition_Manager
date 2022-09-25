@@ -35,6 +35,7 @@ public:
     bool                    contains_runner_number(int number);
 
     bool                    add_run(NCM_OBJ_Run run);
+    bool                    replace_run(NCM_OBJ_Run run);
     NCM_OBJ_Run             get_run(size_t r)                                           {return r < size() ? vRuns[r] : NCM_OBJ_Run();}
 
     size_t                  size()                                                      {return vRuns.size();}

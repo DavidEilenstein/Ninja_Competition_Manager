@@ -7,7 +7,7 @@
 
 using namespace std;
 
-const QString QS_VersionNumber = "v2.0 - 2022_09_23";
+const QString QS_VersionNumber = "v2.1 - 2022_09_25";
 
 enum COMP_DIR {
     COMP_DIR_GENERAL,
@@ -85,8 +85,8 @@ const QString QS_OrderLessIsBetter = "LessIsBetter";
 
 enum QUALI_STATE {
     QUALI_STATE_QUALI_STAGE_PREVIOUS_SAFE,
-    QUALI_STATE_QUALI_STAGE_THIS_SAFE,
     QUALI_STATE_QUALI_STAGE_THIS_CURRENT,
+    QUALI_STATE_QUALI_STAGE_THIS_SAFE,
     QUALI_STATE_QUALI_CHALLENGE,
     QUALI_STATE_1ST,
     QUALI_STATE_2ND,
@@ -98,9 +98,9 @@ enum QUALI_STATE {
 };
 const QStringList QSL_QualiState = {
     "👽",
-    "😎",
-    "🤓",
-    "😍",
+    "🐻",
+    "🐯",
+    "💪",
     "🥇",
     "🥈",
     "🥉",
