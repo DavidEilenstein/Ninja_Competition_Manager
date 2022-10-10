@@ -35,8 +35,16 @@ public:
     explicit NCM_WIN_Edit_Challenge(NCM_OBJ_Competition comp, QWidget *parent = nullptr);
     ~NCM_WIN_Edit_Challenge();
 
+private slots:
+    void on_pushButton_Load_clicked();
+
+    void on_pushButton_Save_clicked();
+
 private:
     Ui::NCM_WIN_Edit_Challenge *ui;
+
+    NCM_OBJ_Competition Competition;
+    NCM_OBJ_Challenge   Challenge;
 };
 
 #endif // NCM_WIN_EDIT_CHALLENGE_H

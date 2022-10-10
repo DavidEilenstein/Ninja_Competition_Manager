@@ -143,7 +143,7 @@ void NCM_OBJ_Stage::code_update()
 
     QSL_Stage_Code.append(QS_LineSpace);//------------------------------;
 
-    //checkpoints
+    //challenges
     QSL_Stage_Code.append(
                 QSL_Stage_Keywords[STAGE_KEYWORD_CHALLENGE_LIST]);
 

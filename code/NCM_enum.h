@@ -16,8 +16,8 @@ enum COMP_DIR {
     COMP_DIR_RUNS,
     COMP_DIR_SPECIAL_PRICES,
     COMP_DIR_SCREENSHOTS,
-    COMP_DIR_SIDECHALLENGES,
-    COMP_DIR_SIDECHALLENGE_TRIES,
+    COMP_DIR_CHALLENGES,
+    COMP_DIR_CHALLENGE_TRIES,
     COMP_DIR_NUMBER_OF
 };
 const QStringList QSL_CompDirs = {
@@ -27,8 +27,8 @@ const QStringList QSL_CompDirs = {
     "Runs",
     "SpecialPrices",
     "Competition_Status_Images",
-    "SideChallenges",
-    "SideChallengeTries"
+    "Challenges",
+    "ChallengeTries"
 };
 
 const QString QS_FemaleSymbol = "♀";
@@ -64,20 +64,18 @@ const QString QS_IsNotFinal = "IsNotFinal";
 
 enum CHALLENGE_KEYWORDS {
     CHALLENGE_KEYWORD_NAME,
+    CHALLENGE_KEYWORD_UNIT,
+    CHALLENGE_KEYWORD_ORDER,
     CHALLENGE_KEYWORD_QUALI_FEMALE,
     CHALLENGE_KEYWORD_QUALI_MALE,
-    CHALLENGE_KEYWORD_STAGE,
-    CHALLENGE_KEYWORD_ORDER,
-    CHALLENGE_KEYWORD_UNIT,
     CHALLENGE_KEYWORD_NUMBER_OF
 };
 const QStringList QSL_Challenge_Keywords = {
     "NAME",
-    "QUALI_FEMALE",
-    "QUALI_MALE",
-    "STAGE",
+    "UNIT",
     "ORDER",
-    "UNIT"
+    "QUALI_FEMALE",
+    "QUALI_MALE"
 };
 
 const QString QS_OrderMoreIsBetter = "MoreIsBetter";
