@@ -95,7 +95,6 @@ int NCM_OBJ_Run_List::average_time_start_to_start_ms()
     int dt_ms = abs(run_earliest().time_to_ms(run_latest().recorded()));
 
     int t_mean = dt_ms / int(size() - 1);
-    //qDebug() << "average time start to start" << t_mean << "ms";
     return t_mean;
 }
 
@@ -138,8 +137,8 @@ bool NCM_OBJ_Run_List::save()
     if(!DIR_SavedIn.exists())
         return false;
 
-    for(size_t c = 0; c < size(); c++)
-        vRuns[c].save(DIR_SavedIn);
+    for(size_t r = 0; r < size(); r++)
+        vRuns[r].save(DIR_SavedIn);
 
     return false;
 }
