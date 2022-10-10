@@ -1,0 +1,26 @@
+#include "ncm_obj_ranking_challenge.h"
+
+NCM_OBJ_Ranking_Challenge::NCM_OBJ_Ranking_Challenge()
+{
+    
+}
+
+size_t NCM_OBJ_Ranking_Challenge::pos_current_overall(NCM_OBJ_Competitor c)
+{
+    
+}
+
+size_t NCM_OBJ_Ranking_Challenge::pos_current_class(NCM_OBJ_Competitor c)
+{
+    
+}
+
+size_t NCM_OBJ_Ranking_Challenge::pos_worst_overall(NCM_OBJ_Competitor c)
+{
+    
+}
+
+size_t NCM_OBJ_Ranking_Challenge::pos_worst_class(NCM_OBJ_Competitor c)
+{
+    
+}

@@ -122,7 +122,7 @@ void NCM_WIN_ResultEntering_Stage::on_pushButton_SaveRun_clicked()
                     this,
                     "Replace Run?",
                     "The previously entered run of " + run.competitor().name() + " will be replaced with no backup."
-                    "<br>Du you want to replace it?")
+                    "<br>Do you want to replace it?")
                 == QMessageBox::Yes)
             Runs.replace_run(run);
     }
