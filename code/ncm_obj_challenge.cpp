@@ -137,7 +137,9 @@ bool NCM_OBJ_Challenge::code_parse()
                     case CHALLENGE_KEYWORD_ORDER:
                     {
                         if(QSL_Blocks.size() >= 2)
+                        {
                             OrderMoreIsBetter = QSL_Blocks[1] == QS_OrderMoreIsBetter;
+                        }
                     }
                         break;
 

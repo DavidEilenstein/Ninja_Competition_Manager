@@ -147,7 +147,7 @@ void NCM_WIN_Ranking_Challenge::get_data()
     size_t n_ch = Ranking.rankings_challenges().size();
     if(n_ch > 0)
     {
-        QString challenge_select_text = QString::number(n_ch) + " challenges have been found.<br>Please select the challenge to be shown in this ranking:";
+        QString challenge_select_text = QString::number(n_ch) + " challenges have been found.<br>Please select the challenge to be shown in this ranking:<br>";
         for(size_t ch = 0; ch < n_ch; ch++)
         {
             challenge_select_text.append("<br>" + QString::number(ch) + ": " + Ranking.rankings_challenges().ranking(ch).challenge().name());
@@ -279,6 +279,9 @@ void NCM_WIN_Ranking_Challenge::update()
         //quali
         size_t quali_state = Ranking.quali_state(competitor);
         vvQS_TableContent_c_r[COL_QUALI][r] = QSL_QualiState[quali_state];
+
+        //run or not
+        vvQS_TableContent_c_r[COL_RUN][r] = Ranking.ranking_this().runs().competitors_list().contains_name(competitor.name()) ? QS_SymbolYes : QS_SymbolNo;
 
         //Highscore/Qualiscore
         if(competitor.female())

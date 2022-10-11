@@ -97,7 +97,7 @@ void NCM_OBJ_Ranking_Combi::update()
                 //safe?
                 if(!got_quali_state && RankingStageThis.pos_worst_class(competitor) <= quali_spots_this + safe_prev_better)
                 {
-                    qDebug() << competitor.name();
+                    //qDebug() << competitor.name();
                     Competitors_Qualified_Stage_This.add_competitor(competitor);
                     vQualiStates[c] = QUALI_STATE_QUALI_STAGE_THIS_SAFE;
                     got_quali_state = true;
@@ -141,9 +141,9 @@ void NCM_OBJ_Ranking_Combi::update()
             NCM_OBJ_Competitor_List competitors_possible_class = competitors_possible.competitors_by_class(female);
 
             //loop pos
-            NCM_OBJ_Competitor competitor_last_added;
+            QString name_last_added;
             bool added_competitor = false;
-            double score_last_added = 0;
+            double score_last_added = 0; //worst possible for quali
             size_t quali_spots = challenge_ranking.challenge().quali_count(female);
             for(size_t pos = 0; pos < quali_spots && pos < competitors_possible_class.size(); pos++)
             {
@@ -154,6 +154,7 @@ void NCM_OBJ_Ranking_Combi::update()
                 vQualiFromChallengeIndex.push_back(cha);
                 added_competitor = true;
                 score_last_added = challenge_ranking.challengetry(competitor_qualified).score();
+                name_last_added = competitor_qualified.name();
             }
 
             //add all competitors with equal score to the last competitor added
@@ -162,10 +163,13 @@ void NCM_OBJ_Ranking_Combi::update()
                 for(size_t com = 0; com < competitors_possible_class.size(); com++)
                 {
                     NCM_OBJ_Competitor competitor_candidate = competitors_possible_class.get_competitor(com);
-                    if(challenge_ranking.challengetry(competitor_candidate).score() == score_last_added)
+                    if(competitor_candidate.name() != name_last_added)
                     {
-                        Competitors_Qualified_Challenges.add_competitor(competitor_candidate);
-                        vQualiFromChallengeIndex.push_back(cha);
+                        if(challenge_ranking.challengetry(competitor_candidate).score() == score_last_added)
+                        {
+                            Competitors_Qualified_Challenges.add_competitor(competitor_candidate);
+                            vQualiFromChallengeIndex.push_back(cha);
+                        }
                     }
                 }
             }
@@ -180,6 +184,15 @@ void NCM_OBJ_Ranking_Combi::update()
             vQualiStates[com] = QUALI_STATE_QUALI_CHALLENGE;
         }
     }
+
+    /*
+    //test challenge qualis
+    qDebug() << "-------------------------------------------";
+    for(size_t com = 0; com < Competitors_Qualified_Challenges.size(); com++)
+    {
+        qDebug() << Competitors_Qualified_Challenges.get_competitor(com).name() << vQualiFromChallengeIndex[com];
+    }
+    */
 }
 
 NCM_OBJ_Competitor_List NCM_OBJ_Ranking_Combi::competitors_qualified()
@@ -204,7 +217,10 @@ size_t NCM_OBJ_Ranking_Combi::quali_state(NCM_OBJ_Competitor competitor)
 size_t NCM_OBJ_Ranking_Combi::quali_from_challenge_index(NCM_OBJ_Competitor competitor)
 {
     if(!Competitors_Qualified_Challenges.contains_name(competitor.name()))
+    {
+        qDebug() << "NCM_OBJ_Ranking_Combi::quali_from_challenge_index - invlid competitor requested" << competitor.name();
         return 0;
+    }
 
     return vQualiFromChallengeIndex[Competitors_Qualified_Challenges.get_competitor_index(competitor)];
 }

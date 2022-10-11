@@ -98,6 +98,13 @@ int NCM_OBJ_Try_List::average_time_start_to_start_ms()
     return t_mean;
 }
 
+void NCM_OBJ_Try_List::sort(bool more_is_better)
+{
+    std::sort(vTries.begin(), vTries.end());
+    if(!more_is_better)
+        std::reverse(vTries.begin(), vTries.end());
+}
+
 bool NCM_OBJ_Try_List::load()
 {
     if(!DIR_SavedIn.exists())

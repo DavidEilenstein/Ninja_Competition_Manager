@@ -7,7 +7,7 @@
 
 using namespace std;
 
-const QString QS_VersionNumber = "v2.1 - 2022_09_25";
+const QString QS_VersionNumber = "v3.0 - 2022_10_11";
 
 enum COMP_DIR {
     COMP_DIR_GENERAL,
@@ -107,6 +107,8 @@ const QStringList QSL_QualiState = {
     "❓"
 };
 const QString QS_QualiChallengeThis = "🦾";
+const QString QS_SymbolYes = "✔️";
+const QString QS_SymbolNo = "✘";
 
 const QString QS_FileName_SpecialPrice_BestTrick = "BestTrick.txt";
 const QString QS_FileName_SpecialPrice_WorstFail = "WorstFail.txt";

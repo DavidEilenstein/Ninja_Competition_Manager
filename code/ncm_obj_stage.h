@@ -71,15 +71,8 @@ private:
     size_t QualiPreviousF = 0;
     size_t QualiPreviousM = 0;
 
-    QStringList QSL_ChallengeNames = {
-        "Challenge A",
-        "Challenge B",
-        "Challenge C"};
-
-    QStringList QSL_Checkpoints = {
-        "Checkpoint 0",
-        "Checkpoint 1",
-        "Checkpoint 2"};
+    QStringList QSL_ChallengeNames;
+    QStringList QSL_Checkpoints;
 };
 
 #endif // NCM_OBJ_STAGE_H

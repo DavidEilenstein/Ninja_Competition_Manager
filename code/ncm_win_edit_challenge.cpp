@@ -23,7 +23,7 @@ void NCM_WIN_Edit_Challenge::on_pushButton_Load_clicked()
     QString path = QFileDialog::getOpenFileName(
                 this,
                 "Load Challenge",
-                Competition.dir(COMP_DIR_STAGES).path());
+                Competition.dir(COMP_DIR_CHALLENGES).path());
     if(path.isEmpty())
         return;
 

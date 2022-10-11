@@ -37,7 +37,7 @@ public:
     void                    load_tries()                                {Tries.load();}
     void                    calc_competitors_allowed()                  {Competitors_Allowed = Competitors_All.subtract(Tries.competitors_list());}
 
-    void                    update()                                    {load_competitors(); load_tries(); calc_competitors_allowed(); Tries.sort();}
+    void                    update()                                    {Challenge.load(); load_competitors(); load_tries(); calc_competitors_allowed(); Tries.sort(Challenge.order_more_is_better());}
 
     size_t                  count_tries()                               {return Tries.size();}
     size_t                  count_competitors_all()                     {return Competitors_All.size();}

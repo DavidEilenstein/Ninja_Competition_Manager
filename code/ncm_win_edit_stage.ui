@@ -262,9 +262,7 @@
        <item row="0" column="0">
         <widget class="QPlainTextEdit" name="plainTextEdit_Challenges">
          <property name="plainText">
-          <string>Challegne A Max Dismount
-Challenge B Long Balance
-Challange C Double Spider Climb</string>
+          <string/>
          </property>
         </widget>
        </item>

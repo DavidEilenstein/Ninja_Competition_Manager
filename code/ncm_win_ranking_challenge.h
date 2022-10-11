@@ -75,11 +75,13 @@ private:
         "name",
         "pos",
         "status",
+        "run",
         "score"};
     enum COL_NAMES {
         COL_NAME,
         COL_POS,
         COL_QUALI,
+        COL_RUN,
         COL_SCORE,
         COL_NUMBER_OF
     };

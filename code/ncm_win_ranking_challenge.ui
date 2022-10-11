@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>447</width>
-    <height>576</height>
+    <width>635</width>
+    <height>746</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -181,7 +181,7 @@ color: rgb(128, 0, 0);</string>
           <string notr="true">font-size: 15px;</string>
          </property>
          <property name="text">
-          <string>💪</string>
+          <string>🦾</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -453,7 +453,7 @@ color: rgb(0, 0, 128);</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>447</width>
+     <width>635</width>
      <height>21</height>
     </rect>
    </property>

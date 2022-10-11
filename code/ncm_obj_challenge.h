@@ -10,6 +10,7 @@
 #include <QMessageBox>
 #include <QIcon>
 #include <QDateEdit>
+#include <QDebug>
 
 //c++
 #include <vector>
