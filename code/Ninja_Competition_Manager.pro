@@ -23,6 +23,7 @@ SOURCES += \
     ncm_obj_competitor.cpp \
     ncm_obj_competitor_list.cpp \
     ncm_obj_ranking_challenge.cpp \
+    ncm_obj_ranking_challenge_list.cpp \
     ncm_obj_ranking_combi.cpp \
     ncm_obj_ranking_stage.cpp \
     ncm_obj_run.cpp \
@@ -50,6 +51,7 @@ HEADERS += \
     ncm_obj_competitor.h \
     ncm_obj_competitor_list.h \
     ncm_obj_ranking_challenge.h \
+    ncm_obj_ranking_challenge_list.h \
     ncm_obj_ranking_combi.h \
     ncm_obj_ranking_stage.h \
     ncm_obj_run.h \

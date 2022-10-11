@@ -11,13 +11,16 @@ void NCM_OBJ_Ranking_Combi::update()
     load_competitors();
     load_runs();
     calc_competitors_allowed();
+    load_challenges();
 
     //update rankings
     RankingStageThis.update();
     RankingStagePrevious.update();
+    RankingsChallenges.update();
 
     //clear competitor categories
     Competitors_Qualified_Stage_Previous.clear();
+    Competitors_Qualified_Stage_This.clear();
     Competitors_Qualified_Challenges.clear();
 
     //quali from previous stage
@@ -42,8 +45,9 @@ void NCM_OBJ_Ranking_Combi::update()
     vQualiStates.clear();
     vQualiStates.resize(n_competitors, QUALI_STATE_UNKNOWN);
 
+    //--------------------------------------------------------------------------- quali stage
+
     //loop competitors
-    qDebug() << "----------------------------------------------";
     for(size_t c = 0; c < n_competitors; c++)
     {
         NCM_OBJ_Competitor competitor = RankingStageThis.competitor(c);
@@ -107,14 +111,70 @@ void NCM_OBJ_Ranking_Combi::update()
                 }
             }
 
-            //challenges
-
             //stage this not qualified
             if(!got_quali_state && RankingStageThis.runs().competitors_list().contains_name(competitor.name()))
             {
                 vQualiStates[c] = QUALI_STATE_OUT;
                 got_quali_state = true;
             }
+        }
+    }
+
+    //--------------------------------------------------------------------------- quali challenge
+
+    //loop challenges
+    for(size_t cha = 0; cha < RankingsChallenges.size(); cha++)
+    {
+        //challenge ranking
+        NCM_OBJ_Ranking_Challenge challenge_ranking = RankingsChallenges.ranking(cha);
+
+        //competitors possible quali with this challenge (sorted by score)
+        NCM_OBJ_Competitor_List competitors_possible = challenge_ranking.challengetrys().competitors_list().subtract(Competitors_Qualified_Stage_This).subtract(Competitors_Qualified_Stage_Previous).subtract(Competitors_Qualified_Challenges);
+
+        //female/male
+        for(int cla = 0; cla < 2; cla++)
+        {
+            bool female = cla == 0;
+
+            //quali candidates
+            NCM_OBJ_Competitor_List competitors_possible_class = competitors_possible.competitors_by_class(female);
+
+            //loop pos
+            NCM_OBJ_Competitor competitor_last_added;
+            bool added_competitor = false;
+            double score_last_added = 0;
+            size_t quali_spots = challenge_ranking.challenge().quali_count(female);
+            for(size_t pos = 0; pos < quali_spots && pos < competitors_possible_class.size(); pos++)
+            {
+                //best competitors are at the beginning of the list, bacuase it is taken from sorted tries
+                NCM_OBJ_Competitor competitor_qualified = competitors_possible_class.get_competitor(pos);
+
+                Competitors_Qualified_Challenges.add_competitor(competitor_qualified);
+                added_competitor = true;
+                score_last_added = challenge_ranking.challengetry(competitor_qualified).score();
+            }
+
+            //add all competitors with equal score to the last competitor added
+            if(added_competitor)
+            {
+                for(size_t com = 0; com < competitors_possible_class.size(); com++)
+                {
+                    NCM_OBJ_Competitor competitor_candidate = competitors_possible_class.get_competitor(com);
+                    if(challenge_ranking.challengetry(competitor_candidate).score() == score_last_added)
+                    {
+                        Competitors_Qualified_Challenges.add_competitor(competitor_candidate);
+                    }
+                }
+            }
+        }
+    }
+
+    //set quali state for challenge qualis
+    for(size_t com = 0; com < Competitors_All.size(); com++)
+    {
+        if(Competitors_Qualified_Challenges.contains_name(Competitors_All.get_competitor(com).name()))
+        {
+            vQualiStates[com] = QUALI_STATE_QUALI_CHALLENGE;
         }
     }
 }

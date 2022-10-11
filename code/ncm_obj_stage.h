@@ -48,6 +48,7 @@ public:
 
     QStringList             checkpoints()                                           {return QSL_Checkpoints;}
     QString                 checkpoints_as_string_line_by_line();
+    QStringList             challenge_names()                                       {return QSL_ChallengeNames;}
     QString                 challenge_names_as_string_line_by_line();
 
     bool                    load(QFileInfo file)                                    {set_file(file); return load();}

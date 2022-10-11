@@ -43,6 +43,7 @@ public:
     void                        clear()                                             {vCompetitors.clear();}
 
     NCM_OBJ_Competitor_List     subtract(NCM_OBJ_Competitor_List list);
+    NCM_OBJ_Competitor_List     competitors_by_class(bool female);
 
     void                        set_dir(QDir dir)                                   {DIR_SavedIn = dir;}
     bool                        load(QDir dir)                                      {set_dir(dir); return load();}

@@ -80,6 +80,17 @@ NCM_OBJ_Competitor_List NCM_OBJ_Competitor_List::subtract(NCM_OBJ_Competitor_Lis
     return list_difference;
 }
 
+NCM_OBJ_Competitor_List NCM_OBJ_Competitor_List::competitors_by_class(bool female)
+{
+    NCM_OBJ_Competitor_List list_filtered;
+
+    for(size_t c = 0; c < size(); c++)
+        if(get_competitor(c).female() == female)
+            list_filtered.add_competitor(get_competitor(c));
+
+    return list_filtered;
+}
+
 bool NCM_OBJ_Competitor_List::load()
 {
     if(!DIR_SavedIn.exists())

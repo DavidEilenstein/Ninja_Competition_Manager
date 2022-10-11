@@ -35,8 +35,9 @@ public:
 
     QString     name()                              {return QS_Name;}
     QString     unit()                              {return QS_Unit;}
-    int         quali_count_m()                     {return QualiCount_M;}
-    int         quali_count_f()                     {return QualiCount_F;}
+    size_t      quali_count(bool female)            {return female ? QualiCount_F : QualiCount_M;}
+    size_t      quali_count_m()                     {return QualiCount_M;}
+    size_t      quali_count_f()                     {return QualiCount_F;}
     bool        order_more_is_better()              {return OrderMoreIsBetter;}
 
     bool        load(QFileInfo file)                {set_file(file); return load();}
@@ -53,8 +54,8 @@ private:
     QStringList QSL_Challenge_Code;
 
     QString     QS_Name = "Challenge 1 - Max Dismount Lache";
-    int         QualiCount_F = 1;
-    int         QualiCount_M = 1;
+    size_t      QualiCount_F = 1;
+    size_t      QualiCount_M = 1;
     bool        OrderMoreIsBetter = true;
     QString     QS_Unit = "cm";
 };

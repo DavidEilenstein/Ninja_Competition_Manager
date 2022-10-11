@@ -64,9 +64,9 @@ void NCM_WIN_ResultEntering_Challenge::get_data()
     ui->label_Name->setText(Challenge.name());
     ui->doubleSpinBox_Score->setSuffix(Challenge.unit());
 
-    //------------------------------- runs
+    //------------------------------- tries
 
-    QDir DIR_Tries(Competition.dir(COMP_DIR_RUNS).path() + "/" + Challenge.name());
+    QDir DIR_Tries(Competition.dir(COMP_DIR_CHALLENGES).path() + "/" + Challenge.name());
 
     if(!DIR_Tries.exists())
         QDir().mkdir(DIR_Tries.path());
