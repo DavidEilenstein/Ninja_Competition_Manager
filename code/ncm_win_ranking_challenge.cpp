@@ -45,11 +45,11 @@ void NCM_WIN_Ranking_Challenge::get_data()
     if(QS_CompetitorsLoadPath.isEmpty())
         return;
 
-    QDir DIR_Competitors(QS_CompetitorsLoadPath);
-    if(!DIR_Competitors.exists())
+    QDir DIR_Competitors_StageThis(QS_CompetitorsLoadPath);
+    if(!DIR_Competitors_StageThis.exists())
         return;
 
-    Ranking.set_stage_this_competitors(DIR_Competitors);
+    Ranking.set_stage_this_competitors(DIR_Competitors_StageThis);
 
     //------------------------------- stage
 
@@ -70,8 +70,6 @@ void NCM_WIN_Ranking_Challenge::get_data()
         return;
 
     Ranking.set_stage_this(FI_StageFile);
-
-    ui->label_Name->setText(Ranking.ranking_this().stage().name());
 
     //------------------------------- runs
 
@@ -98,11 +96,11 @@ void NCM_WIN_Ranking_Challenge::get_data()
         if(QS_CompetitorsLoadPath.isEmpty())
             return;
 
-        DIR_Competitors.setPath(QS_CompetitorsLoadPath);
-        if(!DIR_Competitors.exists())
+        QDir DIR_Competitors_StagePrevious(QS_CompetitorsLoadPath);
+        if(!DIR_Competitors_StagePrevious.exists())
             return;
 
-        Ranking.set_stage_previous_competitors(DIR_Competitors);
+        Ranking.set_stage_previous_competitors(DIR_Competitors_StagePrevious);
 
         //------------------------------- stage
 
@@ -135,6 +133,48 @@ void NCM_WIN_Ranking_Challenge::get_data()
 
         Ranking.set_stage_previous_runs(DIR_Runs);
     }
+
+    //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX   Challenges   XXXXXXXXXXXXXXXXXXXXXX
+
+    //set path and names
+    Ranking.set_challenges_challenges(Competition.dir(COMP_DIR_CHALLENGES));
+    Ranking.set_challenges_competitors(DIR_Competitors_StageThis);
+    Ranking.set_challenges_tries(Competition.dir(COMP_DIR_CHALLENGE_TRIES));
+    Ranking.set_challenges_names();
+    Ranking.load_challenges();
+
+    //select challenge
+    size_t n_ch = Ranking.rankings_challenges().size();
+    if(n_ch > 0)
+    {
+        QString challenge_select_text = QString::number(n_ch) + " challenges have been found.<br>Please select the challenge to be shown in this ranking:";
+        for(size_t ch = 0; ch < n_ch; ch++)
+        {
+            challenge_select_text.append("<br>" + QString::number(ch) + ": " + Ranking.rankings_challenges().ranking(ch).challenge().name());
+        }
+        bool ok;
+        challenge_index = QInputDialog::getInt(
+                    this,
+                    "Select Challenge",
+                    challenge_select_text,
+                    challenge_index,
+                    0,
+                    n_ch - 1,
+                    1,
+                    &ok);
+        if(!ok)
+            return;
+    }
+    else
+    {
+        QMessageBox::warning(
+                    this,
+                    "No Challenges",
+                    "No valid challenges wrere found for the selected stage");
+        return;
+    }
+
+    ui->label_Name->setText(Ranking.rankings_challenges().ranking(challenge_index).challenge().name());
 
     //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
@@ -195,6 +235,10 @@ void NCM_WIN_Ranking_Challenge::update()
     //update
     Ranking.update();
 
+    //challenge ranking
+    NCM_OBJ_Ranking_Challenge ranking_challenge = Ranking.rankings_challenges().ranking(challenge_index);
+    QString unit =  " " + ranking_challenge.challenge().unit();
+
     //--------------------------------------------------------------------------------------- table
 
     //clear scores
@@ -205,108 +249,79 @@ void NCM_WIN_Ranking_Challenge::update()
 
     //data
     size_t n_cols = COL_NUMBER_OF;
-    size_t n_rows = Ranking.ranking_this().runs().size();
+    size_t n_rows = ranking_challenge.challengetrys().size();
     vector<vector<QString>> vvQS_TableContent_c_r(n_cols, vector<QString>(n_rows, "..."));
 
     //row names
     QStringList QSL_NamesRows;
 
-    //checkpoint names
-    QStringList QSL_Checkpoints = Ranking.ranking_this().stage().checkpoints();
-    if(QSL_Checkpoints.size() > 0)
-        QSL_Checkpoints[QSL_Checkpoints.size() - 1] = QS_Buzzer;
-
-    //loop runs
+    //loop tries
     for(size_t r = 0; r < n_rows; r++)
     {
-        //run/competitor
-        NCM_OBJ_Run run = Ranking.ranking_this().runs().get_run(r);
-        NCM_OBJ_Competitor competitor = run.competitor();
+        //try/competitor
+        NCM_OBJ_Try challengetry = ranking_challenge.challengetry(r);
+        NCM_OBJ_Competitor competitor = challengetry.competitor();
 
         //row name
-        QSL_NamesRows.append(QString::number(Ranking.ranking_this().pos_current_overall(competitor)));
+        QSL_NamesRows.append(QString::number(ranking_challenge.pos_current_overall(competitor)));
 
         //competitor info
         vvQS_TableContent_c_r[COL_NAME][r]      = competitor.name();
 
-        //run data
-
-        vvQS_TableContent_c_r[COL_POINT][r]     = QSL_Checkpoints[run.checkpoint_reached()];
-        vvQS_TableContent_c_r[COL_TIME][r]      = run.time_ms_text();
+        //try data
+        vvQS_TableContent_c_r[COL_SCORE][r]     = QString::number(challengetry.score()) + unit;
 
         //position
-        size_t pos_current    = Ranking.ranking_this().pos_current_class(competitor);
-        size_t pos_worst      = Ranking.ranking_this().pos_worst_class(competitor);
-        QString class_symbol = competitor.competitor_class_symbol();
+        size_t pos_current      = ranking_challenge.pos_current_class(competitor);
+        QString class_symbol    = competitor.competitor_class_symbol();
         vvQS_TableContent_c_r[COL_POS][r] = class_symbol + " " + QString::number(pos_current) + ".";
-        if(pos_current != pos_worst)
-            vvQS_TableContent_c_r[COL_POS][r].append(" - " + QString::number(pos_worst) + ".");
 
-        //Podium
+        //quali
+        size_t quali_state = Ranking.quali_state(competitor);
+        vvQS_TableContent_c_r[COL_QUALI][r] = QSL_QualiState[quali_state];
+
+        //Highscore/Qualiscore
         if(competitor.female())
         {
             if(pos_current == 1)
-                ui->label_Podium_F1->setText(ui->label_Podium_F1->text().isEmpty() ? competitor.name() : ui->label_Podium_F1->text() + " & " + competitor.name());
-            else if(pos_current == 2)
-                ui->label_Podium_F2->setText(ui->label_Podium_F2->text().isEmpty() ? competitor.name() : ui->label_Podium_F2->text() + " & " + competitor.name());
-            else if(pos_current == 3)
-                ui->label_Podium_F3->setText(ui->label_Podium_F3->text().isEmpty() ? competitor.name() : ui->label_Podium_F3->text() + " & " + competitor.name());
+            {
+                ui->label_Highscore_F->setText(QString::number(challengetry.score()) + unit);
+            }
+
+            if(quali_state == QUALI_STATE_QUALI_CHALLENGE)
+            {
+                if(Ranking.quali_from_challenge_index(competitor) == challenge_index)
+                {
+                    ui->label_Qualiscore_F->setText(QString::number(challengetry.score()) + unit);
+                    vvQS_TableContent_c_r[COL_QUALI][r] = QS_QualiChallengeThis;
+                }
+            }
         }
         else
         {
             if(pos_current == 1)
-                ui->label_Podium_M1->setText(ui->label_Podium_M1->text().isEmpty() ? competitor.name() : ui->label_Podium_M1->text() + " & " + competitor.name());
-            else if(pos_current == 2)
-                ui->label_Podium_M2->setText(ui->label_Podium_M2->text().isEmpty() ? competitor.name() : ui->label_Podium_M2->text() + " & " + competitor.name());
-            else if(pos_current == 3)
-                ui->label_Podium_M3->setText(ui->label_Podium_M3->text().isEmpty() ? competitor.name() : ui->label_Podium_M3->text() + " & " + competitor.name());
-        }
+            {
+                ui->label_Highscore_M->setText(QString::number(challengetry.score()) + unit);
+            }
 
-        //quali
-        vvQS_TableContent_c_r[COL_QUALI][r] = QSL_QualiState[Ranking.quali_state(competitor)];
+            if(quali_state == QUALI_STATE_QUALI_CHALLENGE)
+            {
+                if(Ranking.quali_from_challenge_index(competitor) == challenge_index)
+                {
+                    ui->label_Qualiscore_M->setText(QString::number(challengetry.score()) + unit);
+                    vvQS_TableContent_c_r[COL_QUALI][r] = QS_QualiChallengeThis;
+                }
+            }
+        }
     }
 
     //set table data
     Table.set_data(vvQS_TableContent_c_r, QSL_NamesColumns, QSL_NamesRows, false, true);
 
-    //--------------------------------------------------------------------------------------- special prices
-
-    QFileInfo FI_BestTrick(Competition.path_best_trick());
-    if(FI_BestTrick.exists())
-    {
-        ifstream IS_BestTrick;
-        IS_BestTrick.open(FI_BestTrick.absoluteFilePath().toStdString());
-
-        if(IS_BestTrick.is_open())
-        {
-            string ST_line;
-            getline(IS_BestTrick, ST_line);
-            QString QS_Line = QString::fromStdString(ST_line);
-            ui->label_BestTrick->setText(QS_Line);
-            IS_BestTrick.close();
-        }
-    }
-
-    QFileInfo FI_WorstFail(Competition.path_worst_fail());
-    if(FI_WorstFail.exists())
-    {
-        ifstream IS_WorstFail;
-        IS_WorstFail.open(FI_WorstFail.absoluteFilePath().toStdString());
-
-        if(IS_WorstFail.is_open())
-        {
-            string ST_line;
-            getline(IS_WorstFail, ST_line);
-            QString QS_Line = QString::fromStdString(ST_line);
-            ui->label_WorstFail->setText(QS_Line);
-            IS_WorstFail.close();
-        }
-    }
-
     //take screenshot once per minute
-    if(ui->actionAutosave_Screenshot_once_per_minute->isChecked())
+    if(ui->actionTake_Screenshot_once_per_minute->isChecked())
         if(QDateTime::currentDateTime().time().second() <= 1)
-            this->grab().save(Competition.dir(COMP_DIR_SCREENSHOTS).path() + "/Ranking - " + Ranking.ranking_this().stage().name() + ".png");
+            this->grab().save(Competition.dir(COMP_DIR_SCREENSHOTS).path() + "/Ranking - " + ranking_challenge.challenge().name() + ".png");
 
     update_running = false;
 }
@@ -343,20 +358,26 @@ void NCM_WIN_Ranking_Challenge::update_auto(bool activate)
 
 void NCM_WIN_Ranking_Challenge::on_actionget_data_triggered()
 {
-
+    get_data();
 }
 
 void NCM_WIN_Ranking_Challenge::on_actionChange_table_settings_triggered()
 {
-
+    table_dims_dialog();
 }
 
 void NCM_WIN_Ranking_Challenge::on_actionUpdate_triggered()
 {
+    ui->actionAutoupdate->setChecked(false);
+    while (update_running)
+    {
+        //just chill
+    }
 
+    update();
 }
 
-void NCM_WIN_Ranking_Challenge::on_actionAutoupdate_triggered()
+void NCM_WIN_Ranking_Challenge::on_actionAutoupdate_triggered(bool checked)
 {
-
+    update_auto(checked);
 }

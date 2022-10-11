@@ -52,7 +52,7 @@
 color: rgb(0, 0, 128);</string>
          </property>
          <property name="text">
-          <string>Example Name</string>
+          <string>-</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -82,7 +82,7 @@ color: rgb(0, 0, 128);</string>
 color: rgb(0, 0, 128);</string>
          </property>
          <property name="text">
-          <string>Example Name</string>
+          <string>-</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -112,7 +112,7 @@ color: rgb(0, 0, 128);</string>
 color: rgb(0, 0, 128);</string>
          </property>
          <property name="text">
-          <string>Example Name</string>
+          <string>-</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -142,7 +142,7 @@ color: rgb(0, 0, 128);</string>
 color: rgb(128, 0, 0);</string>
          </property>
          <property name="text">
-          <string>Example Name</string>
+          <string>-</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -156,7 +156,7 @@ color: rgb(128, 0, 0);</string>
 color: rgb(128, 0, 0);</string>
          </property>
          <property name="text">
-          <string>Example Name</string>
+          <string>-</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -170,7 +170,7 @@ color: rgb(128, 0, 0);</string>
 color: rgb(128, 0, 0);</string>
          </property>
          <property name="text">
-          <string>Example Name</string>
+          <string>-</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>

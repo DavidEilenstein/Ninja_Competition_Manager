@@ -106,6 +106,7 @@ const QStringList QSL_QualiState = {
     "💀",
     "❓"
 };
+const QString QS_QualiChallengeThis = "🦾";
 
 const QString QS_FileName_SpecialPrice_BestTrick = "BestTrick.txt";
 const QString QS_FileName_SpecialPrice_WorstFail = "WorstFail.txt";

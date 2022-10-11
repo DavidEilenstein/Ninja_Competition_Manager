@@ -34,6 +34,7 @@ public:
 
     bool                        add_competitor(NCM_OBJ_Competitor competitor);
     NCM_OBJ_Competitor          get_competitor(size_t c)                            {return c < size() ? vCompetitors[c] : NCM_OBJ_Competitor();}
+    size_t                      get_competitor_index(NCM_OBJ_Competitor competitor);
 
     bool                        change_starter_number(NCM_OBJ_Competitor competitor, int new_number);
 

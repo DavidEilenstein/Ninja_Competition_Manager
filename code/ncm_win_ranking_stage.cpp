@@ -45,11 +45,11 @@ void NCM_WIN_Ranking_Stage::get_data()
     if(QS_CompetitorsLoadPath.isEmpty())
         return;
 
-    QDir DIR_Competitors(QS_CompetitorsLoadPath);
-    if(!DIR_Competitors.exists())
+    QDir DIR_Competitors_StageThis(QS_CompetitorsLoadPath);
+    if(!DIR_Competitors_StageThis.exists())
         return;
 
-    Ranking.set_stage_this_competitors(DIR_Competitors);
+    Ranking.set_stage_this_competitors(DIR_Competitors_StageThis);
 
     //------------------------------- stage
 
@@ -98,11 +98,11 @@ void NCM_WIN_Ranking_Stage::get_data()
         if(QS_CompetitorsLoadPath.isEmpty())
             return;
 
-        DIR_Competitors.setPath(QS_CompetitorsLoadPath);
-        if(!DIR_Competitors.exists())
+        QDir DIR_Competitors_StagePrevious(QS_CompetitorsLoadPath);
+        if(!DIR_Competitors_StagePrevious.exists())
             return;
 
-        Ranking.set_stage_previous_competitors(DIR_Competitors);
+        Ranking.set_stage_previous_competitors(DIR_Competitors_StagePrevious);
 
         //------------------------------- stage
 
@@ -135,6 +135,13 @@ void NCM_WIN_Ranking_Stage::get_data()
 
         Ranking.set_stage_previous_runs(DIR_Runs);
     }
+
+    //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX   Challenges   XXXXXXXXXXXXXXXXXXXXXX
+
+    Ranking.set_challenges_tries(Competition.dir(COMP_DIR_CHALLENGE_TRIES));
+    Ranking.set_challenges_challenges(Competition.dir(COMP_DIR_CHALLENGES));
+    Ranking.set_challenges_competitors(DIR_Competitors_StageThis);
+    Ranking.set_challenges_names();
 
     //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 

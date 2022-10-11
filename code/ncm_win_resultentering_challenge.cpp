@@ -66,7 +66,7 @@ void NCM_WIN_ResultEntering_Challenge::get_data()
 
     //------------------------------- tries
 
-    QDir DIR_Tries(Competition.dir(COMP_DIR_CHALLENGES).path() + "/" + Challenge.name());
+    QDir DIR_Tries(Competition.dir(COMP_DIR_CHALLENGE_TRIES).path() + "/" + Challenge.name());
 
     if(!DIR_Tries.exists())
         QDir().mkdir(DIR_Tries.path());

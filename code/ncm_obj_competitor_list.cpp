@@ -38,6 +38,15 @@ bool NCM_OBJ_Competitor_List::add_competitor(NCM_OBJ_Competitor competitor)
     return true;
 }
 
+size_t NCM_OBJ_Competitor_List::get_competitor_index(NCM_OBJ_Competitor competitor)
+{
+    for(size_t c = 0; c < size(); c++)
+        if(vCompetitors[c].name() == competitor.name())
+            return c;
+
+    return 0;
+}
+
 bool NCM_OBJ_Competitor_List::change_starter_number(NCM_OBJ_Competitor competitor, int new_number)
 {
     for(size_t c = 0; c < size(); c++)

@@ -22,6 +22,7 @@ void NCM_OBJ_Ranking_Combi::update()
     Competitors_Qualified_Stage_Previous.clear();
     Competitors_Qualified_Stage_This.clear();
     Competitors_Qualified_Challenges.clear();
+    vQualiFromChallengeIndex.clear();
 
     //quali from previous stage
     if(StagePreviousRelevant)
@@ -150,6 +151,7 @@ void NCM_OBJ_Ranking_Combi::update()
                 NCM_OBJ_Competitor competitor_qualified = competitors_possible_class.get_competitor(pos);
 
                 Competitors_Qualified_Challenges.add_competitor(competitor_qualified);
+                vQualiFromChallengeIndex.push_back(cha);
                 added_competitor = true;
                 score_last_added = challenge_ranking.challengetry(competitor_qualified).score();
             }
@@ -163,6 +165,7 @@ void NCM_OBJ_Ranking_Combi::update()
                     if(challenge_ranking.challengetry(competitor_candidate).score() == score_last_added)
                     {
                         Competitors_Qualified_Challenges.add_competitor(competitor_candidate);
+                        vQualiFromChallengeIndex.push_back(cha);
                     }
                 }
             }
@@ -196,6 +199,14 @@ size_t NCM_OBJ_Ranking_Combi::quali_state(NCM_OBJ_Competitor competitor)
             return vQualiStates[c];
 
     return QUALI_STATE_UNKNOWN;
+}
+
+size_t NCM_OBJ_Ranking_Combi::quali_from_challenge_index(NCM_OBJ_Competitor competitor)
+{
+    if(!Competitors_Qualified_Challenges.contains_name(competitor.name()))
+        return 0;
+
+    return vQualiFromChallengeIndex[Competitors_Qualified_Challenges.get_competitor_index(competitor)];
 }
 
 

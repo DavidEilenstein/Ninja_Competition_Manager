@@ -52,7 +52,8 @@ private slots:
 
     void on_actionUpdate_triggered();
 
-    void on_actionAutoupdate_triggered();
+
+    void on_actionAutoupdate_triggered(bool checked);
 
 private:
     Ui::NCM_WIN_Ranking_Challenge *ui;
@@ -66,6 +67,8 @@ private:
     QTimer                  TimerAutoupdate;
     bool                    update_running = false;
     bool                    data_loaded = false;
+
+    size_t challenge_index = 0;
 
     //col names
     const QStringList QSL_NamesColumns = {
