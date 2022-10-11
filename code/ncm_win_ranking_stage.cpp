@@ -324,7 +324,7 @@ void NCM_WIN_Ranking_Stage::update_auto(bool activate)
         double time_s = QInputDialog::getDouble(
                     this,
                     "Autoupdate interval",
-                    "Please select the interval for autoupdateing starterlist in seconds.",
+                    "Please select the interval for autoupdateing ranking in seconds.",
                     1,
                     0.1,
                     300,
