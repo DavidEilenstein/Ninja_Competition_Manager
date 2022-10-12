@@ -48,6 +48,7 @@ public:
 
     void                    sort(bool more_is_better);
 
+    bool                    set_challenge(NCM_OBJ_Challenge challenge)                  {for(size_t t = 0; t < size(); t++) vTries[t].set_challenge(challenge); return true;}
     void                    set_dir(QDir dir)                                           {DIR_SavedIn = dir;}
     bool                    load(QDir dir)                                              {set_dir(dir); return load();}
     bool                    load();

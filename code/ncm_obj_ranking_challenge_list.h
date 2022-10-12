@@ -41,6 +41,9 @@ public:
     NCM_OBJ_Ranking_Challenge ranking(size_t c)                                                         {return c < size() ? vRankings[c] : NCM_OBJ_Ranking_Challenge();}
     bool contains_tryer(NCM_OBJ_Competitor c)                                                           {for(size_t i = 0; i < size(); i++) if(ranking(i).challengetrys().competitors_list().contains_name(c.name())) return true; return false;}
 
+    size_t quali_count_f()                                                                              {size_t sum = 0; for(size_t i = 0; i < size(); i++) sum += vRankings[i].challenge().quali_count_f(); return sum;}
+    size_t quali_count_m()                                                                              {size_t sum = 0; for(size_t i = 0; i < size(); i++) sum += vRankings[i].challenge().quali_count_m(); return sum;}
+
     size_t size()                                                                                       {return vRankings.size();}
 
 private:

@@ -49,6 +49,8 @@ private slots:
     void on_checkBox_Rerun_clicked();
     void on_actionreload_competitors_and_runs_triggered();
 
+    void on_spinBox_decimals_valueChanged(int arg1);
+
 private:
     Ui::NCM_WIN_ResultEntering_Stage *ui;
 

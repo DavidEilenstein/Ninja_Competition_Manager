@@ -11,7 +11,7 @@ NCM_WIN_ResultEntering_Stage::NCM_WIN_ResultEntering_Stage(NCM_OBJ_Competition c
 
     get_data();
 
-    setWindowTitle("Result Entering Stage - by David Eilenstein");
+    setWindowTitle("Result Entering Stage");
     setWindowIcon(QIcon(":/img/Logo_Final.jpg"));
 }
 
@@ -113,8 +113,8 @@ void NCM_WIN_ResultEntering_Stage::on_pushButton_SaveRun_clicked()
                 Competitors_Allowed.get_competitor(ui->comboBox_Competitor->currentIndex()),
                 ui->comboBox_Checkpoint->currentIndex(),
                 ui->spinBox_min->value(),
-                ui->spinBox_s->value(),
-                ui->spinBox_ms->value());
+                int(ui->doubleSpinBox_s->value()),
+                (ui->doubleSpinBox_s->value() - int(ui->doubleSpinBox_s->value())) * 1000);
 
     if(Runs.contains_runner_name(run.competitor().name()))
     {
@@ -160,8 +160,7 @@ void NCM_WIN_ResultEntering_Stage::on_pushButton_SaveRun_clicked()
     ui->comboBox_Competitor->setCurrentIndex(0);
     ui->comboBox_Checkpoint->setCurrentIndex(0);
     ui->spinBox_min->setValue(0);
-    ui->spinBox_s->setValue(0);
-    ui->spinBox_ms->setValue(0);
+    ui->doubleSpinBox_s->setValue(0);
 
     calc_competitors_allowed();
 }
@@ -181,4 +180,9 @@ void NCM_WIN_ResultEntering_Stage::on_actionreload_competitors_and_runs_triggere
     load_competitors();
     load_runs();
     calc_competitors_allowed();
+}
+
+void NCM_WIN_ResultEntering_Stage::on_spinBox_decimals_valueChanged(int arg1)
+{
+    ui->doubleSpinBox_s->setDecimals(arg1);
 }

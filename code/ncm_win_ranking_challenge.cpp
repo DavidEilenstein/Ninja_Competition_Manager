@@ -14,7 +14,7 @@ NCM_WIN_Ranking_Challenge::NCM_WIN_Ranking_Challenge(NCM_OBJ_Competition comp, Q
     connect(&TimerAutoupdate, SIGNAL(timeout()), this, SLOT(update()));
     TimerAutoupdate.start(1000);
 
-    setWindowTitle("Ranking Challenge - by David Eilenstein");
+    setWindowTitle("Ranking Challenge");
     setWindowIcon(QIcon(":/img/Logo_Final.jpg"));
 
     int size_button = 80;
@@ -174,7 +174,17 @@ void NCM_WIN_Ranking_Challenge::get_data()
         return;
     }
 
-    ui->label_Name->setText(Ranking.rankings_challenges().ranking(challenge_index).challenge().name());
+    //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX   UI   XXXXXXXXXXXXXXXXXXXXXX
+
+    NCM_OBJ_Stage stage = Ranking.ranking_this().stage();
+    NCM_OBJ_Challenge challenge = Ranking.rankings_challenges().ranking(challenge_index).challenge();
+    ui->label_Name->setText(challenge.name());
+    ui->label_QualiChallenge_F->setText(QString::number(challenge.quali_count_f()));
+    ui->label_QualiChallenge_M->setText(QString::number(challenge.quali_count_m()));
+    ui->label_QualiSafe_F->setText(QString::number(stage.quali_count_this_f()));
+    ui->label_QualiSafe_M->setText(QString::number(stage.quali_count_this_m()));
+    ui->label_QualiSpeed_F->setText(QString::number(stage.quali_count_previous_f()));
+    ui->label_QualiSpeed_M->setText(QString::number(stage.quali_count_previous_m()));
 
     //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
@@ -231,6 +241,9 @@ void NCM_WIN_Ranking_Challenge::update()
         return;
 
     update_running = true;
+
+    //update time
+    ui->label_Time->setText(QDateTime::currentDateTime().time().toString());
 
     //update
     Ranking.update();

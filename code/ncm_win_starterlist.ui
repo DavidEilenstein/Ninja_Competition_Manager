@@ -18,6 +18,21 @@
     <bool>false</bool>
    </property>
    <layout class="QGridLayout" name="gridLayout_2">
+    <property name="leftMargin">
+     <number>3</number>
+    </property>
+    <property name="topMargin">
+     <number>3</number>
+    </property>
+    <property name="rightMargin">
+     <number>3</number>
+    </property>
+    <property name="bottomMargin">
+     <number>3</number>
+    </property>
+    <property name="spacing">
+     <number>3</number>
+    </property>
     <item row="2" column="0" rowspan="2">
      <widget class="QPushButton" name="pushButton_DE">
       <property name="minimumSize">

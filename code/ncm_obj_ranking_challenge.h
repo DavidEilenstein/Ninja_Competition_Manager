@@ -30,8 +30,8 @@ public:
     explicit NCM_OBJ_Ranking_Challenge();
 
     bool                    set_competitors(QDir dir_competitors)       {return Competitors_All.load(dir_competitors);}
-    bool                    set_tries(QDir dir_tries)                   {return Tries.load(dir_tries);}
-    bool                    set_challenge(QFileInfo fi_challenge)       {return Challenge.load(fi_challenge);}
+    bool                    set_tries(QDir dir_tries)                   {return Tries.load(dir_tries) && Tries.set_challenge(Challenge);}
+    bool                    set_challenge(QFileInfo fi_challenge)       {return Challenge.load(fi_challenge) && Tries.set_challenge(Challenge);}
 
     void                    load_competitors()                          {Competitors_All.load();}
     void                    load_tries()                                {Tries.load();}

@@ -9,7 +9,7 @@ NCM_WIN_CheckIn::NCM_WIN_CheckIn(NCM_OBJ_Competition comp, QWidget *parent) :
 
     CompetitorList.set_dir(QDir(comp.dir(COMP_DIR_COMPETITORS).path() + "/CheckedIn"));
 
-    setWindowTitle("Checkin - by David Eilenstein");
+    setWindowTitle("Checkin");
     setWindowIcon(QIcon(":/img/Logo_Final.jpg"));
 }
 

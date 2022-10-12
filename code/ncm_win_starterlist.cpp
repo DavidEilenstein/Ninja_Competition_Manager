@@ -14,7 +14,7 @@ NCM_WIN_StarterList::NCM_WIN_StarterList(NCM_OBJ_Competition comp, QWidget *pare
     connect(&TimerAutoupdate, SIGNAL(timeout()), this, SLOT(update()));
     TimerAutoupdate.start(1000);
 
-    setWindowTitle("Starter List - by David Eilenstein");
+    setWindowTitle("Starter List");
     setWindowIcon(QIcon(":/img/Logo_Final.jpg"));
 
     int size_button = 80;

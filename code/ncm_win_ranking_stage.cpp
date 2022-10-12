@@ -14,7 +14,7 @@ NCM_WIN_Ranking_Stage::NCM_WIN_Ranking_Stage(NCM_OBJ_Competition comp, QWidget *
     connect(&TimerAutoupdate, SIGNAL(timeout()), this, SLOT(update()));
     TimerAutoupdate.start(1000);
 
-    setWindowTitle("Ranking Stage - by David Eilenstein");
+    setWindowTitle("Ranking Stage");
     setWindowIcon(QIcon(":/img/Logo_Final.jpg"));
 
     int size_button = 80;
@@ -143,6 +143,17 @@ void NCM_WIN_Ranking_Stage::get_data()
     Ranking.set_challenges_competitors(DIR_Competitors_StageThis);
     Ranking.set_challenges_names();
 
+    //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX   UI   XXXXXXXXXXXXXXXXXXXXXX
+
+    Ranking.load_challenges();
+    NCM_OBJ_Stage stage = Ranking.ranking_this().stage();
+    ui->label_QualiChallenge_F->setText(QString::number(Ranking.rankings_challenges().quali_count_f()));
+    ui->label_QualiChallenge_M->setText(QString::number(Ranking.rankings_challenges().quali_count_m()));
+    ui->label_QualiSafe_F->setText(QString::number(stage.quali_count_this_f()));
+    ui->label_QualiSafe_M->setText(QString::number(stage.quali_count_this_m()));
+    ui->label_QualiSpeed_F->setText(QString::number(stage.quali_count_previous_f()));
+    ui->label_QualiSpeed_M->setText(QString::number(stage.quali_count_previous_m()));
+
     //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
     data_loaded = true;
@@ -225,8 +236,12 @@ void NCM_WIN_Ranking_Stage::update()
 
     //checkpoint names
     QStringList QSL_Checkpoints = Ranking.ranking_this().stage().checkpoints();
-    if(QSL_Checkpoints.size() > 0)
-        QSL_Checkpoints[QSL_Checkpoints.size() - 1] = QS_Buzzer;
+    size_t n_cp = QSL_Checkpoints.size();
+    if(n_cp > 0)
+        QSL_Checkpoints[int(n_cp - 1)] = QS_Buzzer;
+
+    //checkpoint stats
+    vector<vector<size_t>> vvCheckpointFailHist(2, vector<size_t>(n_cp, 0));
 
     //loop runs
     for(size_t r = 0; r < n_rows; r++)
@@ -242,8 +257,9 @@ void NCM_WIN_Ranking_Stage::update()
         vvQS_TableContent_c_r[COL_NAME][r]      = competitor.name();
 
         //run data
-
-        vvQS_TableContent_c_r[COL_POINT][r]     = QSL_Checkpoints[run.checkpoint_reached()];
+        size_t checkpoint                       = run.checkpoint_reached();
+        vvCheckpointFailHist[competitor.female()][checkpoint]++;
+        vvQS_TableContent_c_r[COL_POINT][r]     = QSL_Checkpoints[int(checkpoint)];
         vvQS_TableContent_c_r[COL_TIME][r]      = run.time_ms_text();
 
         //position
@@ -275,7 +291,39 @@ void NCM_WIN_Ranking_Stage::update()
         }
 
         //quali
-        vvQS_TableContent_c_r[COL_QUALI][r] = QSL_QualiState[Ranking.quali_state(competitor)];
+        vvQS_TableContent_c_r[COL_QUALI][r] = QSL_QualiState[int(Ranking.quali_state(competitor))];
+    }
+
+    //checkpoint statistic
+
+    //cumulate
+    vector<vector<size_t>> vvCheckpointReachHistCum = vvCheckpointFailHist;
+    for(size_t cla = 0; cla < 2; cla++)
+        for(int cp = n_cp - 2; cp >= 0; cp--)
+            vvCheckpointReachHistCum[cla][cp] += vvCheckpointReachHistCum[cla][cp + 1];
+
+    //reach
+    vector<vector<double>> vvCheckpointReach(2, vector<double>(n_cp, 0.0));
+    for(size_t cla = 0; cla < 2; cla++)
+        if(vvCheckpointReachHistCum[cla][0] > 0)
+            for(size_t cp = 0; cp < n_cp; cp++)
+                vvCheckpointReach[cla][cp] = double(vvCheckpointReachHistCum[cla][cp]) / double(vvCheckpointReachHistCum[cla][0]);
+
+    //clear
+    vector<vector<double>> vvCheckpointClear(2, vector<double>(n_cp, 1));
+    for(size_t cla = 0; cla < 2; cla++)
+        for(size_t cp = 0; cp < n_cp; cp++)
+            if(vvCheckpointReachHistCum[cla][cp] > 0)
+                vvCheckpointClear[cla][cp] = 1.0 - double(vvCheckpointFailHist[cla][cp]) / double(vvCheckpointReachHistCum[cla][cp]);
+
+    //set stats to table
+    for(size_t r = 0; r < n_rows; r++)
+    {
+        NCM_OBJ_Run run = Ranking.ranking_this().runs().get_run(r);
+        bool female = run.competitor().female();
+        size_t cp = run.checkpoint_reached();
+        vvQS_TableContent_c_r[COL_CLEAR][r] = QString::number(int(vvCheckpointClear[female][cp] * 100)) + "%";
+        vvQS_TableContent_c_r[COL_REACH][r] = QString::number(int(vvCheckpointReach[female][cp] * 100)) + "%";
     }
 
     //set table data

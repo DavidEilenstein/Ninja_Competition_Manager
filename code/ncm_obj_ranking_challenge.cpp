@@ -7,6 +7,8 @@ NCM_OBJ_Ranking_Challenge::NCM_OBJ_Ranking_Challenge()
 
 size_t NCM_OBJ_Ranking_Challenge::pos_current_overall(NCM_OBJ_Competitor c)
 {
+    Tries.set_challenge(Challenge);
+
     NCM_OBJ_Try c_challengetry = challengetry(c);
     size_t pos = 1;
 
@@ -24,6 +26,8 @@ size_t NCM_OBJ_Ranking_Challenge::pos_current_overall(NCM_OBJ_Competitor c)
 
 size_t NCM_OBJ_Ranking_Challenge::pos_current_class(NCM_OBJ_Competitor c)
 {
+    Tries.set_challenge(Challenge);
+
     bool female = c.female();
     NCM_OBJ_Try c_challengetry = challengetry(c);
     size_t pos = 1;

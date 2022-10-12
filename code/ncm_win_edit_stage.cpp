@@ -9,7 +9,7 @@ NCM_WIN_Edit_Stage::NCM_WIN_Edit_Stage(NCM_OBJ_Competition comp, QWidget *parent
 
     Competition = comp;
 
-    setWindowTitle("Edit Stage - by David Eilenstein");
+    setWindowTitle("Edit Stage");
     setWindowIcon(QIcon(":/img/Logo_Final.jpg"));
 }
 

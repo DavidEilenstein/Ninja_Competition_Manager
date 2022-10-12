@@ -75,13 +75,17 @@ private:
         "pos",
         "status",
         "time",
-        "point"};
+        "point",
+        "reach",
+        "clear"};
     enum COL_NAMES {
         COL_NAME,
         COL_POS,
         COL_QUALI,
         COL_TIME,
         COL_POINT,
+        COL_REACH,
+        COL_CLEAR,
         COL_NUMBER_OF
     };
 };

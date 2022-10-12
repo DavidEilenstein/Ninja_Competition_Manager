@@ -9,7 +9,7 @@ NCM_WIN_Edit_Challenge::NCM_WIN_Edit_Challenge(NCM_OBJ_Competition comp, QWidget
 
     Competition = comp;
 
-    setWindowTitle("Edit Challenge - by David Eilenstein");
+    setWindowTitle("Edit Challenge");
     setWindowIcon(QIcon(":/img/Logo_Final.jpg"));
 }
 
