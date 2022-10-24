@@ -113,7 +113,7 @@ bool NCM_OBJ_Try::load(QString QS_path)
         case 4:
         {
             bool ok;
-            int score = QS_Line.toInt(&ok);
+            double score = QS_Line.toDouble(&ok);
             if(ok)
             {
                 Score = score;

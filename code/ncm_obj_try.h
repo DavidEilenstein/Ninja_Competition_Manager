@@ -36,7 +36,7 @@ public:
 
     NCM_OBJ_Challenge   challenge()                         {return Challenge;}
     NCM_OBJ_Competitor  competitor()                        {return Competitor;}
-    size_t              score()                             {return Score;}
+    double              score()                             {return Score;}
     QDateTime           recorded()                          {return QDT_Recorded;}
 
     int                 time_to_ms(QDateTime QDT_other)     {return -QDT_Recorded.msecsTo(QDT_other);}
