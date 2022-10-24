@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
+    <width>567</width>
     <height>425</height>
    </rect>
   </property>
@@ -408,6 +408,9 @@
          <property name="text">
           <string>By using this free tool, you agree to let David Eilenstein compete for free at your competition💪</string>
          </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
         </widget>
        </item>
       </layout>
@@ -420,7 +423,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>500</width>
+     <width>567</width>
      <height>21</height>
     </rect>
    </property>

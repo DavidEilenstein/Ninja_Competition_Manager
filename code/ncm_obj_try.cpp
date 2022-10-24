@@ -40,7 +40,7 @@ bool NCM_OBJ_Try::save(QDir DIR_Tries)
     OF_Try << Competitor.name().toStdString() << "\n";
     OF_Try << (Competitor.female() ? QS_Female : QS_Male).toStdString() << "\n";
     OF_Try << Challenge.name().toStdString() << "\n";
-    OF_Try << Score << "\n";
+    OF_Try << QString::number(Score).replace(",", ".").toStdString() << "\n";
     OF_Try << QDT_Recorded.toString(QS_DateTimeFormat).toStdString();
 
     OF_Try.close();
