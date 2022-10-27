@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>683</width>
+    <width>624</width>
     <height>671</height>
    </rect>
   </property>
@@ -737,7 +737,7 @@ color: rgb(128, 0, 0);</string>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
+           <width>16777215</width>
            <height>22</height>
           </size>
          </property>
@@ -790,7 +790,7 @@ color: rgb(128, 0, 0);</string>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
+           <width>16777215</width>
            <height>22</height>
           </size>
          </property>
@@ -815,7 +815,7 @@ color: rgb(128, 0, 0);</string>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
+           <width>16777215</width>
            <height>22</height>
           </size>
          </property>
@@ -950,7 +950,7 @@ color: rgb(128, 0, 0);</string>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
+           <width>16777215</width>
            <height>22</height>
           </size>
          </property>
@@ -975,7 +975,7 @@ color: rgb(128, 0, 0);</string>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
+           <width>16777215</width>
            <height>22</height>
           </size>
          </property>
@@ -1056,7 +1056,7 @@ color: rgb(128, 0, 0);</string>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
+           <width>16777215</width>
            <height>22</height>
           </size>
          </property>
@@ -1075,8 +1075,8 @@ color: rgb(128, 0, 0);</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>683</width>
-     <height>21</height>
+     <width>624</width>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuData">

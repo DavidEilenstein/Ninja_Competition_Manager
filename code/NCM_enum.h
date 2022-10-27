@@ -7,7 +7,7 @@
 
 using namespace std;
 
-const QString QS_VersionNumber = "v3.2 - 2022_10_24";
+const QString QS_VersionNumber = "v3.3 - 2022_10_27";
 
 enum COMP_DIR {
     COMP_DIR_GENERAL,
